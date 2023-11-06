@@ -1,7 +1,9 @@
 package com.hou_tai.controller.pc;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
+import com.hou_tai.model.vo.GameVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IGameService;
@@ -10,6 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @ClassName: GameController
@@ -60,7 +64,14 @@ public class GameController {
     @PostMapping("page")
     public ResultVO paginQuery(@RequestBody GameDto dto){
         //1.分页参数
-        return ResponseData.success(gameService.paginQuery(dto));
+        Page<GameVo> page = gameService.paginQuery(dto);
+        ResultVO<List<GameVo>> resultVO = new ResultVO<>();
+        resultVO.setCurrent(page.getCurrent());
+        resultVO.setPages(page.getPages());
+        resultVO.setTotal(page.getTotal());
+        resultVO.setSize(page.getSize());
+        resultVO.setData(page.getRecords());
+        return ResponseData.success(resultVO);
     }
 
     /**
@@ -72,7 +83,7 @@ public class GameController {
     @Operation(summary = "新增数据",description = "gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
-    @PostMapping
+    @PostMapping("add")
     public ResultVO<Game> add(@RequestBody Game game){
         return ResponseData.success(gameService.insert(game));
     }
@@ -86,7 +97,7 @@ public class GameController {
     @Operation(summary = "更新数据",description = "gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
-    @PostMapping
+    @PostMapping("edit")
     public ResultVO<Game> edit(@RequestBody Game game){
         return ResponseData.success(gameService.update(game));
     }
