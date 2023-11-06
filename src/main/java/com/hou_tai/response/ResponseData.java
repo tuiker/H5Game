@@ -1,5 +1,7 @@
 package com.hou_tai.response;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.enums.ResultCode;
 
 /**
@@ -51,6 +53,10 @@ public class ResponseData {
 
     public static <T> ResultVO<T> error(ResultCode ResultCode) {
         return new ResultVO<T>().setCodeAndMsg(ResultCode);
+    }
+
+    public static <T> ResultVO<T> success(Page page) {
+        return new ResultVO<T>(ResultCode.SUCCESS,page);
     }
 
     /*public static <T> ResultVO<T> Forbidden() {

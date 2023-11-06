@@ -1,5 +1,6 @@
 package com.hou_tai.response;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.enums.ResultCode;
 import com.hou_tai.model.base.PageVoEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -52,6 +53,15 @@ public class ResultVO<T> extends PageVoEntity {
     public ResultVO<T> setData(T data) {
         this.data = data;
         return this;
+    }
+
+    public ResultVO(ResultCode resultCode, Page page) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
+        this.data = (T) page.getRecords();
+        this.setTotal(page.getTotal());
+        this.setCurrent(page.getCurrent());
+        this.setSize(page.getSize());
     }
 
     @Override
