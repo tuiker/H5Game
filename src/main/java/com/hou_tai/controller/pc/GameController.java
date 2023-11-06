@@ -61,7 +61,7 @@ public class GameController {
      * @return 查询结果
      */
     @Operation(summary = "分页查询")
-    @PostMapping("page")
+    @PostMapping("/page")
     public ResultVO paginQuery(@RequestBody GameDto dto){
         //1.分页参数
         Page<GameVo> page = gameService.paginQuery(dto);
@@ -83,7 +83,7 @@ public class GameController {
     @Operation(summary = "新增数据",description = "gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResultVO<Game> add(@RequestBody Game game){
         return ResponseData.success(gameService.insert(game));
     }
@@ -97,7 +97,7 @@ public class GameController {
     @Operation(summary = "更新数据",description = "gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
-    @PostMapping("edit")
+    @PostMapping("/edit")
     public ResultVO<Game> edit(@RequestBody Game game){
         return ResponseData.success(gameService.update(game));
     }

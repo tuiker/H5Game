@@ -96,7 +96,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         Page<GameVo> pagin=this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(),dto.getPageSize()) ,
                 GameVo.class, new MPJLambdaWrapper<Game>()
-                        .selectAll(GameReview.class)
+                        .selectAll(Game.class)
                         .select("u.user_name,l.language_name,gt.type_name")
                         .leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
                         .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)

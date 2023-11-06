@@ -46,7 +46,7 @@ public class GameReviewController {
      * @return 查询结果
      */
     @Operation(summary ="分页查询",description ="gameId,page,pageSize")
-    @PostMapping("page")
+    @PostMapping("/page")
     public ResultVO page(@RequestBody GameDto dto){
         Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(dto);
         return ResponseData.success(reviewPage);
@@ -59,7 +59,7 @@ public class GameReviewController {
      * @return 实例对象
      */
     @Operation(summary ="新增评论数据",description = "userId,gameId,reviewContent,helpNum,reviewGrade")
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResultVO<GameReview> add(@RequestBody GameReview gameReview){
         return ResponseData.success(gameReviewService.insert(gameReview));
     }
@@ -71,7 +71,7 @@ public class GameReviewController {
      * @return 实例对象
      */
     @Operation(summary ="更新评论数据")
-    @PostMapping("update")
+    @PostMapping("/update")
     public ResultVO<GameReview> update(@RequestBody GameReview gameReview){
         return ResponseData.success(gameReviewService.update(gameReview));
     }
@@ -96,7 +96,7 @@ public class GameReviewController {
      * @return 实例对象
      */
     @Operation(summary ="回复数据保存",description ="id,replyContent,replyUserId")
-    @PostMapping("saveReply")
+    @PostMapping("/saveReply")
     public ResultVO saveReply(@RequestBody GameReview gameReview){
         return ResponseData.success(gameReviewService.saveReply(gameReview));
     }
