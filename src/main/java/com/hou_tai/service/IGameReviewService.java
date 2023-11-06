@@ -1,12 +1,13 @@
 package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.PointDto;
-import com.hou_tai.model.pojo.Game;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.model.vo.GameReviewVo;
-import com.hou_tai.model.vo.GameVo;
+import com.hou_tai.response_vo.GameReviewPageVo;
 
 /**
  * @InterfaceName: GameService
@@ -15,7 +16,18 @@ import com.hou_tai.model.vo.GameVo;
  * @Date: 2023-11-04 11:37
  * @Version: 1.0
  **/
-public interface IGameReviewService {
+public interface IGameReviewService extends IService<GameReview> {
+
+
+    /**
+     * @Description 分页查询 游戏评论 列表
+     * @Author GaoLu
+     * @Date 2023/11/6
+     * @Return
+     * @Param pageDao 分页参数
+     **/
+    Page<GameReviewPageVo> getReviewPage(PageDaoEntity pageDao);
+
 
     /**
      * 通过ID查询单条数据
@@ -32,6 +44,7 @@ public interface IGameReviewService {
      * @return
      */
     Page<GameReviewVo> pageQuery(GameDto dto);
+
     /**
      * 新增数据
      *
@@ -39,6 +52,7 @@ public interface IGameReviewService {
      * @return 实例对象
      */
     GameReview insert(GameReview gameReview);
+
     /**
      * 更新数据
      *
@@ -46,6 +60,7 @@ public interface IGameReviewService {
      * @return 实例对象
      */
     GameReview update(GameReview gameReview);
+
     /**
      * 通过主键删除数据
      *
@@ -55,7 +70,6 @@ public interface IGameReviewService {
     boolean deleteById(Integer id);
 
     boolean addHelpNum(PointDto dto);
-
 
 
     boolean saveReply(GameReview gameReview);
