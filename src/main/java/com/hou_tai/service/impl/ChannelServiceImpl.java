@@ -19,7 +19,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
 
 
     @Override
-    public List<Channel> list() {
+    public List<Channel> listByChannel() {
         return this.list();
     }
 

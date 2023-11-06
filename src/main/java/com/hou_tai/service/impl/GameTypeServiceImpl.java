@@ -17,7 +17,7 @@ import java.util.List;
 public class GameTypeServiceImpl extends ServiceImpl<GameTypeMapper, GameType> implements IGameTypeService {
 
     @Override
-    public List<GameType> list() {
+    public List<GameType> listByGameType() {
         return this.list();
     }
 }

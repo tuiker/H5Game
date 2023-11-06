@@ -16,7 +16,7 @@ import java.util.List;
 public class LanguageServiceImpl extends ServiceImpl<LanguageMapper, Language> implements ILanguageService {
 
     @Override
-    public List<Language> list() {
+    public List<Language> listByLanguage() {
         return this.list();
     }
 }

@@ -14,6 +14,6 @@ import java.util.List;
  **/
 public interface ILanguageService {
 
-    List<Language> list();
+    List<Language> listByLanguage();
 
 }

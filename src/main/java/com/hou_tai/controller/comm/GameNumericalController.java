@@ -49,7 +49,7 @@ public class GameNumericalController {
     @GetMapping("/listByGameType")
     @ApiResponse(responseCode = "200", description = "查找成功")
     public ResultVO<List<GameType>> listByGameType() {
-        List<GameType> list = gameTypeService.list();
+        List<GameType> list = gameTypeService.listByGameType();
         return ResponseData.success(list);
     }
 
@@ -63,7 +63,7 @@ public class GameNumericalController {
     @GetMapping("/listByLanguage")
     @ApiResponse(responseCode = "200", description = "查找成功")
     public ResultVO<List<Language>> listByLanguage() {
-        List<Language> list = languageService.list();
+        List<Language> list = languageService.listByLanguage();
         return ResponseData.success(list);
     }
 
@@ -76,7 +76,7 @@ public class GameNumericalController {
     @Operation(summary = "所有渠道")
     @GetMapping("/listByChannel")
     public ResultVO<List<Channel>> listByChannel() {
-        List<Channel> list = channelService.list();
+        List<Channel> list = channelService.listByChannel();
         return ResponseData.success(list);
     }
 

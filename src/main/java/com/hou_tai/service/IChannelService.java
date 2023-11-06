@@ -14,6 +14,6 @@ import java.util.List;
  **/
 public interface IChannelService {
 
-    List<Channel> list();
+    List<Channel> listByChannel();
 
 }

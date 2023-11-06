@@ -17,6 +17,6 @@ import java.util.List;
  **/
 public interface IGameTypeService {
 
-    List<GameType> list();
+    List<GameType> listByGameType();
 
 }
