@@ -2,9 +2,11 @@ package com.hou_tai.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hou_tai.enums.ReviewGradeEnum;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.dao.GameReviewMapper;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @ClassName: GameServiceImpl
@@ -35,7 +38,15 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
 
     @Override
     public Page<GameReviewPageVo> getReviewPage(PageDaoEntity pageDao) {
-        return gameReviewMapper.getReviewPage(new Page<>(pageDao.getPage(), pageDao.getPageSize()));
+        Page<GameReviewPageVo> gameReviewPageVoPage = gameReviewMapper.getReviewPage(new Page<>(pageDao.getPage(), pageDao.getPageSize()));
+        //处理 reviewGrade
+        List<GameReviewPageVo> list = gameReviewPageVoPage.getRecords();
+        if (ObjectUtils.isNotNull(list) && list.size() > CommonNum.ZERO) {
+            list.forEach(one -> {
+                one.setReviewGrade(ReviewGradeEnum.getValue(Integer.valueOf(one.getReviewGrade())));
+            });
+        }
+        return gameReviewPageVoPage;
     }
 
     /**
