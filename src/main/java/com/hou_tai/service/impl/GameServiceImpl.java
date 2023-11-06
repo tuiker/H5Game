@@ -113,6 +113,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     public Game insert(Game game){
+        game.setUpdateId(game.getCreateId());
         this.save(game);
         return game;
     }
@@ -127,37 +128,21 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         //1. 根据条件动态更新
         LambdaUpdateWrapper<Game> wrapper = new LambdaUpdateWrapper<Game>();
             wrapper.set(StrUtil.isNotBlank(game.getGameName()),Game::getGameName, game.getGameName())
-                   .set(StrUtil.isNotBlank(game.getGameLogo()),Game::getGameLogo, game.getGameLogo());
-        if(StrUtil.isNotBlank(game.getGameMainLogo())){
-            wrapper.set(Game::getGameMainLogo, game.getGameMainLogo());
-        }
-        if(StrUtil.isNotBlank(game.getGameBackground())){
-            wrapper.set(Game::getGameBackground, game.getGameBackground());
-        }
-        if(StrUtil.isNotBlank(game.getGameUrl())){
-            wrapper.set(Game::getGameUrl, game.getGameUrl());
-        }
-        if(StrUtil.isNotBlank(game.getGameDesc())){
-            wrapper.set(Game::getGameDesc, game.getGameDesc());
-        }
-        if(StrUtil.isNotBlank(game.getDataSecurity())){
-            wrapper.set(Game::getDataSecurity, game.getDataSecurity());
-        }
-        if(StrUtil.isNotBlank(game.getDevEmail())){
-            wrapper.set(Game::getDevEmail, game.getDevEmail());
-        }
-        if(StrUtil.isNotBlank(game.getDevUrl())){
-            wrapper.set(Game::getDevUrl, game.getDevUrl());
-        }
+                   .set(StrUtil.isNotBlank(game.getGameLogo()),Game::getGameLogo, game.getGameLogo())
+                    .set(StrUtil.isNotBlank(game.getGameMainLogo()),Game::getGameMainLogo, game.getGameMainLogo())
+                    .set(StrUtil.isNotBlank(game.getGameBackground()),Game::getGameBackground, game.getGameBackground())
+                    .set(StrUtil.isNotBlank(game.getGameUrl()),Game::getGameUrl, game.getGameUrl())
+                    .set(StrUtil.isNotBlank(game.getGameDesc()),Game::getGameDesc, game.getGameDesc())
+                    .set(StrUtil.isNotBlank(game.getDataSecurity()),Game::getDataSecurity, game.getDataSecurity())
+                    .set(StrUtil.isNotBlank(game.getDevEmail()),Game::getDevEmail, game.getDevEmail())
+                    .set(StrUtil.isNotBlank(game.getDevUrl()),Game::getDevUrl, game.getDevUrl())
+                    .set(StrUtil.isNotBlank(game.getGameLabel()),Game::getGameLabel, game.getGameLabel())
+                    .set(game.getUpdateTime()!=null,Game::getUpdateTime, game.getUpdateTime());
         //2. 设置主键，并更新
         wrapper.eq(Game::getId, game.getId());
-        boolean ret = this.update(wrapper);
+        this.update(wrapper);
         //3. 更新成功了，查询最最对象返回
-        if(ret){
-            return queryById(game.getId());
-        }else{
-            return game;
-        }
+        return game;
     }
 
     /**

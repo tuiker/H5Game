@@ -65,13 +65,7 @@ public class GameController {
     public ResultVO paginQuery(@RequestBody GameDto dto){
         //1.分页参数
         Page<GameVo> page = gameService.paginQuery(dto);
-        ResultVO<List<GameVo>> resultVO = new ResultVO<>();
-        resultVO.setCurrent(page.getCurrent());
-        resultVO.setPages(page.getPages());
-        resultVO.setTotal(page.getTotal());
-        resultVO.setSize(page.getSize());
-        resultVO.setData(page.getRecords());
-        return ResponseData.success(resultVO);
+        return ResponseData.success(page);
     }
 
     /**
@@ -94,7 +88,7 @@ public class GameController {
      * @param game 实例对象
      * @return 实例对象
      */
-    @Operation(summary = "更新数据",description = "gameName,gameType,languageId," +
+    @Operation(summary = "更新数据",description = "id,gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
     @PostMapping("/edit")
