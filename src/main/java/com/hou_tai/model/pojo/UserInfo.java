@@ -1,115 +1,53 @@
 package com.hou_tai.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+
+import java.nio.LongBuffer;
 import java.util.Date;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@TableName("user_info")
+@Schema(title = "用户实体")
 public class UserInfo {
-    private Long id;
+    @Schema(title = "用户ID" )
+    @TableId
+    private Long id ;
+    /** 用户名称 */
+     @Schema(title = "用户名称" )
+    private String userName ;
+    /** 用户头像 */
+     @Schema(title = "用户头像" )
+    private String userImg ;
+    /** 用户密码 */
+     @Schema(title = "用户密码" )
+    private String password ;
+    /** 最近登录时间 */
+     @Schema(title = "最近登录时间" )
+    private Date recentLoginTime ;
+    /**  */
+     @Schema(title = "" )
+    private Integer createId ;
+    /**  */
+     @Schema(title = "" )
+    private Date createTime ;
+    /**  */
+     @Schema(title = "" )
+    private Integer updateId ;
+    /**  */
+     @Schema(title = "" )
+    private Date updateTime ;
+    /** 角色ID */
+     @Schema(title = "角色ID" )
+    private Integer roleId ;
+    /** 渠道ID */
+     @Schema(title = "渠道ID" )
+    private Integer channelId ;
 
-    private String userName;
-
-    private String userImg;
-
-    private String password;
-
-    private Date recentLoginTime;
-
-    private Integer createId;
-
-    private Date createTime;
-
-    private Integer updateId;
-
-    private Date updateTime;
-
-    private Integer roleId;
-
-    private Integer channelId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getUserImg() {
-        return userImg;
-    }
-
-    public void setUserImg(String userImg) {
-        this.userImg = userImg == null ? null : userImg.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public Date getRecentLoginTime() {
-        return recentLoginTime;
-    }
-
-    public void setRecentLoginTime(Date recentLoginTime) {
-        this.recentLoginTime = recentLoginTime;
-    }
-
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Integer createId) {
-        this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public Integer getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(Integer channelId) {
-        this.channelId = channelId;
-    }
 }

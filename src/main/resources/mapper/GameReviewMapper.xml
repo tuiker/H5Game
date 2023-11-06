@@ -108,4 +108,8 @@
       help_num = #{helpNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="addHelpNum">
+    update game_review set help_num=help_num+1 where  game_id =#{dto.gameId}  and id=#{dto.reviewId}
+  </update>
 </mapper>

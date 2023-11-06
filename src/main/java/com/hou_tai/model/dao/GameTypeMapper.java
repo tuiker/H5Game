@@ -1,8 +1,9 @@
 package com.hou_tai.model.dao;
 
+import com.github.yulichang.base.MPJBaseMapper;
 import com.hou_tai.model.pojo.GameType;
 
-public interface GameTypeMapper {
+public interface GameTypeMapper extends MPJBaseMapper<GameType> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(GameType record);

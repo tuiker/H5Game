@@ -1,4 +1,4 @@
-package com.hou_tai.utli;
+package com.hou_tai.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

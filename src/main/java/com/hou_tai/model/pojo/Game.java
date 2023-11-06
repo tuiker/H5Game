@@ -1,195 +1,88 @@
 package com.hou_tai.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hou_tai.model.base.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Game {
-    private Integer id;
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@TableName("game")
+@Schema(title = "游戏实体")
+public class Game implements Serializable {
 
-    private String gameName;
+    @Schema(title = "游戏ID")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id ;
+    /** 游戏名称 */
+    @Schema(title = "游戏名称")
+    private String gameName ;
+    /** 游戏类型 */
+    @Schema(title = "游戏类型")
+    private Integer gameType ;
+    /** 游戏语言ID */
+    @Schema(title = "游戏语言ID")
+    private Integer languageId ;
+    /** 游戏LOGO */
+    @Schema(title = "游戏LOGO")
+    private String gameLogo ;
+    /** 游戏主图 */
+    @Schema(title = "游戏主图")
+    private String gameMainLogo ;
+    /** 游戏背景 */
+    @Schema(title = "游戏背景")
+    private String gameBackground ;
+    /** 游戏地址 */
+    @Schema(title = "游戏地址")
+    private String gameUrl ;
+    /** 游戏描述 */
+    @Schema(title = "游戏描述")
+    private String gameDesc ;
+    /** 数据安全 */
+    @Schema(title = "数据安全")
+    private String dataSecurity ;
+    /** 游戏评分 */
+    @Schema(title = "游戏评分")
+    private Integer gameGrade ;
+    /** 游戏下载次数 */
+    @Schema(title = "游戏下载次数")
+    private Integer gameDownload ;
+    /** 游戏适合年龄 */
+    @Schema(title = "游戏适合年龄")
+    private Integer gameAge ;
+    /** 开发者邮箱 */
+    @Schema(title = "开发者邮箱")
+    private String devEmail ;
+    /** 开发者地址 */
+    @Schema(title = "开发者地址")
+    private String devUrl ;
+    /** 创建用户ID */
+    @Schema(title = "创建用户ID")
+    private Long createId ;
+    /**  */
+    @TableField(fill = FieldFill.INSERT) // 插入自动填充
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+    /** 更新用户ID */
+    @Schema(title = "更新用户ID")
+    private Long updateId ;
+    /**  */
+    @Schema(title = "游戏更新日期")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
-    private Integer gameType;
+    @Schema(title = "游戏标签 用;分隔")
+    private String gameLabel;
 
-    private Integer languageId;
-
-    private String gameLogo;
-
-    private String gameMainLogo;
-
-    private String gameBackground;
-
-    private String gameUrl;
-
-    private String gameDesc;
-
-    private String dataSecurity;
-
-    private Integer gameGrade;
-
-    private Integer gameDownload;
-
-    private Integer gameAge;
-
-    private String devEmail;
-
-    private String devUrl;
-
-    private Long createId;
-
-    private Date createTime;
-
-    private Long updateId;
-
-    private Date updateTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName == null ? null : gameName.trim();
-    }
-
-    public Integer getGameType() {
-        return gameType;
-    }
-
-    public void setGameType(Integer gameType) {
-        this.gameType = gameType;
-    }
-
-    public Integer getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
-    }
-
-    public String getGameLogo() {
-        return gameLogo;
-    }
-
-    public void setGameLogo(String gameLogo) {
-        this.gameLogo = gameLogo == null ? null : gameLogo.trim();
-    }
-
-    public String getGameMainLogo() {
-        return gameMainLogo;
-    }
-
-    public void setGameMainLogo(String gameMainLogo) {
-        this.gameMainLogo = gameMainLogo == null ? null : gameMainLogo.trim();
-    }
-
-    public String getGameBackground() {
-        return gameBackground;
-    }
-
-    public void setGameBackground(String gameBackground) {
-        this.gameBackground = gameBackground == null ? null : gameBackground.trim();
-    }
-
-    public String getGameUrl() {
-        return gameUrl;
-    }
-
-    public void setGameUrl(String gameUrl) {
-        this.gameUrl = gameUrl == null ? null : gameUrl.trim();
-    }
-
-    public String getGameDesc() {
-        return gameDesc;
-    }
-
-    public void setGameDesc(String gameDesc) {
-        this.gameDesc = gameDesc == null ? null : gameDesc.trim();
-    }
-
-    public String getDataSecurity() {
-        return dataSecurity;
-    }
-
-    public void setDataSecurity(String dataSecurity) {
-        this.dataSecurity = dataSecurity == null ? null : dataSecurity.trim();
-    }
-
-    public Integer getGameGrade() {
-        return gameGrade;
-    }
-
-    public void setGameGrade(Integer gameGrade) {
-        this.gameGrade = gameGrade;
-    }
-
-    public Integer getGameDownload() {
-        return gameDownload;
-    }
-
-    public void setGameDownload(Integer gameDownload) {
-        this.gameDownload = gameDownload;
-    }
-
-    public Integer getGameAge() {
-        return gameAge;
-    }
-
-    public void setGameAge(Integer gameAge) {
-        this.gameAge = gameAge;
-    }
-
-    public String getDevEmail() {
-        return devEmail;
-    }
-
-    public void setDevEmail(String devEmail) {
-        this.devEmail = devEmail == null ? null : devEmail.trim();
-    }
-
-    public String getDevUrl() {
-        return devUrl;
-    }
-
-    public void setDevUrl(String devUrl) {
-        this.devUrl = devUrl == null ? null : devUrl.trim();
-    }
-
-    public Long getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Long createId) {
-        this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Long updateId) {
-        this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

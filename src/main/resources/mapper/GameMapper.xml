@@ -21,11 +21,12 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_id" jdbcType="BIGINT" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="game_label" jdbcType="VARCHAR" property="gameLabel" />
   </resultMap>
   <sql id="Base_Column_List">
     id, game_name, game_type, language_id, game_logo, game_main_logo, game_background, 
     game_url, game_desc, data_security, game_grade, game_download, game_age, dev_email, 
-    dev_url, create_id, create_time, update_id, update_time
+    dev_url, create_id, create_time, update_id, update_time,game_label
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -44,14 +45,14 @@
       data_security, game_grade, game_download, 
       game_age, dev_email, dev_url, 
       create_id, create_time, update_id, 
-      update_time)
+      update_time,game_label)
     values (#{id,jdbcType=INTEGER}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER}, 
       #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR}, 
       #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR}, 
       #{dataSecurity,jdbcType=VARCHAR}, #{gameGrade,jdbcType=INTEGER}, #{gameDownload,jdbcType=INTEGER}, 
       #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR}, 
       #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{gameLabel,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.Game">
     insert into game
@@ -172,6 +173,9 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="gameLabel != null">
+        #{gameLabel,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.hou_tai.model.pojo.Game">
@@ -231,6 +235,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="gameLabel != null">
+        game_label=#{gameLabel,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -254,6 +261,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
+      game_label = #{gameLabel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

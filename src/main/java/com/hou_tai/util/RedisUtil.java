@@ -1,4 +1,4 @@
-package com.hou_tai.utli;
+package com.hou_tai.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

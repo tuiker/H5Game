@@ -1,4 +1,4 @@
-package com.hou_tai.utli;
+package com.hou_tai.util;
 
 import org.apache.commons.lang3.StringUtils;
 
