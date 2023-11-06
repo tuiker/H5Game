@@ -14,6 +14,12 @@ public class GameReview {
     private Date reviewTime;
 
     private Integer helpNum;
+    private Integer reviewGrade;
+
+    private String replyContent;
+
+    private Date replyTime;
+    private Integer haveReply;
 
     public Integer getId() {
         return id;

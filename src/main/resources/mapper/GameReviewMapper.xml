@@ -8,9 +8,14 @@
     <result column="review_content" jdbcType="VARCHAR" property="reviewContent" />
     <result column="review_time" jdbcType="TIMESTAMP" property="reviewTime" />
     <result column="help_num" jdbcType="INTEGER" property="helpNum" />
+    <result column="review_grade" jdbcType="INTEGER" property="reviewGrade" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="have_reply" jdbcType="INTEGER" property="haveReply" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, game_id, review_content, review_time, help_num
+    id, user_id, game_id, review_content, review_time, help_num,
+        review_grade,reply_content,reply_time,have_reply
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
