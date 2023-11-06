@@ -55,9 +55,9 @@ public class ResponseData {
         return new ResultVO<T>().setCodeAndMsg(ResultCode);
     }
 
-    public static <T> ResultVO<T> success(Page page) {
+    /*public static <T> ResultVO<T> success(Page page) {
         return new ResultVO<T>(ResultCode.SUCCESS,page);
-    }
+    }*/
 
     /*public static <T> ResultVO<T> Forbidden() {
         return new ResultVO<T>().setCode(ResultCode.FORBIDDEN).setMsg(FORBIDDEN);

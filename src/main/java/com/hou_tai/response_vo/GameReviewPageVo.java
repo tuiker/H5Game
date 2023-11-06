@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Data
 @Schema(title = "游戏评论输出")
 public class GameReviewPageVo {
+    @Schema(title = "ID", description = "game_review_id", name = "id")
+    private int id;
     @Schema(title = "游戏ID", description = "游戏ID", name = "gameId")
     private long gameId;
     @Schema(title = "游戏名称", description = "游戏名称", name = "gameName")
@@ -29,4 +31,8 @@ public class GameReviewPageVo {
     private LocalDateTime reviewTime;
     @Schema(title = "是否回复", description = "是否回复：0.否；1.是", name = "haveReply")
     private int haveReply;
+    @Schema(title = "游戏类型", description = "游戏类型", name = "gameType")
+    private String gameType;
+    @Schema(title = "游戏语言", description = "游戏语言", name = "gameLanguage")
+    private String gameLanguage;
 }

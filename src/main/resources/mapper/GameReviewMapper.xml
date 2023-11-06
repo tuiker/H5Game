@@ -23,6 +23,22 @@
     from game_review
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getGameReviewById" resultType="com.hou_tai.response_vo.GameReviewPageVo">
+    SELECT
+      ga.id gameId,
+      ga.game_name gameName,
+      ga.game_type gameType,
+      ga.language_id gameLanguage,
+      gr.review_content reviewContent,
+      gr.id id
+    FROM
+      game_review gr
+        LEFT JOIN game ga ON gr.game_id = ga.id
+    WHERE gr.id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from game_review
     where id = #{id,jdbcType=INTEGER}

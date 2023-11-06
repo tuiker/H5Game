@@ -55,14 +55,14 @@ public class ResultVO<T> extends PageVoEntity {
         return this;
     }
 
-    public ResultVO(ResultCode resultCode, Page page) {
+   /* public ResultVO(ResultCode resultCode, Page page) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
         this.data = (T) page.getRecords();
         this.setTotal(page.getTotal());
         this.setCurrent(page.getCurrent());
         this.setSize(page.getSize());
-    }
+    }*/
 
     @Override
     public String toString() {

@@ -28,6 +28,15 @@ public interface IGameReviewService extends IService<GameReview> {
      **/
     Page<GameReviewPageVo> getReviewPage(PageDaoEntity pageDao);
 
+    /**
+     * @Description 根据 游戏评论ID找 游戏评论详情
+     * @Author GaoLu
+     * @Date 2023/11/6
+     * @Return
+     * @Param id 游戏评论ID
+     **/
+    GameReviewPageVo getGameReviewById(Integer id);
+
 
     /**
      * 通过ID查询单条数据

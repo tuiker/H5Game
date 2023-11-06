@@ -7,7 +7,6 @@ import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.model.vo.GameReviewVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
-import com.hou_tai.response_vo.GameReviewPageVo;
 import com.hou_tai.service.IGameReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,20 +28,41 @@ public class GameReviewController {
     @Resource
     private IGameReviewService gameReviewService;
 
-
     /**
-     * @Description
+     * @Description 游戏评论列表
      * @Author GaoLu
      * @Date 2023/11/6
      * @Return
      **/
     @Operation(summary = "游戏评论列表", description = "分页查询游戏评论")
-    @PostMapping("getReviewPage")
+    @PostMapping("/getReviewPage")
     public ResultVO getReviewPage(@RequestBody PageDaoEntity pageDao) {
-        Page<GameReviewPageVo> reviewPage = gameReviewService.getReviewPage(pageDao);
-        return ResponseData.success(reviewPage);
+        return ResponseData.success(gameReviewService.getReviewPage(pageDao));
     }
 
+    /**
+     * @Description 游戏评论详情
+     * @Author GaoLu
+     * @Date 2023/11/6
+     * @Return
+     **/
+    @Operation(summary = "游戏评论详情", description = "根据评论ID获取游戏评论详情")
+    @GetMapping("/getGameReviewById")
+    public ResultVO getGameReviewById( Integer id) {
+        return ResponseData.success(gameReviewService.getGameReviewById(id));
+    }
+
+    /**
+     * 新增数据
+     *
+     * @param gameReview 实例对象
+     * @return 实例对象
+     */
+    @Operation(summary = "回复数据保存", description = "id,replyContent,replyUserId")
+    @PostMapping("/saveReply")
+    public ResultVO saveReply(@RequestBody GameReview gameReview) {
+        return ResponseData.success(gameReviewService.saveReply(gameReview));
+    }
 
     /**
      * 通过ID查询单条数据
@@ -50,11 +70,11 @@ public class GameReviewController {
      * @param id 主键
      * @return 实例对象
      */
-    @Operation(summary = "通过ID查询单条数据")
-    @GetMapping("{id}")
-    public ResultVO queryById(Integer id) {
-        return ResponseData.success(gameReviewService.queryById(id));
-    }
+//    @Operation(summary = "通过ID查询单条数据")
+//    @GetMapping("{id}")
+//    public ResultVO queryById(Integer id) {
+//        return ResponseData.success(gameReviewService.queryById(id));
+//    }
 
     /**
      * 分页查询
@@ -103,19 +123,6 @@ public class GameReviewController {
     @DeleteMapping
     public ResultVO<Boolean> deleteById(Integer id) {
         return ResponseData.success(gameReviewService.deleteById(id));
-    }
-
-
-    /**
-     * 新增数据
-     *
-     * @param gameReview 实例对象
-     * @return 实例对象
-     */
-    @Operation(summary = "回复数据保存", description = "id,replyContent,replyUserId")
-    @PostMapping("/saveReply")
-    public ResultVO saveReply(@RequestBody GameReview gameReview) {
-        return ResponseData.success(gameReviewService.saveReply(gameReview));
     }
 
 

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hou_tai.enums.GameTypeEnums;
+import com.hou_tai.enums.LanguageTypeEnum;
 import com.hou_tai.enums.ReviewGradeEnum;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.base.PageDaoEntity;
@@ -47,6 +49,17 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
             });
         }
         return gameReviewPageVoPage;
+    }
+
+    @Override
+    public GameReviewPageVo getGameReviewById(Integer id) {
+        GameReviewPageVo gameReviewPageVo = gameReviewMapper.getGameReviewById(id);
+        //处理游戏语言、游戏类型
+        if (ObjectUtils.isNotNull(gameReviewPageVo)) {
+            gameReviewPageVo.setGameType(GameTypeEnums.getValue(Integer.valueOf(gameReviewPageVo.getGameType())));
+            gameReviewPageVo.setGameLanguage(LanguageTypeEnum.getValue(Integer.valueOf(gameReviewPageVo.getGameLanguage())));
+        }
+        return gameReviewPageVo;
     }
 
     /**
