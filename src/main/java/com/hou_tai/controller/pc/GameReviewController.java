@@ -48,33 +48,22 @@ public class GameReviewController {
      **/
     @Operation(summary = "游戏评论详情", description = "根据评论ID获取游戏评论详情")
     @GetMapping("/getGameReviewById")
-    public ResultVO getGameReviewById( Integer id) {
+    public ResultVO getGameReviewById(Integer id) {
         return ResponseData.success(gameReviewService.getGameReviewById(id));
     }
 
     /**
-     * 新增数据
-     *
-     * @param gameReview 实例对象
-     * @return 实例对象
-     */
-    @Operation(summary = "回复数据保存", description = "id,replyContent,replyUserId")
+     * @Description 回复
+     * @Author GaoLu
+     * @Date 2023/11/6
+     * @Return
+     **/
+    @Operation(summary = "回复评论", description = "根据评论ID回复评论")
     @PostMapping("/saveReply")
     public ResultVO saveReply(@RequestBody GameReview gameReview) {
         return ResponseData.success(gameReviewService.saveReply(gameReview));
     }
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-//    @Operation(summary = "通过ID查询单条数据")
-//    @GetMapping("{id}")
-//    public ResultVO queryById(Integer id) {
-//        return ResponseData.success(gameReviewService.queryById(id));
-//    }
 
     /**
      * 分页查询
