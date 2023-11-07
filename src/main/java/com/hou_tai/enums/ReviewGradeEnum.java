@@ -13,7 +13,7 @@ public enum ReviewGradeEnum {
     TWO_STAR(2, "二星"),
     THREE_STAR(3, "三星"),
     FOUR_STAR(4, "四星"),
-    FIVE_STAR(4, "五星");
+    FIVE_STAR(5, "五星");
 
     private int code;
     private String msg;
