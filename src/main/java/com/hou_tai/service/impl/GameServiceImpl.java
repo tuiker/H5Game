@@ -10,6 +10,7 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.GameDto;
+import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.pojo.*;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameVo;
@@ -55,30 +56,13 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .eq(Game::getId, dto.getGameId()));
         if(mobileGameVo !=null){
             //加载评论
-                Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(dto);
+                MobileGameReviewDto grDto=new MobileGameReviewDto();
+                grDto.setPage(dto.getPage());
+                grDto.setPageSize(dto.getPageSize());
+                Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(grDto);
                 if(reviewPage.getTotal()>0){
                     List<GameReviewVo> grList=reviewPage.getRecords();
                     //回复数据
-//                if(CollectionUtil.isNotEmpty(grList)){
-//                    List<Integer> reviewIds=grList.stream().map(GameReview::getId).collect(Collectors.toList());
-//                    List<ReviewReplyVo> replyList=reviewReplyService.getListByReviewIds(reviewIds);
-//                    //填充
-//                    if(CollectionUtil.isNotEmpty(replyList)) {
-//                        grList.forEach(vo1 -> {
-//                            replyList.stream().filter(vo2 -> vo1.getId() == vo2.getReviewId())
-//                                    .findFirst().ifPresent(vo -> {
-//                                        if (vo != null) {
-//                                            List<ReviewReplyVo> rlist = vo1.getReviewReplyList();
-//                                            if(CollectionUtil.isEmpty(rlist)){
-//                                                rlist=new ArrayList<>();
-//                                            }
-//                                            rlist.add(vo);
-//                                            vo1.setReviewReplyList(rlist);
-//                                        }
-//                                    });
-//                        });
-//                    }
-//                }
                     mobileGameVo.setGameReviewList(grList);
                 }
 
@@ -136,22 +120,21 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     public Game update(Game game){
-        //1. 根据条件动态更新
         LambdaUpdateWrapper<Game> wrapper = new LambdaUpdateWrapper<Game>();
-            wrapper.set(StrUtil.isNotBlank(game.getGameName()),Game::getGameName, game.getGameName())
-                   .set(StrUtil.isNotBlank(game.getGameLogo()),Game::getGameLogo, game.getGameLogo())
-                    .set(StrUtil.isNotBlank(game.getGameMainLogo()),Game::getGameMainLogo, game.getGameMainLogo())
-                    .set(StrUtil.isNotBlank(game.getGameBackground()),Game::getGameBackground, game.getGameBackground())
-                    .set(StrUtil.isNotBlank(game.getGameUrl()),Game::getGameUrl, game.getGameUrl())
-                    .set(StrUtil.isNotBlank(game.getGameDesc()),Game::getGameDesc, game.getGameDesc())
-                    .set(StrUtil.isNotBlank(game.getDataSecurity()),Game::getDataSecurity, game.getDataSecurity())
-                    .set(StrUtil.isNotBlank(game.getDevEmail()),Game::getDevEmail, game.getDevEmail())
-                    .set(StrUtil.isNotBlank(game.getDevUrl()),Game::getDevUrl, game.getDevUrl())
-                    .set(game.getGameAge()!=null,Game::getGameAge, game.getGameAge())
-                    .set(game.getReviewNum()!=null,Game::getReviewNum, game.getReviewNum())
-                    .set(game.getGameGrade()!=null,Game::getGameGrade, game.getGameGrade())
-                    .set(game.getGameDownload()!=null,Game::getGameDownload, game.getGameDownload())
-                    .set(game.getUpdateTime()!=null,Game::getUpdateTime, game.getUpdateTime());
+        wrapper.set(StrUtil.isNotBlank(game.getGameName()),Game::getGameName, game.getGameName())
+                .set(StrUtil.isNotBlank(game.getGameLogo()),Game::getGameLogo, game.getGameLogo())
+                .set(StrUtil.isNotBlank(game.getGameMainLogo()),Game::getGameMainLogo, game.getGameMainLogo())
+                .set(StrUtil.isNotBlank(game.getGameBackground()),Game::getGameBackground, game.getGameBackground())
+                .set(StrUtil.isNotBlank(game.getGameUrl()),Game::getGameUrl, game.getGameUrl())
+                .set(StrUtil.isNotBlank(game.getGameDesc()),Game::getGameDesc, game.getGameDesc())
+                .set(StrUtil.isNotBlank(game.getDataSecurity()),Game::getDataSecurity, game.getDataSecurity())
+                .set(StrUtil.isNotBlank(game.getDevEmail()),Game::getDevEmail, game.getDevEmail())
+                .set(StrUtil.isNotBlank(game.getDevUrl()),Game::getDevUrl, game.getDevUrl())
+                .set(game.getGameAge()!=null,Game::getGameAge, game.getGameAge())
+                .set(game.getReviewNum()!=null,Game::getReviewNum, game.getReviewNum())
+                .set(game.getGameGrade()!=null,Game::getGameGrade, game.getGameGrade())
+                .set(game.getGameDownload()!=null,Game::getGameDownload, game.getGameDownload())
+                .set(game.getUpdateTime()!=null,Game::getUpdateTime, game.getUpdateTime());
         //2. 设置主键，并更新
         wrapper.eq(Game::getId, game.getId());
         this.update(wrapper);

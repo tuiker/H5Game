@@ -1,5 +1,6 @@
 package com.hou_tai.model.dto;
 
+import com.hou_tai.model.base.PageDaoEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -15,15 +16,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Schema(title = "埋点数据入参")
-public class PointDto {
+@Schema(title = "游戏查询入参")
+public class MobileGameReviewDto extends PageDaoEntity {
 
     @Schema(title = "游戏id")
     private Integer gameId;
 
-    @Schema(title = "评论id")
-    private Integer reviewId;
 
-    @Schema(title = "触发类型 2下载3打开")
-    private Integer triggerType;
+    @Schema(title = "评价分数",description = "1-5")
+    private Integer reviewGrade;
+
 }

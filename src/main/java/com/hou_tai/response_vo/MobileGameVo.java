@@ -2,7 +2,8 @@ package com.hou_tai.response_vo;
 
 import com.hou_tai.model.pojo.Game;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 

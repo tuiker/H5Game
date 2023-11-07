@@ -79,8 +79,8 @@ public class GameController {
     @Operation(summary = "更新数据",description = "id,gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
-    @PostMapping("/edit")
-    public ResultVO<Game> edit(@RequestBody Game game){
+    @PostMapping("/update")
+    public ResultVO<Game> update(@RequestBody Game game){
         return ResponseData.success(gameService.update(game));
     }
 
