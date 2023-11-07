@@ -40,7 +40,7 @@ public interface IGameService {
      * @param dto 筛选条件
      * @return
      */
-    Page<MobileGameVo> paginQuery(GameDto dto);
+    Page<GameVo> paginQuery(GameDto dto);
     /**
      * 新增数据
      *

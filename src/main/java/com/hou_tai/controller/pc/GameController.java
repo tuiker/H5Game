@@ -50,9 +50,9 @@ public class GameController {
      */
     @Operation(summary = "分页查询")
     @PostMapping("/page")
-    public ResultVO paginQuery(@RequestBody GameDto dto){
+    public ResultVO<Page<GameVo>> paginQuery(@RequestBody GameDto dto){
         //1.分页参数
-        Page<MobileGameVo> page = gameService.paginQuery(dto);
+        Page<GameVo> page = gameService.paginQuery(dto);
         return ResponseData.success(page);
     }
 
