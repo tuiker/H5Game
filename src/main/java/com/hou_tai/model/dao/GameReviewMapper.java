@@ -2,13 +2,14 @@ package com.hou_tai.model.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.yulichang.base.MPJBaseMapper;
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.response_vo.GameReviewPageVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-public interface GameReviewMapper extends BaseMapper<GameReview> {
+public interface GameReviewMapper extends MPJBaseMapper<GameReview> {
     String pageListSql = "SELECT ga.id gameId,ga.game_name gameName,gr.review_content reviewContent,gr.reply_content replyContent," +
             "gr.review_grade reviewGrade,gr.review_time reviewTime,gr.have_reply haveReply,gr.id id  "
             + "FROM game_review gr LEFT JOIN game ga ON gr.game_id = ga.id";

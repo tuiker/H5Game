@@ -2,7 +2,7 @@ package com.hou_tai.controller.pc;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.base.PageDaoEntity;
-import com.hou_tai.model.dto.GameDto;
+import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response.ResponseData;
@@ -73,7 +73,7 @@ public class GameReviewController {
      */
     @Operation(summary = "分页查询", description = "gameId,page,pageSize")
     @PostMapping("/page")
-    public ResultVO page(@RequestBody GameDto dto) {
+    public ResultVO page(@RequestBody MobileGameReviewDto dto) {
         Page<GameReviewVo> reviewPage = gameReviewService.pageQuery(dto);
         return ResponseData.success(reviewPage);
     }

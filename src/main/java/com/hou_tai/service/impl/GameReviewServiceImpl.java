@@ -6,15 +6,18 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.enums.GameTypeEnums;
 import com.hou_tai.enums.LanguageTypeEnum;
 import com.hou_tai.enums.ReviewGradeEnum;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.dao.GameReviewMapper;
-import com.hou_tai.model.dto.GameDto;
+import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.dto.PointDto;
+import com.hou_tai.model.pojo.Game;
 import com.hou_tai.model.pojo.GameReview;
+import com.hou_tai.model.pojo.UserInfo;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
 import com.hou_tai.service.IGameReviewService;
@@ -78,8 +81,8 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
      * @param dto 筛选条件
      * @return
      */
-    public Page<GameReviewVo> pageQuery(GameDto dto) {
-        /*Page<GameReviewVo> pagin=this.baseMapper.selectJoinPage(
+    public Page<GameReviewVo> pageQuery(MobileGameReviewDto dto) {
+        Page<GameReviewVo> pagin=this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(),dto.getPageSize()) ,
                 GameReviewVo.class, new MPJLambdaWrapper<GameReview>()
                 .selectAll(GameReview.class)
@@ -87,9 +90,11 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
                 .leftJoin(UserInfo.class,"u", UserInfo::getId,GameReview::getUserId)
                 .leftJoin(Game.class,"g", Game::getId,GameReview::getGameId)
                 .leftJoin(UserInfo.class,"ru", UserInfo::getId,GameReview::getReplyUserId)
-                .eq(dto.getGameId()!=null&&dto.getGameId()>0,GameReview::getGameId,dto.getGameId()));*/
+                .eq(dto.getGameId()!=null&&dto.getGameId()>0,GameReview::getGameId,dto.getGameId())
+                .eq(dto.getReviewGrade()!=null&&dto.getReviewGrade()>0,GameReview::getReviewGrade,dto.getReviewGrade())
+        );
         //3. 返回结果
-        return null;
+        return pagin;
     }
 
     /**
