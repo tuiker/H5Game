@@ -103,4 +103,9 @@ public class Game implements Serializable {
     @TableField(value = "game_label")
     private String gameLabel;
 
+    @Schema(title = "游戏评论数")
+    @TableField(value = "review_num")
+    private Integer reviewNum ;
+
+
 }

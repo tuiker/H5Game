@@ -12,10 +12,11 @@
     <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
     <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
     <result column="have_reply" jdbcType="INTEGER" property="haveReply" />
+    <result column="reply_user_id" jdbcType="BIGINT" property="replyUserId" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, game_id, review_content, review_time, help_num,
-        review_grade,reply_content,reply_time,have_reply
+        review_grade,reply_content,reply_time,have_reply,reply_user_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -72,6 +73,9 @@
       <if test="helpNum != null">
         help_num,
       </if>
+      <if test="replyUserId != null">
+        reply_user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -91,6 +95,9 @@
       </if>
       <if test="helpNum != null">
         #{helpNum,jdbcType=INTEGER},
+      </if>
+      <if test="replyUserId != null">
+        #{replyUserId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -112,6 +119,9 @@
       <if test="helpNum != null">
         help_num = #{helpNum,jdbcType=INTEGER},
       </if>
+      <if test="replyUserId != null">
+        reply_user_id = #{replyUserId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -121,7 +131,8 @@
       game_id = #{gameId,jdbcType=INTEGER},
       review_content = #{reviewContent,jdbcType=VARCHAR},
       review_time = #{reviewTime,jdbcType=TIMESTAMP},
-      help_num = #{helpNum,jdbcType=INTEGER}
+      help_num = #{helpNum,jdbcType=INTEGER},
+      reply_user_id = #{replyUserId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

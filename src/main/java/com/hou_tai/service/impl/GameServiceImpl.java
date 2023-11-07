@@ -106,7 +106,6 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 GameVo.class, new MPJLambdaWrapper<Game>()
                         .selectAll(Game.class)
                         .select("u.user_name,l.language_name,gt.type_name")
-                        .select("(select count(1) from game_review gr where gr.game_id=t.id) review_num")
                         .leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
                         .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
                         .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType));
@@ -144,7 +143,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                     .set(StrUtil.isNotBlank(game.getDataSecurity()),Game::getDataSecurity, game.getDataSecurity())
                     .set(StrUtil.isNotBlank(game.getDevEmail()),Game::getDevEmail, game.getDevEmail())
                     .set(StrUtil.isNotBlank(game.getDevUrl()),Game::getDevUrl, game.getDevUrl())
-                    .set(StrUtil.isNotBlank(game.getGameLabel()),Game::getGameLabel, game.getGameLabel())
+                    .set(game.getGameAge()!=null,Game::getGameAge, game.getGameAge())
+                    .set(game.getReviewNum()!=null,Game::getReviewNum, game.getReviewNum())
+                    .set(game.getGameGrade()!=null,Game::getGameGrade, game.getGameGrade())
+                    .set(game.getGameDownload()!=null,Game::getGameDownload, game.getGameDownload())
                     .set(game.getUpdateTime()!=null,Game::getUpdateTime, game.getUpdateTime());
         //2. 设置主键，并更新
         wrapper.eq(Game::getId, game.getId());
