@@ -1,8 +1,6 @@
 package com.hou_tai.response;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.enums.ResultCode;
-import com.hou_tai.model.base.PageVoEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Schema(title = "返回", description = "返回对象")
-public class ResultVO<T> extends PageVoEntity {
+public class ResultVO<T> {
 
     @Schema(title = "状态码", description = "状态码", name = "code")
     private int code;
@@ -55,14 +53,6 @@ public class ResultVO<T> extends PageVoEntity {
         return this;
     }
 
-   /* public ResultVO(ResultCode resultCode, Page page) {
-        this.code = resultCode.getCode();
-        this.msg = resultCode.getMsg();
-        this.data = (T) page.getRecords();
-        this.setTotal(page.getTotal());
-        this.setCurrent(page.getCurrent());
-        this.setSize(page.getSize());
-    }*/
 
     @Override
     public String toString() {
