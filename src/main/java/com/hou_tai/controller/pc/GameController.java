@@ -3,7 +3,8 @@ package com.hou_tai.controller.pc;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.model.vo.GameVo;
+import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IGameService;
@@ -12,8 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @ClassName: GameController
@@ -36,22 +35,10 @@ public class GameController {
      * @param id 主键
      * @return 实例对象
      */
-//    @Operation(summary = "通过ID查询单条数据")
-//    @GetMapping("{id}")
-//    public ResultVO<Game> queryById(Integer id){
-//        return ResponseData.success(gameService.queryById(id));
-//    }
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @return 实例对象
-     */
-    @Operation(summary = "通过ID查询游戏详情",description = "")
-    @PostMapping("/getVoById")
-    @ApiResponse(responseCode = "200", description = "查找成功")
-    public ResultVO getVoById(@RequestBody GameDto dto){
-        return ResponseData.success(gameService.getVoById(dto));
+    @Operation(summary = "通过ID查询单条数据")
+    @GetMapping("{id}")
+    public ResultVO<GameVo> getVoById(Integer id){
+        return ResponseData.success(gameService.getVoById(id));
     }
 
     /**
@@ -64,7 +51,7 @@ public class GameController {
     @PostMapping("/page")
     public ResultVO paginQuery(@RequestBody GameDto dto){
         //1.分页参数
-        Page<GameVo> page = gameService.paginQuery(dto);
+        Page<MobileGameVo> page = gameService.paginQuery(dto);
         return ResponseData.success(page);
     }
 
@@ -107,4 +94,7 @@ public class GameController {
     public ResultVO<Boolean> deleteById(Integer id){
         return ResponseData.success(gameService.deleteById(id));
     }
+
+
+
 }

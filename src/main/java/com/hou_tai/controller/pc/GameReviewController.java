@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.model.vo.GameReviewVo;
+import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IGameReviewService;

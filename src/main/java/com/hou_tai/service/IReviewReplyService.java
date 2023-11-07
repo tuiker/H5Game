@@ -2,7 +2,7 @@ package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.pojo.ReviewReply;
-import com.hou_tai.model.vo.ReviewReplyVo;
+import com.hou_tai.response_vo.ReviewReplyVo;
 
 import java.util.List;
 

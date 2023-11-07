@@ -7,6 +7,7 @@ import com.hou_tai.model.pojo.Language;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IChannelService;
+import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IGameTypeService;
 import com.hou_tai.service.ILanguageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -38,6 +40,9 @@ public class GameNumericalController {
 
     @Resource
     private IChannelService channelService;
+
+    @Resource
+    private IGameService gameService;
 
 
     /**
@@ -80,7 +85,17 @@ public class GameNumericalController {
         return ResponseData.success(list);
     }
 
-
+    /**
+     * @Description 所有游戏
+     * @Author Sam
+     * @Date 2023年11月7日
+     **/
+    @Operation(summary = "所有游戏")
+    @GetMapping("/listByGame")
+    public ResultVO listByGame() {
+        List<Map<String,Object>> list = gameService.listByGame();
+        return ResponseData.success(list);
+    }
 
 
 }

@@ -15,7 +15,7 @@ import com.hou_tai.model.dao.GameReviewMapper;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.model.vo.GameReviewVo;
+import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
 import com.hou_tai.service.IGameReviewService;
 import jakarta.annotation.Resource;

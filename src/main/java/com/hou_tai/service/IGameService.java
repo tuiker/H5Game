@@ -3,7 +3,11 @@ package com.hou_tai.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.model.vo.GameVo;
+import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.response_vo.MobileGameVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName: GameService
@@ -28,7 +32,7 @@ public interface IGameService {
      * @param id 主键
      * @return 实例对象
      */
-    GameVo getVoById(GameDto dto);
+    MobileGameVo getVoById(GameDto dto);
 
     /**
      * 分页查询
@@ -36,7 +40,7 @@ public interface IGameService {
      * @param dto 筛选条件
      * @return
      */
-    Page<GameVo> paginQuery(GameDto dto);
+    Page<MobileGameVo> paginQuery(GameDto dto);
     /**
      * 新增数据
      *
@@ -58,4 +62,15 @@ public interface IGameService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    /**
+     * @Author Sam
+     * @Description 获取所有游戏
+     * @Date 9:48 2023/11/7
+     * @Param  * @param 
+     * @return List<Map<String,Object>>
+     **/
+    List<Map<String, Object>> listByGame();
+
+    GameVo getVoById(Integer id);
 }

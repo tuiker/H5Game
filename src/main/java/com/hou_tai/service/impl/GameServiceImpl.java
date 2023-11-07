@@ -1,6 +1,5 @@
 package com.hou_tai.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -10,9 +9,9 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.*;
-import com.hou_tai.model.vo.GameReviewVo;
-import com.hou_tai.model.vo.GameVo;
-import com.hou_tai.model.vo.ReviewReplyVo;
+import com.hou_tai.response_vo.GameReviewVo;
+import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IReviewReplyService;
@@ -20,11 +19,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @ClassName: GameServiceImpl
@@ -47,19 +42,19 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return this.getById(id);
     }
 
-    public GameVo getVoById(GameDto dto){
-        GameVo gameVo=this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
+    public MobileGameVo getVoById(GameDto dto){
+        MobileGameVo mobileGameVo =this.baseMapper.selectJoinOne(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                 .selectAll(Game.class)
                 .select("gt.type_name,l.language_name")
                 .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
                 .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
                 .eq(Game::getId, dto.getGameId()));
-        if(gameVo!=null){
+        if(mobileGameVo !=null){
             //加载评论
-            Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(dto);
-            if(reviewPage.getTotal()>0){
-                List<GameReviewVo> grList=reviewPage.getRecords();
-                //回复数据
+                Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(dto);
+                if(reviewPage.getTotal()>0){
+                    List<GameReviewVo> grList=reviewPage.getRecords();
+                    //回复数据
 //                if(CollectionUtil.isNotEmpty(grList)){
 //                    List<Integer> reviewIds=grList.stream().map(GameReview::getId).collect(Collectors.toList());
 //                    List<ReviewReplyVo> replyList=reviewReplyService.getListByReviewIds(reviewIds);
@@ -80,9 +75,20 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
 //                        });
 //                    }
 //                }
-                gameVo.setGameReviewList(grList);
-            }
+                    mobileGameVo.setGameReviewList(grList);
+                }
+
         }
+        return mobileGameVo;
+    }
+
+    public GameVo getVoById(Integer id){
+        GameVo gameVo =this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
+                .select(Game::getId,Game::getGameName,Game::getGameLogo)
+                .select("gt.type_name,l.language_name")
+                .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
+                .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
+                .eq(Game::getId, id));
         return gameVo;
     }
 
@@ -92,16 +98,15 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @param dto 筛选条件
      * @return
      */
-    public Page<GameVo> paginQuery(GameDto dto){
-        Page<GameVo> pagin=this.baseMapper.selectJoinPage(
+    public Page<MobileGameVo> paginQuery(GameDto dto){
+        Page<MobileGameVo> pagin=this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(),dto.getPageSize()) ,
-                GameVo.class, new MPJLambdaWrapper<Game>()
+                MobileGameVo.class, new MPJLambdaWrapper<Game>()
                         .selectAll(Game.class)
                         .select("u.user_name,l.language_name,gt.type_name")
                         .leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
                         .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
-                        .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
-                        .leftJoin(Game.class,"g", Game::getId,Game::getId));
+                        .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType));
         //3. 返回结果
         return pagin;
     }
@@ -153,5 +158,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      */
     public boolean deleteById(Integer id){
         return this.removeById(id);
+    }
+
+    public List<Map<String, Object>> listByGame(){
+        return this.listMaps(new LambdaQueryWrapper<Game>().select(Game::getId,Game::getGameName));
     }
 }

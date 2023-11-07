@@ -1,7 +1,6 @@
-package com.hou_tai.model.vo;
+package com.hou_tai.response_vo;
 
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.model.pojo.GameReview;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "游戏输出")
-public class GameVo extends Game {
+public class MobileGameVo extends Game {
 
     @Schema(title = "游戏类型名称")
     private String typeName ;
