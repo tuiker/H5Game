@@ -1,5 +1,6 @@
 package com.hou_tai.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -15,6 +16,7 @@ import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IReviewReplyService;
+import com.hou_tai.util.BeanUtil;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -160,7 +162,12 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return this.removeById(id);
     }
 
-    public List<Map<String, Object>> listByGame(){
-        return this.listMaps(new LambdaQueryWrapper<Game>().select(Game::getId,Game::getGameName));
+    public List<GameVo> listByGame(){
+        List<GameVo> volist=Arrays.asList();
+        List<Game> list=this.list(new LambdaQueryWrapper<Game>().select(Game::getId,Game::getGameName));
+        if(CollectionUtil.isNotEmpty(list)){
+            volist=BeanUtil.copyListProperties(list,GameVo.class);
+        }
+        return volist;
     }
 }

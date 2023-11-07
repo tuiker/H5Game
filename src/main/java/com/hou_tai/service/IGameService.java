@@ -70,7 +70,7 @@ public interface IGameService {
      * @Param  * @param 
      * @return List<Map<String,Object>>
      **/
-    List<Map<String, Object>> listByGame();
+    List<GameVo> listByGame();
 
     GameVo getVoById(Integer id);
 }

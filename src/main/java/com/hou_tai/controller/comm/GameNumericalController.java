@@ -6,6 +6,7 @@ import com.hou_tai.model.pojo.GameType;
 import com.hou_tai.model.pojo.Language;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
+import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.service.IChannelService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IGameTypeService;
@@ -93,7 +94,7 @@ public class GameNumericalController {
     @Operation(summary = "所有游戏")
     @GetMapping("/listByGame")
     public ResultVO listByGame() {
-        List<Map<String,Object>> list = gameService.listByGame();
+        List<GameVo> list = gameService.listByGame();
         return ResponseData.success(list);
     }
 
