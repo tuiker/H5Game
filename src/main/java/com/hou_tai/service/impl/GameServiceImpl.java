@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.*;
@@ -17,6 +18,7 @@ import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IReviewReplyService;
 import com.hou_tai.util.BeanUtil;
+import com.hou_tai.util.SystemNumUtil;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -122,6 +124,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      */
     public Game insert(Game game){
         game.setUpdateId(game.getCreateId());
+        game.setId(getGameId());
         this.save(game);
         return game;
     }
@@ -173,5 +176,18 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             volist=BeanUtil.copyListProperties(list,GameVo.class);
         }
         return volist;
+    }
+
+    /**
+     * @Description 生成游戏ID
+     * @Author GaoLu
+     * @Date  2023/11/7
+     * @Return
+    **/
+    private long getGameId() {
+        String num = SystemNumUtil.getRandomNumberByNum(CommonNum.FOUR);
+        long allNum = this.count();
+        String gameId = num + allNum;
+        return Long.valueOf(gameId);
     }
 }

@@ -22,7 +22,7 @@ public class Game implements Serializable {
 
     @Schema(title = "游戏ID")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id ;
+    private long id ;
     /** 游戏名称 */
     @Schema(title = "游戏名称")
     @TableField(value = "game_name")
