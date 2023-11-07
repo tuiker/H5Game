@@ -37,8 +37,8 @@ public class GameController {
      * @return 实例对象
      */
     @Operation(summary = "通过ID查询单条数据")
-    @GetMapping("{id}")
-    public ResultVO<GameVo> getVoById(@PathVariable Integer id){
+    @GetMapping("getVoById")
+    public ResultVO<GameVo> getVoById( Integer id){
         return ResponseData.success(gameService.getVoById(id));
     }
 
