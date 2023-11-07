@@ -24,6 +24,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -130,6 +131,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(StrUtil.isNotBlank(game.getDataSecurity()),Game::getDataSecurity, game.getDataSecurity())
                 .set(StrUtil.isNotBlank(game.getDevEmail()),Game::getDevEmail, game.getDevEmail())
                 .set(StrUtil.isNotBlank(game.getDevUrl()),Game::getDevUrl, game.getDevUrl())
+                .set(game.getUpdateId()>0,Game::getUpdateId, game.getUpdateId())
+                .set(Game::getUpdateTime, LocalDateTime.now())
                 .set(game.getGameAge()!=null,Game::getGameAge, game.getGameAge())
                 .set(game.getReviewNum()!=null,Game::getReviewNum, game.getReviewNum())
                 .set(game.getGameGrade()!=null,Game::getGameGrade, game.getGameGrade())

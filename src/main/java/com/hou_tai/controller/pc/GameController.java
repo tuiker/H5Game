@@ -3,16 +3,13 @@ package com.hou_tai.controller.pc;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.response_vo.GameVo;
-import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
+import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.service.IGameService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 /**

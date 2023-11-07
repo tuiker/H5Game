@@ -1,5 +1,6 @@
 package com.hou_tai.model.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +34,7 @@ public class GameReview {
     private String reviewContent ;
     /** 评论时间 */
     @Schema(title = "评论时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "review_time",fill = FieldFill.INSERT)
     private LocalDateTime reviewTime ;
@@ -51,7 +52,7 @@ public class GameReview {
     private String replyContent;
 
     @Schema(title = "回复时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "reply_time")
     private LocalDateTime replyTime;

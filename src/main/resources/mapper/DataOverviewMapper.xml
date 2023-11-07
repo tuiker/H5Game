@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hou_tai.model.dao.DataOverviewMapper">
+
+    <select id="getNum" resultType="com.hou_tai.response_vo.DataBoardVo">
+            <!--1下载2打开-->
+            <!--select '1' type,IFNULL(count(1),0) num from game_trigger where type= and  DATE(create_time)= CURDATE()
+            UNION ALL-->
+            select '2' type,IFNULL(count(1),0) total from game_trigger where type=2 and  DATE(create_time)= CURDATE()
+            UNION ALL
+            select '3' type,IFNULL(count(1),0) total from game_trigger where type=3 and DATE(create_time) = CURDATE()
+    </select>
+
+    <select id="getStats"  resultType="com.hou_tai.response_vo.LinesStatesVo">
+        <if test="type==2"><!--2下载-->
+            SELECT '2' type,DATE_FORMAT(create_time,'%Y-%m-%d') days,IFNULL(COUNT(1),0) total  FROM game_trigger
+            where type=2 and DATE(create_time) between #{dto.startDate} and #{dto.endDate}  GROUP BY days
+        </if>
+        <if test="type==3"><!--3打开-->
+            SELECT '3' type,DATE_FORMAT(create_time,'%Y-%m-%d') days,IFNULL(COUNT(1),0) total  FROM game_trigger
+            where type=3 and DATE(create_time) between #{dto.startDate} and #{dto.endDate} GROUP BY days
+        </if>
+    </select>
+
+    <!--<select id="get">
+
+
+    </select>-->
+    
+</mapper>

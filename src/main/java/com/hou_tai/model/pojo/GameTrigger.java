@@ -1,5 +1,6 @@
 package com.hou_tai.model.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hou_tai.model.base.BaseEntity;
@@ -27,10 +28,10 @@ public class GameTrigger implements Serializable {
     /** 类型 对应枚举1下载2打开 */
     @Schema(name = "类型 对应枚举1下载2打开")
     private Integer type ;
+
     /**  */
     @TableField(fill = FieldFill.INSERT)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
-
 }

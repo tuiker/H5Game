@@ -10,11 +10,11 @@ import lombok.Getter;
 @Getter
 public enum DataBoardTypeEnums {
 
-    ONLINE_USER(1, "1","页面请求数"),
+    REQUESTS(1, "1","页面请求数"),
 
-    REG_USER(2, "2","应用下载数"),
+    DOWNLAND(2, "2","应用下载数"),
 
-    ADV_NUM(3,"3", "打开应用数");
+    OPEN(3,"3", "打开应用数");
 
     private int code;
     private String codeStr;

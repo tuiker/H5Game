@@ -1,5 +1,6 @@
 package com.hou_tai.model.base;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,16 +23,16 @@ public class BaseEntity implements Serializable {
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT) // 插入自动填充
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE) // 插入或更新时自动填充
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     /** 删除标记（0未删除，1已删除） */
