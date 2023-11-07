@@ -29,5 +29,10 @@ public class GameVo extends Game{
     @TableField(value = "language_name")
     private String languageName ;
 
+    @Schema(title = "实际游戏评论数")
+    @TableField(value = "real_review_num")
+    private Integer realReviewNum ;
+
+
 
 }

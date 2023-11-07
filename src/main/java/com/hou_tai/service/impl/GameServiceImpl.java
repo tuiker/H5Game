@@ -106,6 +106,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 GameVo.class, new MPJLambdaWrapper<Game>()
                         .selectAll(Game.class)
                         .select("u.user_name,l.language_name,gt.type_name")
+                        .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
                         .leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
                         .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
                         .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType));
