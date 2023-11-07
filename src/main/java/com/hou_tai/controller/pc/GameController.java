@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,7 +38,7 @@ public class GameController {
      */
     @Operation(summary = "通过ID查询单条数据")
     @GetMapping("{id}")
-    public ResultVO<GameVo> getVoById(Integer id){
+    public ResultVO<GameVo> getVoById(@PathVariable Integer id){
         return ResponseData.success(gameService.getVoById(id));
     }
 
