@@ -20,25 +20,6 @@ import java.util.List;
 @Schema(title = "游戏输出")
 public class GameVo extends Game{
 
-//    @Schema(title = "游戏id")
-//    @TableField(value = "id")
-//    private Integer id ;
-//
-//    @Schema(title = "游戏名称")
-//    @TableField(value = "game_name")
-//    private String gameName ;
-//    /** 游戏类型 */
-//    @Schema(title = "游戏类型")
-//    @TableField(value = "game_type")
-//    private Integer gameType ;
-//    /** 游戏语言ID */
-//    @Schema(title = "游戏语言ID")
-//    @TableField(value = "language_id")
-//    private Integer languageId ;
-//    /** 游戏LOGO */
-//    @Schema(title = "游戏LOGO")
-//    @TableField(value = "game_logo")
-//    private String gameLogo ;
 
     @Schema(title = "游戏类型名称")
     @TableField(value = "type_name")
@@ -48,8 +29,5 @@ public class GameVo extends Game{
     @TableField(value = "language_name")
     private String languageName ;
 
-    @Schema(title = "评论数")
-    @TableField(value = "review_num")
-    private Integer reviewNum ;
 
 }
