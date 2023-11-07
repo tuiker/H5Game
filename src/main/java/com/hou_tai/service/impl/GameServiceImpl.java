@@ -86,7 +86,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
 
     public GameVo getVoById(Integer id){
         GameVo gameVo =this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
-                .select(Game::getId,Game::getGameName,Game::getGameLogo)
+                .selectAll(Game.class)
                 .select("gt.type_name,l.language_name")
                 .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
                 .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
