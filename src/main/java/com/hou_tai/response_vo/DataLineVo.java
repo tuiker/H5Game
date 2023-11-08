@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Schema(title = "折线数据")
-public class LinesStatesVo implements Serializable {
+public class DataLineVo implements Serializable {
 
 
     @Schema(title = "总数")

@@ -1,6 +1,7 @@
 package com.hou_tai.controller.pc;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.hou_tai.model.dto.DataDto;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response_vo.DataBoardVo;
@@ -10,12 +11,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -30,30 +30,14 @@ public class DataOverviewController {
 
     @Resource
     IDataOverviewService dataOverviewService;
-
-    @Operation(summary = "数据看板")
-    @PostMapping("/getDataBoardList")
+    @Operation(summary = "数据概览",description = "1看板数据2折线数据3概览数据")
+    @PostMapping("/getAllStates")
     @ApiResponse(responseCode = "200", description = "查找成功")
-    public ResultVO<List<DataBoardVo>> getDataBoardList() {
-        List<DataBoardVo> list = dataOverviewService.getDataList();
-        return ResponseData.success(list);
-    }
-
-    @Operation(summary = "折线图数据统计",description = "2下载3打开")
-    @PostMapping("/getLineStates")
-    @ApiResponse(responseCode = "200", description = "查找成功")
-    public ResultVO getLineStates(){
-        //默认7天
-        return ResponseData.success(dataOverviewService.getLinesList(null));
-    }
-
-    @Operation(summary = "数据概览",description = "")
-    @GetMapping("/getListStates")
-    @ApiResponse(responseCode = "200", description = "查找成功")
-    public ResultVO getListStates(){
-
-
-        return ResponseData.success();
+    public ResultVO getAllStates(@RequestBody DataDto dto){
+        if(ObjectUtil.isEmpty(dto)||dto.getStartDate()==null){//默认7天
+            dto=DataDto.builder().startDate(LocalDate.now().minusDays(6l)).endDate(LocalDate.now()).build();
+        }
+        return ResponseData.success(dataOverviewService.getAllStates(dto));
     }
 
 

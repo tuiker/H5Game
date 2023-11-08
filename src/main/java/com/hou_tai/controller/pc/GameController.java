@@ -87,11 +87,11 @@ public class GameController {
      * @param id 主键
      * @return 是否成功
      */
-    @Operation(summary = "通过主键删除数据")
-    @DeleteMapping
-    public ResultVO<Boolean> deleteById(Integer id){
-        return ResponseData.success(gameService.deleteById(id));
-    }
+//    @Operation(summary = "通过主键删除数据")
+//    @DeleteMapping
+//    public ResultVO<Boolean> deleteById(Integer id){
+//        return ResponseData.success(gameService.deleteById(id));
+//    }
 
 
 

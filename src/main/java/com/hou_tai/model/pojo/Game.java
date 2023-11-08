@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 public class Game implements Serializable {
 
     @Schema(title = "游戏ID")
-    @TableId(value = "id", type = IdType.AUTO)
-    private long id;
+    //@TableId(value = "id", type = IdType.AUTO)
+    private Long id;
     /**
      * 游戏名称
      */

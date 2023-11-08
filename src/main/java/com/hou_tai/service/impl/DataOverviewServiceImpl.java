@@ -1,20 +1,19 @@
 package com.hou_tai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.hou_tai.enums.DataBoardTypeEnums;
-import com.hou_tai.final_common.CommonNum;
+import com.hou_tai.enums.DataTypeEnums;
+import com.hou_tai.enums.TriggerTypeEnums;
 import com.hou_tai.model.dao.DataOverviewMapper;
 import com.hou_tai.model.dto.DataDto;
 import com.hou_tai.response_vo.DataBoardVo;
-import com.hou_tai.response_vo.LinesStatesVo;
+import com.hou_tai.response_vo.DataLineVo;
+import com.hou_tai.response_vo.DataListVo;
 import com.hou_tai.service.IDataOverviewService;
 import com.hou_tai.util.BeanUtil;
 import com.hou_tai.util.DateUtil;
-import com.hou_tai.util.NormalUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -30,36 +29,25 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
     DataOverviewMapper dataOverviewMapper;
 
     @Override
-    public List<DataBoardVo> getDataList() {
-        List<DataBoardVo> list=this.dataOverviewMapper.getNum();
-        //访问数据来自渠道方
-        DataBoardVo vo=new DataBoardVo();
-        vo.setType(DataBoardTypeEnums.REQUESTS.getCode());
-        vo.setTotal(CommonNum.ZERO);
-        list.add(vo);
+    public List<DataBoardVo> getBoardList() {
+        List<DataBoardVo> list=this.dataOverviewMapper.getBoardList();
         return list;
     }
     @Override
-    public Map<String,List<LinesStatesVo>> getLinesList(DataDto dto) {
-        if(dto==null){//默认7天
-            dto=new DataDto();
-            dto.setStartDate(LocalDate.now().minusDays(6l));
-            dto.setEndDate(LocalDate.now());
-        }
-
+    public Map<String,List<DataLineVo>> getLinesList(DataDto dto) {
         List<String> dateList=DateUtil.getDatesBetween(dto.getStartDate(), dto.getEndDate(),false);
-        Map<String,List<LinesStatesVo>> map=new HashMap<>();
+        Map<String,List<DataLineVo>> map=new HashMap<>();
 
-        List<LinesStatesVo> dataList=new ArrayList<>();
+        List<DataLineVo> dataList=new ArrayList<>();
         dateList.stream().forEach(date->{
-            dataList.add(LinesStatesVo.builder().days(date).total(0).build());
+            dataList.add(DataLineVo.builder().days(date).total(0).build());
         });
-        DataDto ndto=dto;
-        Stream.of(DataBoardTypeEnums.values()).forEach(e -> {
-            if(e.getCode()!=DataBoardTypeEnums.REQUESTS.getCode()){
+        DataDto nDto=dto;
+        Stream.of(TriggerTypeEnums.values()).forEach(e -> {
+            //if(e.getCode()!=DataBoardTypeEnums.REQUESTS.getCode()){
                 map.put(e.getCodeStr(), Arrays.asList());
-                List<LinesStatesVo> realList=this.dataOverviewMapper.getStats(ndto,e.getCode());
-                List<LinesStatesVo> allList= BeanUtil.copyListProperties(dataList,LinesStatesVo.class);
+                List<DataLineVo> realList=this.dataOverviewMapper.getLinesStats(nDto,e.getCode());
+                List<DataLineVo> allList= BeanUtil.copyListProperties(dataList, DataLineVo.class);
                 if(CollectionUtil.isNotEmpty(realList)){
                     allList.stream().forEach(all->{
                         realList.stream()
@@ -75,14 +63,25 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
                 if(CollectionUtil.isNotEmpty(allList)){
                     map.put(e.getCodeStr(),allList);
                 }
-            }
+           // }
         });
-        //访问数据来自渠道方
-        map.put(DataBoardTypeEnums.REQUESTS.getCodeStr(),dataList);
         return map;
     }
 
 
+    @Override
+    public List<DataListVo> getListStats(){
+        return dataOverviewMapper.getListStats();
+    }
+
+
+    public Map<String,Object> getAllStates(DataDto dto){
+        Map<String,Object> map=new HashMap<>();
+        map.put(DataTypeEnums.BOARD.getCodeStr(), getBoardList());
+        map.put(DataTypeEnums.LINE.getCodeStr(), getLinesList(dto));
+        map.put(DataTypeEnums.LIST.getCodeStr(), getListStats());
+        return map;
+    }
 
 
 

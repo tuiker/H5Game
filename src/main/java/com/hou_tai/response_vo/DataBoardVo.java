@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Schema(title = "数据概览看板出参")
 public class DataBoardVo implements Serializable {
 
-    @Schema(title = "1请求次数2今日应用下载3今日打开应用")
+    @Schema(title = "1今日访问2今日应用下载3今日打开应用")
     private Integer type;
 
     @Schema(title = "总数")

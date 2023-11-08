@@ -71,12 +71,12 @@ public class GameReviewController {
      * @param dto 筛选条件
      * @return 查询结果
      */
-    @Operation(summary = "分页查询", description = "gameId,page,pageSize")
-    @PostMapping("/page")
-    public ResultVO page(@RequestBody MobileGameReviewDto dto) {
-        Page<GameReviewVo> reviewPage = gameReviewService.pageQuery(dto);
-        return ResponseData.success(reviewPage);
-    }
+//    @Operation(summary = "分页查询", description = "gameId,page,pageSize")
+//    @PostMapping("/page")
+//    public ResultVO page(@RequestBody MobileGameReviewDto dto) {
+//        Page<GameReviewVo> reviewPage = gameReviewService.pageQuery(dto);
+//        return ResponseData.success(reviewPage);
+//    }
 
     /**
      * 新增数据
@@ -96,11 +96,11 @@ public class GameReviewController {
      * @param gameReview 实例对象
      * @return 实例对象
      */
-    @Operation(summary = "更新评论数据")
-    @PostMapping("/update")
-    public ResultVO<GameReview> update(@RequestBody GameReview gameReview) {
-        return ResponseData.success(gameReviewService.update(gameReview));
-    }
+//    @Operation(summary = "更新评论数据")
+//    @PostMapping("/update")
+//    public ResultVO<GameReview> update(@RequestBody GameReview gameReview) {
+//        return ResponseData.success(gameReviewService.update(gameReview));
+//    }
 
     /**
      * 通过主键删除数据
@@ -108,11 +108,11 @@ public class GameReviewController {
      * @param id 主键
      * @return 是否成功
      */
-    @Operation(summary = "通过主键删除数据")
-    @DeleteMapping
-    public ResultVO<Boolean> deleteById(Integer id) {
-        return ResponseData.success(gameReviewService.deleteById(id));
-    }
+//    @Operation(summary = "通过主键删除数据")
+//    @DeleteMapping
+//    public ResultVO<Boolean> deleteById(Integer id) {
+//        return ResponseData.success(gameReviewService.deleteById(id));
+//    }
 
 
 }
