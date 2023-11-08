@@ -1,6 +1,4 @@
 spring:
-  server:
-    port: 8080
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/h5_game
@@ -76,3 +74,5 @@ pagehelper:
   params: count=countSql
   reasonable: true  #当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
   support-methods-arguments: true
+server:
+  port: 8090
