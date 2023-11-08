@@ -10,22 +10,19 @@ import lombok.Getter;
 @Getter
 public enum TriggerTypeEnums {
 
-    DOWNLOAD(1, "下载"),
+    REQUESTS(1, "1","页面请求"),
 
-    OPEN(2, "打开");
+    DOWNLAND(2, "2","应用下载"),
+
+    OPEN(3,"3", "打开应用");
 
     private int code;
+    private String codeStr;
     private String msg;
 
-    TriggerTypeEnums(int code, String msg) {
+    TriggerTypeEnums(int code, String codeStr , String msg) {
         this.code = code;
+        this.codeStr = codeStr;
         this.msg = msg;
-    }
-
-    public static String getValue(int code) {
-        for (TriggerTypeEnums ele : values()) {
-            if (ele.getCode() == code) return ele.getMsg();
-        }
-        return null;
     }
 }
