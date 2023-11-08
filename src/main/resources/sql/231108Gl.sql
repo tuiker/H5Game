@@ -37,3 +37,9 @@ ALTER TABLE `h5_game`.`channel_data`
 ALTER TABLE `h5_game`.`game`
     ADD COLUMN `apk_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'APK包名' AFTER `game_background`,
 MODIFY COLUMN `game_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'APK地址' AFTER `game_background`;
+
+ALTER TABLE `h5_game`.`game_trigger`
+    MODIFY COLUMN `game_id` bigint NOT NULL COMMENT '游戏ID' AFTER `id`;
+
+ALTER TABLE `h5_game`.`channel_data`
+    MODIFY COLUMN `game_id` bigint NULL DEFAULT NULL COMMENT '游戏ID' AFTER `record_time`;

@@ -2,6 +2,7 @@ package com.hou_tai.service;
 
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.GameTrigger;
+import com.hou_tai.response.ResultVO;
 
 /**
  * @InterfaceName: GameService
@@ -12,6 +13,6 @@ import com.hou_tai.model.pojo.GameTrigger;
  **/
 public interface IGameTriggerService {
 
-    boolean insertByPoint(PointDto dto);
+    ResultVO insertByPoint(PointDto dto);
     GameTrigger insert(GameTrigger gameTrigger);
 }
