@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hou_tai.model.dao.DataOverviewMapper">
+
+    <select id="getBoardList" resultType="com.hou_tai.response_vo.DataBoardVo">
+            <!--1访问2下载3打开-->
+            select '1' type,IFNULL(SUM(request_data),0) total from channel_data where  DATE(record_time)= CURDATE()
+            UNION ALL
+            select '2' type,IFNULL(count(1),0) total from game_trigger where type=2 and  DATE(create_time)= CURDATE()
+            UNION ALL
+            select '3' type,IFNULL(count(1),0) total from game_trigger where type=3 and DATE(create_time) = CURDATE()
+    </select>
+
+    <select id="getLinesStats"  resultType="com.hou_tai.response_vo.DataLineVo">
+        <if test="type==1"><!--1访问-->
+            SELECT '1' type,DATE_FORMAT(record_time,'%Y-%m-%d') days,IFNULL(SUM(request_data),0) total  FROM channel_data
+            where DATE(record_time) between #{dto.startDate} and #{dto.endDate}  GROUP BY days
+        </if>
+        <if test="type==2"><!--2下载-->
+            SELECT '2' type,DATE_FORMAT(create_time,'%Y-%m-%d') days,IFNULL(COUNT(1),0) total  FROM game_trigger
+            where type=2 and DATE(create_time) between #{dto.startDate} and #{dto.endDate}  GROUP BY days
+        </if>
+        <if test="type==3"><!--3打开-->
+            SELECT '3' type,DATE_FORMAT(create_time,'%Y-%m-%d') days,IFNULL(COUNT(1),0) total  FROM game_trigger
+            where type=3 and DATE(create_time) between #{dto.startDate} and #{dto.endDate} GROUP BY days
+        </if>
+    </select>
+
+    <select id="getListStats" resultType="com.hou_tai.response_vo.DataListVo">
+        select t1.*,
+               rank() over(ORDER BY download_num desc ) as 'rank'
+            from (
+                 SELECT t.*,
+                        (select IFNULL(sum(request_data),0) from channel_data cd where cd.game_id =t.id) request_num,
+                        (select IFNULL(count(1),0) from game_trigger gtr where gtr.game_id =t.id and gtr.type=2) download_num,
+                        (select IFNULL(count(1),0) from game_trigger gtr where gtr.game_id =t.id and gtr.type=3) open_num
+                 from
+                     (select g.id,g.game_name,l.language_name,gt.type_name from game g
+                                                                                    LEFT join language l on l.id=g.language_id
+                                                                                    LEFT JOIN game_type gt on gt.id=g.game_type
+                     ) t
+             )t1
+    </select>
+    
+</mapper>

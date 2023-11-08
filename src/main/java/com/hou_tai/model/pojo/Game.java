@@ -1,195 +1,150 @@
 package com.hou_tai.model.pojo;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.hou_tai.model.base.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
-public class Game {
-    private Integer id;
+import java.io.Serializable;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@TableName("game")
+@Schema(title = "游戏实体")
+public class Game extends BaseEntity implements Serializable {
+
+    @Schema(title = "游戏ID")
+    //@TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+    /**
+     * 游戏名称
+     */
+    @Schema(title = "游戏名称")
+    @TableField(value = "game_name")
     private String gameName;
-
+    /**
+     * 游戏类型
+     */
+    @Schema(title = "游戏类型")
+    @TableField(value = "game_type")
     private Integer gameType;
-
+    /**
+     * 游戏语言ID
+     */
+    @Schema(title = "游戏语言ID")
+    @TableField(value = "language_id")
     private Integer languageId;
-
+    /**
+     * 游戏LOGO
+     */
+    @Schema(title = "游戏LOGO")
+    @TableField(value = "game_logo")
     private String gameLogo;
-
+    /**
+     * 游戏主图
+     */
+    @Schema(title = "游戏主图")
+    @TableField(value = "game_main_logo")
     private String gameMainLogo;
-
+    /**
+     * 游戏背景
+     */
+    @Schema(title = "游戏背景")
+    @TableField(value = "game_background")
     private String gameBackground;
-
+    /**
+     * 游戏地址
+     */
+    @Schema(title = "游戏地址")
+    @TableField(value = "game_url")
     private String gameUrl;
-
+    /**
+     * APK包名
+     */
+    @Schema(title = "APK包名")
+    @TableField(value = "apk_name")
+    private String apkName;
+    /**
+     * 游戏描述
+     */
+    @Schema(title = "游戏描述")
+    @TableField(value = "game_desc")
     private String gameDesc;
-
+    /**
+     * 数据安全
+     */
+    @Schema(title = "数据安全")
+    @TableField(value = "data_security")
     private String dataSecurity;
-
+    /**
+     * 游戏评分
+     */
+    @Schema(title = "游戏评分")
+    @TableField(value = "game_grade")
     private Integer gameGrade;
-
+    /**
+     * 游戏下载次数
+     */
+    @Schema(title = "游戏下载次数")
+    @TableField(value = "game_download")
     private Integer gameDownload;
-
+    /**
+     * 游戏适合年龄
+     */
+    @Schema(title = "游戏适合年龄")
+    @TableField(value = "game_age")
     private Integer gameAge;
-
+    /**
+     * 开发者邮箱
+     */
+    @Schema(title = "开发者邮箱")
+    @TableField(value = "dev_email")
     private String devEmail;
-
+    /**
+     * 开发者地址
+     */
+    @Schema(title = "开发者地址")
+    @TableField(value = "dev_url")
     private String devUrl;
-
+    /**
+     * 创建用户ID
+     */
+    @Schema(title = "创建用户ID")
+    @TableField(value = "create_id")
     private Long createId;
-
-    private Date createTime;
-
+    /**
+     *
+     */
+//    @TableField(value = "create_time", fill = FieldFill.INSERT) // 插入自动填充
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+//    private LocalDateTime createTime;
+    /**
+     * 更新用户ID
+     */
+    @Schema(title = "更新用户ID")
+    @TableField(value = "update_id")
     private Long updateId;
+    /**
+     *
+     */
+//    @Schema(title = "游戏更新日期")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
+//    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
+//    @TableField(value = "update_time")
+//    private LocalDateTime updateTime;
 
-    private Date updateTime;
+    @Schema(title = "游戏标签 用;分隔")
+    @TableField(value = "game_label")
+    private String gameLabel;
 
-    public Integer getId() {
-        return id;
-    }
+    @Schema(title = "游戏评论数")
+    @TableField(value = "review_num")
+    private Integer reviewNum;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName == null ? null : gameName.trim();
-    }
-
-    public Integer getGameType() {
-        return gameType;
-    }
-
-    public void setGameType(Integer gameType) {
-        this.gameType = gameType;
-    }
-
-    public Integer getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
-    }
-
-    public String getGameLogo() {
-        return gameLogo;
-    }
-
-    public void setGameLogo(String gameLogo) {
-        this.gameLogo = gameLogo == null ? null : gameLogo.trim();
-    }
-
-    public String getGameMainLogo() {
-        return gameMainLogo;
-    }
-
-    public void setGameMainLogo(String gameMainLogo) {
-        this.gameMainLogo = gameMainLogo == null ? null : gameMainLogo.trim();
-    }
-
-    public String getGameBackground() {
-        return gameBackground;
-    }
-
-    public void setGameBackground(String gameBackground) {
-        this.gameBackground = gameBackground == null ? null : gameBackground.trim();
-    }
-
-    public String getGameUrl() {
-        return gameUrl;
-    }
-
-    public void setGameUrl(String gameUrl) {
-        this.gameUrl = gameUrl == null ? null : gameUrl.trim();
-    }
-
-    public String getGameDesc() {
-        return gameDesc;
-    }
-
-    public void setGameDesc(String gameDesc) {
-        this.gameDesc = gameDesc == null ? null : gameDesc.trim();
-    }
-
-    public String getDataSecurity() {
-        return dataSecurity;
-    }
-
-    public void setDataSecurity(String dataSecurity) {
-        this.dataSecurity = dataSecurity == null ? null : dataSecurity.trim();
-    }
-
-    public Integer getGameGrade() {
-        return gameGrade;
-    }
-
-    public void setGameGrade(Integer gameGrade) {
-        this.gameGrade = gameGrade;
-    }
-
-    public Integer getGameDownload() {
-        return gameDownload;
-    }
-
-    public void setGameDownload(Integer gameDownload) {
-        this.gameDownload = gameDownload;
-    }
-
-    public Integer getGameAge() {
-        return gameAge;
-    }
-
-    public void setGameAge(Integer gameAge) {
-        this.gameAge = gameAge;
-    }
-
-    public String getDevEmail() {
-        return devEmail;
-    }
-
-    public void setDevEmail(String devEmail) {
-        this.devEmail = devEmail == null ? null : devEmail.trim();
-    }
-
-    public String getDevUrl() {
-        return devUrl;
-    }
-
-    public void setDevUrl(String devUrl) {
-        this.devUrl = devUrl == null ? null : devUrl.trim();
-    }
-
-    public Long getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Long createId) {
-        this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Long updateId) {
-        this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

@@ -1,8 +1,9 @@
 package com.hou_tai.model.dao;
 
+import com.github.yulichang.base.MPJBaseMapper;
 import com.hou_tai.model.pojo.ReviewReply;
 
-public interface ReviewReplyMapper {
+public interface ReviewReplyMapper extends MPJBaseMapper<ReviewReply> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(ReviewReply record);

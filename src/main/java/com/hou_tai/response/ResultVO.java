@@ -1,7 +1,6 @@
 package com.hou_tai.response;
 
 import com.hou_tai.enums.ResultCode;
-import com.hou_tai.model.base.PageVoEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Schema(title = "返回", description = "返回对象")
-public class ResultVO<T> extends PageVoEntity {
+public class ResultVO<T> {
 
     @Schema(title = "状态码", description = "状态码", name = "code")
     private int code;
@@ -53,6 +52,7 @@ public class ResultVO<T> extends PageVoEntity {
         this.data = data;
         return this;
     }
+
 
     @Override
     public String toString() {

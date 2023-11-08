@@ -53,7 +53,4 @@ public class ResponseData {
         return new ResultVO<T>().setCodeAndMsg(ResultCode);
     }
 
-    /*public static <T> ResultVO<T> Forbidden() {
-        return new ResultVO<T>().setCode(ResultCode.FORBIDDEN).setMsg(FORBIDDEN);
-    }*/
 }

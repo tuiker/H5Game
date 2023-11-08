@@ -4,13 +4,19 @@
   <resultMap id="BaseResultMap" type="com.hou_tai.model.pojo.GameReview">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="game_id" jdbcType="BIGINT" property="gameId" />
     <result column="review_content" jdbcType="VARCHAR" property="reviewContent" />
     <result column="review_time" jdbcType="TIMESTAMP" property="reviewTime" />
     <result column="help_num" jdbcType="INTEGER" property="helpNum" />
+    <result column="review_grade" jdbcType="INTEGER" property="reviewGrade" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="have_reply" jdbcType="INTEGER" property="haveReply" />
+    <result column="reply_user_id" jdbcType="BIGINT" property="replyUserId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, game_id, review_content, review_time, help_num
+    id, user_id, game_id, review_content, review_time, help_num,
+        review_grade,reply_content,reply_time,have_reply,reply_user_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,16 +24,33 @@
     from game_review
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getGameReviewById" resultType="com.hou_tai.response_vo.GameReviewPageVo">
+    SELECT
+      ga.id gameId,
+      ga.game_name gameName,
+      ga.game_type gameType,
+      ga.language_id gameLanguage,
+      gr.review_content reviewContent,
+      gr.id id
+    FROM
+      game_review gr
+        LEFT JOIN game ga ON gr.game_id = ga.id
+    WHERE gr.id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from game_review
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.hou_tai.model.pojo.GameReview">
     insert into game_review (id, user_id, game_id, 
-      review_content, review_time, help_num
+      review_content, review_time, help_num,review_grade
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{gameId,jdbcType=INTEGER}, 
       #{reviewContent,jdbcType=VARCHAR}, #{reviewTime,jdbcType=TIMESTAMP}, #{helpNum,jdbcType=INTEGER}
+      , #{reviewGrade,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.GameReview">
@@ -51,6 +74,9 @@
       <if test="helpNum != null">
         help_num,
       </if>
+      <if test="replyUserId != null">
+        reply_user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +96,9 @@
       </if>
       <if test="helpNum != null">
         #{helpNum,jdbcType=INTEGER},
+      </if>
+      <if test="replyUserId != null">
+        #{replyUserId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -91,6 +120,9 @@
       <if test="helpNum != null">
         help_num = #{helpNum,jdbcType=INTEGER},
       </if>
+      <if test="replyUserId != null">
+        reply_user_id = #{replyUserId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +132,12 @@
       game_id = #{gameId,jdbcType=INTEGER},
       review_content = #{reviewContent,jdbcType=VARCHAR},
       review_time = #{reviewTime,jdbcType=TIMESTAMP},
-      help_num = #{helpNum,jdbcType=INTEGER}
+      help_num = #{helpNum,jdbcType=INTEGER},
+      reply_user_id = #{replyUserId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="addHelpNum">
+    update game_review set help_num=help_num+1 where  game_id =#{dto.gameId}  and id=#{dto.reviewId}
   </update>
 </mapper>
