@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 /**
- * @ClassName: GameDto
+ * @ClassName: AppGameDto
  * @Description: 游戏入参
  * @Author: Sam
  * @Date: 2023-11-04 13:22
@@ -16,16 +16,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Schema(title = "游戏查询入参")
-public class MobileGameReviewDto extends PageDaoEntity {
+@Schema(title = "移动端游戏查询入参")
+public class MobileGameDto extends PageDaoEntity {
 
     @Schema(title = "游戏id")
     private Long gameId;
 
-    @Schema(title = "评论id")
-    private Integer reviewId;
+    @Schema(title = "游戏名称")
+    private String gameName;
 
-    @Schema(title = "评价分数",description = "1-5")
-    private Integer reviewGrade;
-
+    @Schema(title = "游戏类型")
+    private Integer gameType;
 }

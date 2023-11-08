@@ -9,11 +9,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
+import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.pojo.*;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.response_vo.MobileGameReviewVo;
 import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
@@ -48,7 +50,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return this.getById(id);
     }
 
-    public MobileGameVo getVoById(GameDto dto){
+    public MobileGameVo getVoById(MobileGameDto dto){
         MobileGameVo mobileGameVo =this.baseMapper.selectJoinOne(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                 .selectAll(Game.class)
                 .select("gt.type_name,l.language_name")
@@ -60,9 +62,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 MobileGameReviewDto grDto=new MobileGameReviewDto();
                 grDto.setPage(dto.getPage());
                 grDto.setPageSize(dto.getPageSize());
-                Page<GameReviewVo> reviewPage=gameReviewService.pageQuery(grDto);
+                Page<MobileGameReviewVo> reviewPage=gameReviewService.pageQuery(grDto);
                 if(reviewPage.getTotal()>0){
-                    List<GameReviewVo> grList=reviewPage.getRecords();
+                    List<MobileGameReviewVo> grList=reviewPage.getRecords();
                     //回复数据
                     mobileGameVo.setGameReviewList(grList);
                 }
@@ -175,5 +177,22 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         long allNum = this.count();
         String gameId = num + allNum;
         return Long.valueOf(gameId);
+    }
+
+
+    public Page<MobileGameVo> pageForMobile(MobileGameDto dto){
+        Page<MobileGameVo> pagin=this.baseMapper.selectJoinPage(
+                new Page<>(dto.getPage(),dto.getPageSize()) ,
+                MobileGameVo.class, new MPJLambdaWrapper<Game>()
+                        .select(Game::getId,Game::getGameName,Game::getGameLogo,Game::getGameGrade,Game::getGameLabel,Game::getGameType)
+                        .select("l.language_name,gt.type_name")
+                        //.leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
+                        .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
+                        .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
+                        .eq(dto.getGameType()!=null&&dto.getGameType()>0,Game::getGameType,dto.getGameType())
+                        .notIn(dto.getGameId()!=null ,Game::getId,dto.getGameId())
+        );
+        //3. 返回结果
+        return pagin;
     }
 }

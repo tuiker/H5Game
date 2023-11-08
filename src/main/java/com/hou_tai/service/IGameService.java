@@ -1,13 +1,13 @@
 package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.response_vo.MobileGameVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @InterfaceName: GameService
@@ -27,12 +27,12 @@ public interface IGameService {
     Game queryById(Long id);
 
     /**
-     * 通过ID查询单条数据
+     * 通过ID查询单条数据-移动端
      *
      * @param
      * @return 实例对象
      */
-    MobileGameVo getVoById(GameDto dto);
+    MobileGameVo getVoById(MobileGameDto dto);
 
     /**
      * 分页查询
@@ -71,6 +71,22 @@ public interface IGameService {
      * @return List<Map<String,Object>>
      **/
     List<GameVo> listByGame();
-
+    
+    /**
+     * @Author Sam
+     * @Description 
+     * @Date 16:02 2023/11/8
+     * @Param  * @param id
+     * @return GameVo
+     **/
     GameVo getVoById(Long id);
+    
+    /**
+     * @Author Sam
+     * @Description 分页获取游戏数据-移动端
+     * @Date 16:05 2023/11/8
+     * @Param  * @param dto
+     * @return Page<GameVo>
+     **/
+    Page<MobileGameVo> pageForMobile(MobileGameDto dto);
 }

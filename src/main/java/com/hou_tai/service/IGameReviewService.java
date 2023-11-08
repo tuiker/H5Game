@@ -8,6 +8,7 @@ import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
+import com.hou_tai.response_vo.MobileGameReviewVo;
 
 /**
  * @InterfaceName: GameService
@@ -47,12 +48,12 @@ public interface IGameReviewService extends IService<GameReview> {
     GameReview queryById(Integer id);
 
     /**
-     * 分页查询
+     * 分页查询-移动端
      *
      * @param dto 筛选条件
      * @return
      */
-    Page<GameReviewVo> pageQuery(MobileGameReviewDto dto);
+    Page<MobileGameReviewVo> pageQuery(MobileGameReviewDto dto);
 
     /**
      * 新增数据
@@ -78,9 +79,23 @@ public interface IGameReviewService extends IService<GameReview> {
      */
     boolean deleteById(Integer id);
 
-    boolean addHelpNum(PointDto dto);
+    /**
+     * @Author Sam
+     * @Description 添加评论帮助数
+     * @Date 17:16 2023/11/8
+     * @Param  * @param dto
+     * @return boolean
+     **/
+    boolean addHelpNum(MobileGameReviewDto dto);
 
-
+    /**
+     * @Author Sam
+     * @Description 评论保存
+     * @Date 17:16 2023/11/8
+     * @Param  * @param gameReview
+     * @return boolean
+     **/
     boolean saveReply(GameReview gameReview);
+
 
 }

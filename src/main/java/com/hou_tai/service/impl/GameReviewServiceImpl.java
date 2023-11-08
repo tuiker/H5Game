@@ -20,6 +20,7 @@ import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.model.pojo.UserInfo;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
+import com.hou_tai.response_vo.MobileGameReviewVo;
 import com.hou_tai.service.IGameReviewService;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -81,12 +82,12 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
      * @param dto 筛选条件
      * @return
      */
-    public Page<GameReviewVo> pageQuery(MobileGameReviewDto dto) {
-        Page<GameReviewVo> pagin=this.baseMapper.selectJoinPage(
+    public Page<MobileGameReviewVo> pageQuery(MobileGameReviewDto dto) {
+        Page<MobileGameReviewVo> pagin=this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(),dto.getPageSize()) ,
-                GameReviewVo.class, new MPJLambdaWrapper<GameReview>()
+                MobileGameReviewVo.class, new MPJLambdaWrapper<GameReview>()
                 .selectAll(GameReview.class)
-                .select("u.user_name,g.game_name,ru.user_name")
+                .select("u.user_name,u.user_img,g.game_name,ru.user_name")
                 .leftJoin(UserInfo.class,"u", UserInfo::getId,GameReview::getUserId)
                 .leftJoin(Game.class,"g", Game::getId,GameReview::getGameId)
                 .leftJoin(UserInfo.class,"ru", UserInfo::getId,GameReview::getReplyUserId)
@@ -144,8 +145,8 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
     }
 
     @Override
-    public boolean addHelpNum(PointDto dto) {
-        return this.baseMapper.addHelpNum(dto) > CommonNum.ZERO ? false : true;
+    public boolean addHelpNum(MobileGameReviewDto dto) {
+        return this.baseMapper.addHelpNum(dto) > CommonNum.ZERO ? true : false;
     }
 
     @Override
@@ -159,5 +160,6 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
                 .eq(GameReview::getId, gameReview.getId());
         return this.update(wrapper);
     }
+
 
 }

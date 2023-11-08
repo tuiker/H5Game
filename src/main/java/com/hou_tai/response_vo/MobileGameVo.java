@@ -8,15 +8,15 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @ClassName: GameVo
- * @Description: 游戏输出
+ * @ClassName: MobileGameVo
+ * @Description: 移动端游戏输出
  * @Author: Sam
  * @Date: 2023-11-04 11:52
  * @Version: 1.0
  **/
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "游戏输出")
+@Schema(title = "移动端游戏输出")
 public class MobileGameVo extends Game {
 
     @Schema(title = "游戏类型名称")
@@ -26,5 +26,5 @@ public class MobileGameVo extends Game {
     private String languageName ;
 
     @Schema(title = "游戏评论集合")
-    List<GameReviewVo> gameReviewList;
+    List<MobileGameReviewVo> gameReviewList;
 }
