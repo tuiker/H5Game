@@ -1,7 +1,9 @@
 package com.hou_tai.model.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -63,6 +65,12 @@ public class Game implements Serializable {
     @Schema(title = "游戏地址")
     @TableField(value = "game_url")
     private String gameUrl;
+    /**
+     * APK包名
+     */
+    @Schema(title = "APK包名")
+    @TableField(value = "apk_name")
+    private String apkName;
     /**
      * 游戏描述
      */
