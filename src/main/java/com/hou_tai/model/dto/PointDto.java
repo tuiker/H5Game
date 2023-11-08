@@ -21,8 +21,8 @@ public class PointDto {
     @Schema(title = "游戏id")
     private Integer gameId;
 
-    @Schema(title = "评论id")
-    private Integer reviewId;
+//    @Schema(title = "评论id")
+//    private Integer reviewId;
 
     @Schema(title = "触发类型 2下载3打开")
     private Integer triggerType;
