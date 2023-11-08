@@ -1,11 +1,9 @@
 spring:
-  server:
-    port: 8086
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://65.49.215.185:3306/zgdata
-    username: zgdata
-    password: DEFdjhyZS7pArajY
+    url: jdbc:mysql://65.49.215.185:3306/h5shop
+    username: h5shop
+    password: DzfaWpEhwTwBhC8b
 
   # mail邮箱
   mail:
@@ -56,3 +54,5 @@ pagehelper:
   params: count=countSql
   reasonable: true  #当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
   support-methods-arguments: true
+server:
+  port: 8090
