@@ -35,7 +35,7 @@ public class GameController {
      */
     @Operation(summary = "通过ID查询单条数据")
     @GetMapping("getVoById")
-    public ResultVO<GameVo> getVoById( Integer id){
+    public ResultVO<GameVo> getVoById( Long id){
         return ResponseData.success(gameService.getVoById(id));
     }
 
@@ -89,7 +89,7 @@ public class GameController {
      */
 //    @Operation(summary = "通过主键删除数据")
 //    @DeleteMapping
-//    public ResultVO<Boolean> deleteById(Integer id){
+//    public ResultVO<Boolean> deleteById(Long id){
 //        return ResponseData.success(gameService.deleteById(id));
 //    }
 

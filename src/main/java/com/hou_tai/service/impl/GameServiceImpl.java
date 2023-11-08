@@ -44,7 +44,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     @Resource
     IReviewReplyService reviewReplyService;
 
-    public Game queryById(Integer id){
+    public Game queryById(Long id){
         return this.getById(id);
     }
 
@@ -71,7 +71,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return mobileGameVo;
     }
 
-    public GameVo getVoById(Integer id){
+    public GameVo getVoById(Long id){
         GameVo gameVo =this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
                 .selectAll(Game.class)
                 .select("gt.type_name,l.language_name")
@@ -151,7 +151,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @param id 主键
      * @return 是否成功
      */
-    public boolean deleteById(Integer id){
+    public boolean deleteById(Long id){
         return this.removeById(id);
     }
 

@@ -24,12 +24,12 @@ public interface IGameService {
      * @param id 主键
      * @return 实例对象
      */
-    Game queryById(Integer id);
+    Game queryById(Long id);
 
     /**
      * 通过ID查询单条数据
      *
-     * @param id 主键
+     * @param
      * @return 实例对象
      */
     MobileGameVo getVoById(GameDto dto);
@@ -61,7 +61,7 @@ public interface IGameService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
     /**
      * @Author Sam
@@ -72,5 +72,5 @@ public interface IGameService {
      **/
     List<GameVo> listByGame();
 
-    GameVo getVoById(Integer id);
+    GameVo getVoById(Long id);
 }
