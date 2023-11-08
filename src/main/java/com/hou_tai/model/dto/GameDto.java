@@ -21,7 +21,7 @@ import lombok.*;
 public class GameDto extends PageDaoEntity {
 
     @Schema(title = "游戏id")
-    private Integer gameId;
+    private Long gameId;
 
     @Schema(title = "游戏名称")
     private String gameName;

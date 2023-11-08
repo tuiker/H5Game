@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.hou_tai.model.pojo.GameReview">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="game_id" jdbcType="BIGINT" property="gameId" />
     <result column="review_content" jdbcType="VARCHAR" property="reviewContent" />
     <result column="review_time" jdbcType="TIMESTAMP" property="reviewTime" />
     <result column="help_num" jdbcType="INTEGER" property="helpNum" />

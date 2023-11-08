@@ -24,7 +24,7 @@ public class GameTrigger implements Serializable {
     private Integer id ;
     /** 游戏ID */
     @Schema(name = "游戏ID")
-    private long gameId ;
+    private Long gameId ;
     /** 类型 对应枚举1下载2打开 */
     @Schema(name = "类型 对应枚举1下载2打开")
     private Integer type ;

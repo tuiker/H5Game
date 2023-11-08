@@ -19,7 +19,7 @@ import lombok.*;
 public class PointDto {
 
     @Schema(title = "游戏id")
-    private long gameId;
+    private Long gameId;
 
 //    @Schema(title = "评论id")
 //    private Integer reviewId;

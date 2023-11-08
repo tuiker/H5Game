@@ -27,7 +27,7 @@ public class GameReview {
     /** 游戏ID */
     @Schema(title = "游戏ID")
     @TableField(value = "game_id")
-    private Integer gameId ;
+    private Long gameId ;
     /** 评论内容 */
     @Schema(title = "评论内容")
     @TableField(value = "review_content")

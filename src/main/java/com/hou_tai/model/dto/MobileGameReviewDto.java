@@ -20,7 +20,7 @@ import lombok.*;
 public class MobileGameReviewDto extends PageDaoEntity {
 
     @Schema(title = "游戏id")
-    private Integer gameId;
+    private Long gameId;
 
 
     @Schema(title = "评价分数",description = "1-5")
