@@ -20,10 +20,10 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class UploadAspect {
 
-    @Value("spring.profiles.active")
+    @Value("${spring.profiles.active:}")
     private String active;
 
-    @Value("mobile.path")
+    @Value("${mobile.path:}")
     private String mobilePath;
 
     @Around("execution(* com.hou_tai.controller.*..*(..)) ")
