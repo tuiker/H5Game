@@ -22,6 +22,8 @@ public class MobileGameReviewDto extends PageDaoEntity {
     @Schema(title = "游戏id")
     private Long gameId;
 
+    @Schema(title = "评论id")
+    private Integer reviewId;
 
     @Schema(title = "评价分数",description = "1-5")
     private Integer reviewGrade;

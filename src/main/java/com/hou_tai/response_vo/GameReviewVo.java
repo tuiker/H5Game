@@ -25,9 +25,6 @@ public class GameReviewVo extends GameReview {
     @Schema(title = "游戏名称")
     private String gameName ;
 
-//    @Schema(title = "回复集合")
-//    private List<ReviewReplyVo> reviewReplyList;
-
     @Schema(title = "评论用户名称")
     private String userName ;
 

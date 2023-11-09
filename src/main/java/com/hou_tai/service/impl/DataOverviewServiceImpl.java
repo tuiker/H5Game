@@ -1,21 +1,21 @@
 package com.hou_tai.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.hou_tai.enums.DataTypeEnums;
-import com.hou_tai.enums.TriggerTypeEnums;
-import com.hou_tai.model.dao.DataOverviewMapper;
-import com.hou_tai.model.dto.DataDto;
+import cn.hutool.core.util.ObjectUtil;
+import com.hou_tai.enums.GameTypeEnums;
+import com.hou_tai.enums.LanguageTypeEnum;
+import com.hou_tai.final_common.CommonNum;
+import com.hou_tai.model.dao.ChannelDataMapper;
+import com.hou_tai.model.dao.GameMapper;
+import com.hou_tai.model.dao.GameTriggerMapper;
+import com.hou_tai.model.pojo.Game;
 import com.hou_tai.response_vo.DataBoardVo;
-import com.hou_tai.response_vo.DataLineVo;
-import com.hou_tai.response_vo.DataListVo;
+import com.hou_tai.response_vo.GameGeneralizeVo;
 import com.hou_tai.service.IDataOverviewService;
-import com.hou_tai.util.BeanUtil;
-import com.hou_tai.util.DateUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,68 +26,42 @@ import java.util.stream.Stream;
 public class DataOverviewServiceImpl implements IDataOverviewService {
 
     @Resource
-    DataOverviewMapper dataOverviewMapper;
+    private ChannelDataMapper channelDataMapper;
+    @Resource
+    private GameTriggerMapper gameTriggerMapper;
+    @Resource
+    private GameMapper gameMapper;
 
     @Override
-    public List<DataBoardVo> getBoardList() {
-        List<DataBoardVo> list=this.dataOverviewMapper.getBoardList();
-        return list;
+    public DataBoardVo getAllStates() {
+        DataBoardVo dataBoardVo = new DataBoardVo();
+        Integer requestNum=channelDataMapper.getCountByToday(CommonNum.ZERO);
+        dataBoardVo.setTodayRequestNum(requestNum==null?0:requestNum);
+        dataBoardVo.setTodayDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO, CommonNum.ZERO));
+        dataBoardVo.setTodayOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE, CommonNum.ZERO));
+        dataBoardVo.setRequestDataOfTime(channelDataMapper.getNumForSevenDay());
+        dataBoardVo.setDownloadDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.TWO));
+        dataBoardVo.setOpenDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.THREE));
+        //封装游戏概括
+        List<GameGeneralizeVo> list = new ArrayList<>();
+        List<Game> gameList = gameMapper.selectList(null);
+        if (ObjectUtil.isNotNull(gameList) && gameList.size() > 0) {
+            gameList.forEach(game -> {
+                GameGeneralizeVo gameGeneralizeVo = new GameGeneralizeVo();
+                gameGeneralizeVo.setGameName(game.getGameName());
+                gameGeneralizeVo.setGameType(GameTypeEnums.getValue(game.getGameType()));
+                gameGeneralizeVo.setGameLanguage(LanguageTypeEnum.getValue(game.getLanguageId()));
+                long gameId = game.getId();
+                Integer requestNum2=channelDataMapper.getCountByToday(CommonNum.ZERO);
+                gameGeneralizeVo.setRequestNum(requestNum2==null?0:requestNum);
+                gameGeneralizeVo.setDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO, gameId));
+                gameGeneralizeVo.setOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE, gameId));
+                list.add(gameGeneralizeVo);
+            });
+        }
+        dataBoardVo.setGameGeneralize(list);
+        return dataBoardVo;
     }
-    @Override
-    public Map<String,List<DataLineVo>> getLinesList(DataDto dto) {
-        List<String> dateList=DateUtil.getDatesBetween(dto.getStartDate(), dto.getEndDate(),false);
-        Map<String,List<DataLineVo>> map=new HashMap<>();
-
-        List<DataLineVo> dataList=new ArrayList<>();
-        dateList.stream().forEach(date->{
-            dataList.add(DataLineVo.builder().days(date).total(0).build());
-        });
-        DataDto nDto=dto;
-        Stream.of(TriggerTypeEnums.values()).forEach(e -> {
-            //if(e.getCode()!=DataBoardTypeEnums.REQUESTS.getCode()){
-                map.put(e.getCodeStr(), Arrays.asList());
-                List<DataLineVo> realList=this.dataOverviewMapper.getLinesStats(nDto,e.getCode());
-                List<DataLineVo> allList= BeanUtil.copyListProperties(dataList, DataLineVo.class);
-                if(CollectionUtil.isNotEmpty(realList)){
-                    allList.stream().forEach(all->{
-                        realList.stream()
-                                .filter(real -> all.getDays().equals(real.getDays()))
-                                .findFirst()
-                                .ifPresent(vo -> {
-                                    if (vo != null && vo.getTotal() > 0) {
-                                        all.setTotal(vo.getTotal());
-                                    }
-                                });
-                    });
-                }
-                if(CollectionUtil.isNotEmpty(allList)){
-                    map.put(e.getCodeStr(),allList);
-                }
-           // }
-        });
-        return map;
-    }
-
-
-    @Override
-    public List<DataListVo> getListStats(){
-        return dataOverviewMapper.getListStats();
-    }
-
-
-    public Map<String,Object> getAllStates(DataDto dto){
-        Map<String,Object> map=new HashMap<>();
-        map.put(DataTypeEnums.BOARD.getCodeStr(), getBoardList());
-        map.put(DataTypeEnums.LINE.getCodeStr(), getLinesList(dto));
-        map.put(DataTypeEnums.LIST.getCodeStr(), getListStats());
-        return map;
-    }
-
-
-
-
-
-
 
 
 }

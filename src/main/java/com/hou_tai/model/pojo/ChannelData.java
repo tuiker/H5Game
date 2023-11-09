@@ -1,13 +1,17 @@
 package com.hou_tai.model.pojo;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class ChannelData {
     private Integer id;
 
     private Integer channelId;
 
     private Integer requestData;
+    private Integer gameId;
 
     private Date recordTime;
 

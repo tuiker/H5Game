@@ -43,3 +43,9 @@ ALTER TABLE `h5_game`.`game_trigger`
 
 ALTER TABLE `h5_game`.`channel_data`
     MODIFY COLUMN `game_id` bigint NULL DEFAULT NULL COMMENT '游戏ID' AFTER `record_time`;
+
+ALTER TABLE `h5_game`.`channel_data`
+    MODIFY COLUMN `request_data` int NULL DEFAULT 0 COMMENT '请求次数' AFTER `channel_id`;
+
+ALTER TABLE `h5_game`.`game_trigger`
+    MODIFY COLUMN `type` int NOT NULL COMMENT '类型 对应枚举2下载3打开' AFTER `game_id`;

@@ -1,82 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hou_tai.model.dao.ChannelDataMapper">
-  <resultMap id="BaseResultMap" type="com.hou_tai.model.pojo.ChannelData">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
-    <result column="request_data" jdbcType="INTEGER" property="requestData" />
-    <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, channel_id, request_data, record_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from channel_data
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from channel_data
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.hou_tai.model.pojo.ChannelData">
-    insert into channel_data (id, channel_id, request_data, 
-      record_time)
-    values (#{id,jdbcType=INTEGER}, #{channelId,jdbcType=INTEGER}, #{requestData,jdbcType=INTEGER}, 
-      #{recordTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.ChannelData">
-    insert into channel_data
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="channelId != null">
-        channel_id,
-      </if>
-      <if test="requestData != null">
-        request_data,
-      </if>
-      <if test="recordTime != null">
-        record_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="channelId != null">
-        #{channelId,jdbcType=INTEGER},
-      </if>
-      <if test="requestData != null">
-        #{requestData,jdbcType=INTEGER},
-      </if>
-      <if test="recordTime != null">
-        #{recordTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hou_tai.model.pojo.ChannelData">
-    update channel_data
-    <set>
-      <if test="channelId != null">
-        channel_id = #{channelId,jdbcType=INTEGER},
-      </if>
-      <if test="requestData != null">
-        request_data = #{requestData,jdbcType=INTEGER},
-      </if>
-      <if test="recordTime != null">
-        record_time = #{recordTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.hou_tai.model.pojo.ChannelData">
-    update channel_data
-    set channel_id = #{channelId,jdbcType=INTEGER},
-      request_data = #{requestData,jdbcType=INTEGER},
-      record_time = #{recordTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.hou_tai.model.pojo.ChannelData">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="channel_id" jdbcType="INTEGER" property="channelId"/>
+        <result column="request_data" jdbcType="INTEGER" property="requestData"/>
+        <result column="game_id" jdbcType="INTEGER" property="gameId"/>
+        <result column="record_time" jdbcType="TIMESTAMP" property="recordTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , channel_id, request_data, record_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_data
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getCountByToday" resultType="java.lang.Integer">
+        SELECT request_data
+        FROM channel_data
+        WHERE TO_DAYS(record_time) = TO_DAYS(NOW())
+        <if test="gameId !=null and gameId !=0">
+            and game_id =#{gameId}
+        </if>
+    </select>
+    <select id="getNumForSevenDay" resultType="com.hou_tai.response_vo.DataOfTimeVo">
+        SELECT request_data num,
+               date_format(record_time, '%Y-%m-%d') time
+        FROM
+            channel_data
+        WHERE
+            DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date ( record_time );
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from channel_data
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.hou_tai.model.pojo.ChannelData">
+        insert into channel_data (id, channel_id, request_data,
+                                  record_time)
+        values (#{id,jdbcType=INTEGER}, #{channelId,jdbcType=INTEGER}, #{requestData,jdbcType=INTEGER},
+                #{recordTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.ChannelData">
+        insert into channel_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="requestData != null">
+                request_data,
+            </if>
+            <if test="recordTime != null">
+                record_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="requestData != null">
+                #{requestData,jdbcType=INTEGER},
+            </if>
+            <if test="recordTime != null">
+                #{recordTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hou_tai.model.pojo.ChannelData">
+        update channel_data
+        <set>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="requestData != null">
+                request_data = #{requestData,jdbcType=INTEGER},
+            </if>
+            <if test="recordTime != null">
+                record_time = #{recordTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hou_tai.model.pojo.ChannelData">
+        update channel_data
+        set channel_id   = #{channelId,jdbcType=INTEGER},
+            request_data = #{requestData,jdbcType=INTEGER},
+            record_time  = #{recordTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
