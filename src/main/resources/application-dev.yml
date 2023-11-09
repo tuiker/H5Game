@@ -38,6 +38,11 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+  #上传下载文件大小
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 #日志级别的设置
 #logging:
 #  level:
@@ -76,3 +81,6 @@ pagehelper:
   support-methods-arguments: true
 server:
   port: 8090
+
+mobile:
+ path: https://h5shop.cajbook.com

@@ -7,16 +7,15 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.hou_tai.enums.HomeEnums;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileGameReviewDto;
+import com.hou_tai.model.dto.MobileHomeGameDto;
 import com.hou_tai.model.pojo.*;
-import com.hou_tai.response_vo.GameReviewVo;
-import com.hou_tai.response_vo.GameVo;
-import com.hou_tai.response_vo.MobileGameReviewVo;
-import com.hou_tai.response_vo.MobileGameVo;
+import com.hou_tai.response_vo.*;
 import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IReviewReplyService;
@@ -28,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @ClassName: GameServiceImpl
@@ -186,7 +186,6 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 MobileGameVo.class, new MPJLambdaWrapper<Game>()
                         .select(Game::getId,Game::getGameName,Game::getGameLogo,Game::getGameGrade,Game::getGameLabel,Game::getGameType)
                         .select("l.language_name,gt.type_name")
-                        //.leftJoin(UserInfo.class,"u", UserInfo::getId,Game::getCreateId)
                         .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
                         .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
                         .eq(dto.getGameType()!=null&&dto.getGameType()>0,Game::getGameType,dto.getGameType())
@@ -195,4 +194,35 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         //3. 返回结果
         return pagin;
     }
+
+    public Page<MobileGameVo> pageForMobileHome(MobileHomeGameDto dto){
+        Page<MobileGameVo> pagin=this.baseMapper.selectJoinPage(
+                new Page<>(dto.getPage(),dto.getPageSize()) ,
+                MobileGameVo.class, new MPJLambdaWrapper<Game>()
+                        .select(Game::getId,Game::getGameName,Game::getGameLogo,Game::getGameMainLogo,Game::getGameGrade,Game::getGameLabel,Game::getGameType)
+                        .select("l.language_name,gt.type_name")
+                        .leftJoin(Language.class,"l", Language::getId,Game::getLanguageId)
+                        .leftJoin(GameType.class,"gt", GameType::getId,Game::getGameType)
+                        .eq(dto.getLanguageId()!=null&&dto.getLanguageId()>0,Game::getLanguageId,dto.getLanguageId())
+        );
+        //3. 返回结果
+        return pagin;
+    }
+
+    public List<MobileGameHomeVo> getHomeTypeList(MobileHomeGameDto dto){
+        if(dto.getHomeType()==null){
+            dto.setHomeType(CommonNum.ZERO);
+        }
+        //此处暂时用全数据
+        Page<MobileGameVo> page = pageForMobileHome(dto);
+        List<MobileGameHomeVo> list = new ArrayList<>();
+        MobileHomeGameDto gameDto=dto;
+        //如果搜索带参了 则只传对应的 其他的不传
+        Stream.of(HomeEnums.values()).forEach(e -> {
+            list.add(MobileGameHomeVo.builder().gameVoList((gameDto.getHomeType()==CommonNum.ZERO||e.getCode()==gameDto.getHomeType())
+                    ?page.getRecords():null).homeType(e.getCode()).build());
+        });
+        return list;
+    }
+
 }

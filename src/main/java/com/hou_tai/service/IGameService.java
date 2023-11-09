@@ -3,8 +3,10 @@ package com.hou_tai.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.GameDto;
+import com.hou_tai.model.dto.MobileHomeGameDto;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.response_vo.MobileGameHomeVo;
 import com.hou_tai.response_vo.MobileGameVo;
 
 import java.util.List;
@@ -83,10 +85,13 @@ public interface IGameService {
     
     /**
      * @Author Sam
-     * @Description 分页获取游戏数据-移动端
+     * @Description 分页获取类似游戏数据-移动端
      * @Date 16:05 2023/11/8
      * @Param  * @param dto
      * @return Page<GameVo>
      **/
     Page<MobileGameVo> pageForMobile(MobileGameDto dto);
+    
+
+    List<MobileGameHomeVo> getHomeTypeList(MobileHomeGameDto dto);
 }

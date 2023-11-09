@@ -1,9 +1,15 @@
 package com.hou_tai.response_vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hou_tai.model.pojo.GameReview;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * @ClassName: MobileGameReviewVo
@@ -31,4 +37,15 @@ public class MobileGameReviewVo extends GameReview {
 
     @Schema(title = "回复用户名称")
     private String replyUserName ;
+
+    @Schema(title = "评论时间")
+    @JSONField(format = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime reviewTime ;
+
+    @Schema(title = "回复时间")
+    @JSONField(format = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "reply_time")
+    private LocalDateTime replyTime;
 }

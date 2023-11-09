@@ -13,18 +13,16 @@ import lombok.*;
  **/
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Schema(title = "移动端游戏查询入参")
-public class MobileGameDto extends PageDaoEntity {
+public class MobileGameDto  extends PageDaoEntity{
 
-    @Schema(title = "游戏id")
+    @Schema(title = "游戏id",description = "当前游戏id,进行排除")
     private Long gameId;
 
     @Schema(title = "游戏名称")
     private String gameName;
 
-    @Schema(title = "游戏类型")
+    @Schema(title = "游戏类型",description = "当前游戏类型,则为相似游戏")
     private Integer gameType;
+
 }

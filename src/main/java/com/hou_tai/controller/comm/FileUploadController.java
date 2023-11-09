@@ -39,7 +39,7 @@ public class FileUploadController {
             return ResponseData.error("文件为空", ResultCode.FAILED);
         }
         List<String> map = fileUploadService.upload(files);
-
+        //System.out.println(map);
         return ResponseData.success(map);
 
     }

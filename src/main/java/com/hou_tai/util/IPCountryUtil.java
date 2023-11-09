@@ -25,7 +25,7 @@ public class IPCountryUtil {
     private static final String LOCAL_IP_PROMPT = "本地循环地址";
     private static final String PRIVATE_IP_PROMPT = "私有地址";
 
-    private static final String[] LOCAL_IPS = {"127.0.0.1", "0.0.0.0", "localhost"};
+    private static final String[] LOCAL_IPS = {"127.0.0.1", "0.0.0.0", "localhost","0:0:0:0:0:0:0:1"};
 
     private static final String PRIVATE_IP_REGEX = "^(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$";
 
@@ -41,11 +41,11 @@ public class IPCountryUtil {
                 "127.0.0.1", "0.0.0.0", "LOCALHOST", "192.168.33.174", "10.2.2.2", "172.17.3.3"
         };
         for (String ip : ips) {
-            System.out.println(ipToContry(ip));
+            System.out.println(ipToCountry(ip));
         }
     }
 
-    public static Integer ipToContry(String ip) {
+    public static Integer ipToCountry(String ip) {
         if (isLocalIp(ip)) {
             return 1;
         }
@@ -110,8 +110,11 @@ public class IPCountryUtil {
     private static final HashMap<String, Integer> map = new HashMap<>();
 
     static {
-        map.put("BR", 2);
+        map.put("PT", 2);
         map.put("IN", 3);
+        map.put("JP", 5);
+        map.put("KR", 6);
+        map.put("ID", 7);
         //map.put("ES", "西班牙");
         /* map.put("ID", "印度尼西亚");
        map.put("AD","安道尔共和国");
