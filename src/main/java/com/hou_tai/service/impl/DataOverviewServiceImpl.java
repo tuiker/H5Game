@@ -52,7 +52,8 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
                 gameGeneralizeVo.setGameType(GameTypeEnums.getValue(game.getGameType()));
                 gameGeneralizeVo.setGameLanguage(LanguageTypeEnum.getValue(game.getLanguageId()));
                 long gameId = game.getId();
-                gameGeneralizeVo.setRequestNum(channelDataMapper.getCountByToday(gameId));
+                Integer requestNum2=channelDataMapper.getCountByToday(CommonNum.ZERO);
+                gameGeneralizeVo.setRequestNum(requestNum2==null?0:requestNum);
                 gameGeneralizeVo.setDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO, gameId));
                 gameGeneralizeVo.setOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE, gameId));
                 list.add(gameGeneralizeVo);
