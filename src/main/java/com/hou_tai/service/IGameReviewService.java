@@ -84,9 +84,9 @@ public interface IGameReviewService extends IService<GameReview> {
      * @Description 添加评论帮助数
      * @Date 17:16 2023/11/8
      * @Param  * @param dto
-     * @return boolean
+     * @return GameReview
      **/
-    boolean addHelpNum(MobileGameReviewDto dto);
+    GameReview addHelpNum(MobileGameReviewDto dto);
 
     /**
      * @Author Sam
