@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.enums.HomeEnums;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dto.*;
+import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.response_vo.MobileGameHomeVo;
@@ -73,11 +74,11 @@ public class MobileGameController {
     }
 
 
-    @Operation(summary = "新增评论有用数",description = "")
+    @Operation(summary = "新增评论有用数",description = "返回当前评论")
     @PostMapping("/addHelpNum")
     @ResponseBody
-    public ResultVO addHelpNum(@RequestBody MobileGameReviewDto dto) {
-        return gameReviewService.addHelpNum(dto)?ResponseData.success():ResponseData.error();
+    public ResultVO<GameReview> addHelpNum(@RequestBody MobileGameReviewDto dto) {
+        return ResponseData.success(gameReviewService.addHelpNum(dto));
     }
 
     @Operation(summary = "游戏首页",description = "0全部1近期2广告推荐3个性化")

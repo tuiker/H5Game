@@ -145,8 +145,8 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
     }
 
     @Override
-    public boolean addHelpNum(MobileGameReviewDto dto) {
-        return this.baseMapper.addHelpNum(dto) > CommonNum.ZERO ? true : false;
+    public GameReview addHelpNum(MobileGameReviewDto dto) {
+        return this.baseMapper.addHelpNum(dto) > CommonNum.ZERO ? getById(dto.getReviewId()): null;
     }
 
     @Override
