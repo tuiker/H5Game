@@ -1,0 +1,58 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://65.49.215.185:3306/h5shop
+    username: h5shop
+    password: DzfaWpEhwTwBhC8b
+
+  # mail邮箱
+  mail:
+    # SMTP服务器（我用的是QQ邮箱的SMTP服务器地址，如果用的其它邮箱请另行百度搜索）
+    host: smtp.qq.com
+    # 发送验证码的邮箱（发件人的邮箱）
+    username: 349918386@qq.com
+    # 授权码
+    password: tbxlggnvxonscbah
+    # 编码
+    default-encoding: utf-8
+    # 其它参数
+    properties:
+      mail:
+        smtp:
+          # 如果是用SSL方式，需要配置如下属性,使用qq邮箱的话需要开启
+          ssl:
+            enable: true
+            required: true
+          # 邮件接收时间的限制，单位毫秒
+          timeout: 10000
+          # 连接时间的限制，单位毫秒
+          connection-timeout: 10000
+          # 邮件发送时间的限制，单位毫秒
+          write-timeout: 10000
+  #  redis配置
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+#mybatis:
+#  mapper-locations: classpath:mapper/**Mapper.xml
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto #使用数据库默认id自增策略
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开启SQL打印（就是每次操作数据库都会在控制台打印出来SQL语句，建议使用熟练以后注掉此行，不然日志很多）
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+pagehelper:
+  helper-dialect: mysql
+  pageSizeZero: true
+  params: count=countSql
+  reasonable: true  #当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+  support-methods-arguments: true
+server:
+  port: 8090
