@@ -2,6 +2,7 @@ package com.hou_tai.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.hou_tai.service.IFileUploadService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,11 @@ import java.util.List;
 @Service
 public class FileUploadServiceImpl implements IFileUploadService {
 
+    @Value("${spring.profiles.active:}")
+    private String active;
+
+    @Value("${mobile.path:}")
+    private String mobilePath;
 
     @Override
     public List<String> upload(MultipartFile[] files) {
@@ -56,6 +62,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
                     System.out.println("文件将要保存的路径：{}" + targetFile.getAbsoluteFile());
                     saveDBPath = targetFile.getAbsoluteFile().getAbsolutePath();
                     //储存数据库文件名
+                    if(active!=null&&!active.equals("dev")){//非本地则替换路径
+                        //System.out.println(saveDBPath);
+                        saveDBPath = saveDBPath.replace("\\", "/").replaceAll("/home/file_storage",mobilePath);
+                        //System.out.println(saveDBPath);
+                    }
                     urlList.add(saveDBPath);
 
                 } catch (Exception e) {
