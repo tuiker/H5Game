@@ -57,6 +57,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     @Resource
     IReviewReplyService reviewReplyService;
 
+    @Value("${lanBo.fall.path:}")
+    private String fallPath;
+
     public Game queryById(Long id) {
         return this.getById(id);
     }
@@ -127,7 +130,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         game.setId(gameId);
         game.setApkName(getApkName(game.getGameUrl()));
         //生成落地页，注意环境不同，地址不一样
-        game.setGameFallUrl(CommonString.PRO_FALL_URL + gameId);
+        game.setGameFallUrl(fallPath + gameId);
         this.save(game);
         return game;
     }

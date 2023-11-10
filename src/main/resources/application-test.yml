@@ -68,3 +68,5 @@ lanBo:
     path: https://h5.cajbook.com/
   file:
     path: /home/file_storage/
+  fall:
+    path: https://h5shop.cajbook.com/?id=
