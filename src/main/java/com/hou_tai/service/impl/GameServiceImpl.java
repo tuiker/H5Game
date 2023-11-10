@@ -122,7 +122,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      */
     public Game insert(Game game) {
         long gameId = getGameId();
-        game.setUpdateId(game.getUpdateId());
+        game.setUpdateId(game.getCreateId());
         game.setId(gameId);
         game.setApkName(getApkName(game.getGameUrl()));
         //生成落地页，注意环境不同，地址不一样
