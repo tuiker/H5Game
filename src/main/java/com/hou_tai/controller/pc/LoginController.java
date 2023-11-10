@@ -28,10 +28,10 @@ public class LoginController {
     @Resource
     IUserInfoService userInfoService;
 
-    @Operation(summary = "用户登录")
-    @PostMapping("/login")
-    public ResultVO loginUser(@RequestBody UserDto dto) {
-        return userInfoService.loginUser(dto);
-    }
+//    @Operation(summary = "用户登录")
+//    @PostMapping("/login")
+//    public ResultVO loginUser(@RequestBody UserDto dto) {
+//        return userInfoService.loginUser(dto);
+//    }
 
 }
