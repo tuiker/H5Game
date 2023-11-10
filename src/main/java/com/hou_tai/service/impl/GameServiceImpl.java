@@ -29,9 +29,9 @@ import com.hou_tai.service.IReviewReplyService;
 import com.hou_tai.util.BeanUtil;
 import com.hou_tai.util.SystemNumUtil;
 import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
 import net.dongliu.apk.parser.ApkFile;
 import net.dongliu.apk.parser.bean.ApkMeta;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -50,9 +50,7 @@ import java.util.stream.Stream;
  * @Version: 1.0
  **/
 @Service
-@AllArgsConstructor
 public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IGameService {
-
     @Resource
     IGameReviewService gameReviewService;
 
@@ -247,6 +245,15 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return pageForMobileHome(dto);
     }
 
+    @Value("${spring.profiles.active:}")
+    private String active;
+
+    @Value("${lanBo.mobile.path:}")
+    private String mobilePath;
+
+    @Value("${lanBo.file.path:}")
+    private String filePath;
+
     /**
      * @Description
      * @Author GaoLu
@@ -259,6 +266,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         ApkFile apkFile;
         ApkMeta apkMeta;
         try {
+            if(active!=null&&!active.equals("dev")){//非开发则替换路径
+                apkUrl = apkUrl.replace("\\", "/").replaceAll(mobilePath,filePath);
+            }
             apkFile = new ApkFile(new File(apkUrl));
             apkMeta = apkFile.getApkMeta();
             System.out.println(apkMeta.getPackageName());
@@ -267,4 +277,5 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         }
         return apkMeta.getPackageName();
     }
+
 }

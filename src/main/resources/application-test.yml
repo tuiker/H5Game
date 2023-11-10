@@ -62,5 +62,9 @@ pagehelper:
 server:
   port: 8090
 
-mobile:
-  path: https://h5.cajbook.com/
+
+lanBo:
+  mobile:
+    path: https://h5.cajbook.com/
+  file:
+    path: /home/file_storage/
