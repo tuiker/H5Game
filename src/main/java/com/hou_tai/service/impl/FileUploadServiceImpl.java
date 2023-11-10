@@ -23,8 +23,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Value("${spring.profiles.active:}")
     private String active;
 
-    @Value("${mobile.path:}")
+    @Value("${lanBo.mobile.path:}")
     private String mobilePath;
+
+    @Value("${lanBo.file.path:}")
+    private String filePath;
 
     @Override
     public List<String> upload(MultipartFile[] files) {
@@ -53,7 +56,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 } else {
                     folderPath = "file/" + datePath;
                 }
-                String path = bathPath + folderPath;
+                String path = filePath + folderPath;
                 //文件名 普通地址 命名方式:时间-数字-描述
                 String newFileName = sdf.format(new Date()) + "-" + (i + 1) + extension;
                 File targetFile = new File(path, newFileName);
@@ -65,7 +68,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                     //储存数据库文件名
                     if(active!=null&&!active.equals("dev")){//非开发则替换路径
                         saveDBPath = saveDBPath.replace("\\", "/")
-                                .replaceAll(bathPath,mobilePath);
+                                .replaceAll(filePath,mobilePath);
                     }
                     urlList.add(saveDBPath);
                 } catch (Exception e) {
