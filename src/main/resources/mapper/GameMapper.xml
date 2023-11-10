@@ -50,7 +50,7 @@
                           data_security, game_grade, game_download,
                           game_age, dev_email, dev_url,
                           create_id, create_time, update_id,
-                          update_time, game_label, review_num, apk_name)
+                          update_time, game_label, review_num, apk_name,game_fall_url)
         values (#{id,jdbcType=BIGINT}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER},
                 #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR},
                 #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
@@ -58,7 +58,7 @@
                 #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR},
                 #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
                 #{updateTime,jdbcType=TIMESTAMP}, #{gameLabel,jdbcType=VARCHAR}, #{reviewNum,jdbcType=INTEGER},
-                #{apkName,jdbcType=VARCHAR})
+                #{apkName,jdbcType=VARCHAR},#{gameFallUrl,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.Game">
         insert into game
@@ -85,7 +85,10 @@
                 game_background,
             </if>
             <if test="gameUrl != null">
-                game_url
+                game_url,
+            </if>
+            <if test="gameFallUrl != null">
+                game_fall_url,
             </if>
             <if test="apkName != null">
                 apk_name,
@@ -154,6 +157,9 @@
             </if>
             <if test="gameUrl != null">
                 #{gameUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gameFallUrl != null">
+                #{gameFallUrl,jdbcType=VARCHAR},
             </if>
             <if test="apkName != null">
                 #{apkName,jdbcType=VARCHAR},
@@ -277,6 +283,7 @@
             game_main_logo  = #{gameMainLogo,jdbcType=VARCHAR},
             game_background = #{gameBackground,jdbcType=VARCHAR},
             game_url        = #{gameUrl,jdbcType=VARCHAR},
+            game_fall_url        = #{gameFallUrl,jdbcType=VARCHAR},
             apk_name        = #{apkName,jdbcType=VARCHAR},
             game_desc       = #{gameDesc,jdbcType=VARCHAR},
             data_security   = #{dataSecurity,jdbcType=VARCHAR},
