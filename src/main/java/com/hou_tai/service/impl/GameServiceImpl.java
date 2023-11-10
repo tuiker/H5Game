@@ -123,9 +123,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     public Game insert(Game game) {
-        long gameId = game.getCreateId();
-        game.setUpdateId(gameId);
-        game.setId(getGameId());
+        long gameId = getGameId();
+        game.setUpdateId(game.getUpdateId());
+        game.setId(gameId);
         game.setApkName(getApkName(game.getGameUrl()));
         //生成落地页，注意环境不同，地址不一样
         game.setGameFallUrl(CommonString.TEST_FALL_URL + gameId);
