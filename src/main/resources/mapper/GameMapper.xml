@@ -283,7 +283,6 @@
             game_main_logo  = #{gameMainLogo,jdbcType=VARCHAR},
             game_background = #{gameBackground,jdbcType=VARCHAR},
             game_url        = #{gameUrl,jdbcType=VARCHAR},
-            game_fall_url        = #{gameFallUrl,jdbcType=VARCHAR},
             apk_name        = #{apkName,jdbcType=VARCHAR},
             game_desc       = #{gameDesc,jdbcType=VARCHAR},
             data_security   = #{dataSecurity,jdbcType=VARCHAR},
