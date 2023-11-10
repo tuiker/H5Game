@@ -44,6 +44,12 @@ public class Game extends BaseEntity implements Serializable {
     @Schema(title = "游戏LOGO")
     @TableField(value = "game_logo")
     private String gameLogo;
+    @Schema(title = "游戏LOGO")
+    @TableField(value = "game_logo")
+    private String game_logo;
+    @Schema(title = "落地页地址")
+    @TableField(value = "game_fall_url")
+    private String gameFallUrl;;
     /**
      * 游戏主图
      */
