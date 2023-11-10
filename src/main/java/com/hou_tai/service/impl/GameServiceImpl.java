@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.enums.HomeEnums;
 import com.hou_tai.final_common.CommonNum;
+import com.hou_tai.final_common.CommonString;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileGameDto;
@@ -122,9 +123,12 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     public Game insert(Game game) {
-        game.setUpdateId(game.getCreateId());
+        long gameId = game.getCreateId();
+        game.setUpdateId(gameId);
         game.setId(getGameId());
         game.setApkName(getApkName(game.getGameUrl()));
+        //生成落地页，注意环境不同，地址不一样
+        game.setGameFallUrl(CommonString.TEST_FALL_URL + gameId);
         this.save(game);
         return game;
     }
@@ -238,7 +242,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return list;
     }
 
-    public Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto){
+    public Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto) {
         //具体类型的实现在此处
         return pageForMobileHome(dto);
     }
@@ -253,10 +257,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     private String getApkName(String apkUrl) {
         //获取APK包名
         ApkFile apkFile;
-        ApkMeta apkMeta ;
+        ApkMeta apkMeta;
         try {
             apkFile = new ApkFile(new File(apkUrl));
-            apkMeta=apkFile.getApkMeta();
+            apkMeta = apkFile.getApkMeta();
             System.out.println(apkMeta.getPackageName());
         } catch (IOException e) {
             throw new RuntimeException(e);
