@@ -47,9 +47,8 @@ public class Game implements Serializable {
     @Schema(title = "游戏LOGO")
     @TableField(value = "game_logo")
     private String gameLogo;
-    @Schema(title = "游戏LOGO")
-    @TableField(value = "game_logo")
-    private String game_logo;
+
+
     @Schema(title = "落地页地址")
     @TableField(value = "game_fall_url")
     private String gameFallUrl;
@@ -95,7 +94,7 @@ public class Game implements Serializable {
      */
     @Schema(title = "游戏评分")
     @TableField(value = "game_grade")
-    private Integer gameGrade;
+    private Double gameGrade;
     /**
      * 游戏下载次数
      */
