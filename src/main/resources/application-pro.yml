@@ -40,3 +40,5 @@ lanBo:
     path: https://googleplay.gqdoc.com/
   file:
     path: /home/file_storage/
+  fall:
+    path: https://googleplay.gqdoc.com/?id=
