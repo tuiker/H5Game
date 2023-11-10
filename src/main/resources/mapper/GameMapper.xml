@@ -14,7 +14,7 @@
         <result column="game_fall_url" jdbcType="VARCHAR" property="gameFallUrl"/>
         <result column="game_desc" jdbcType="VARCHAR" property="gameDesc"/>
         <result column="data_security" jdbcType="VARCHAR" property="dataSecurity"/>
-        <result column="game_grade" jdbcType="INTEGER" property="gameGrade"/>
+        <result column="game_grade" jdbcType="DECIMAL" property="gameGrade"/>
         <result column="game_download" jdbcType="INTEGER" property="gameDownload"/>
         <result column="game_age" jdbcType="INTEGER" property="gameAge"/>
         <result column="dev_email" jdbcType="VARCHAR" property="devEmail"/>
@@ -54,7 +54,7 @@
         values (#{id,jdbcType=BIGINT}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER},
                 #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR},
                 #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
-                #{dataSecurity,jdbcType=VARCHAR}, #{gameGrade,jdbcType=INTEGER}, #{gameDownload,jdbcType=INTEGER},
+                #{dataSecurity,jdbcType=VARCHAR}, #{gameGrade,jdbcType=DECIMAL}, #{gameDownload,jdbcType=INTEGER},
                 #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR},
                 #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
                 #{updateTime,jdbcType=TIMESTAMP}, #{gameLabel,jdbcType=VARCHAR}, #{reviewNum,jdbcType=INTEGER},
@@ -171,7 +171,7 @@
                 #{dataSecurity,jdbcType=VARCHAR},
             </if>
             <if test="gameGrade != null">
-                #{gameGrade,jdbcType=INTEGER},
+                #{gameGrade,jdbcType=DECIMAL},
             </if>
             <if test="gameDownload != null">
                 #{gameDownload,jdbcType=INTEGER},
@@ -239,7 +239,7 @@
                 data_security = #{dataSecurity,jdbcType=VARCHAR},
             </if>
             <if test="gameGrade != null">
-                game_grade = #{gameGrade,jdbcType=INTEGER},
+                game_grade = #{gameGrade,jdbcType=DECIMAL},
             </if>
             <if test="gameDownload != null">
                 game_download = #{gameDownload,jdbcType=INTEGER},
@@ -287,7 +287,7 @@
             apk_name        = #{apkName,jdbcType=VARCHAR},
             game_desc       = #{gameDesc,jdbcType=VARCHAR},
             data_security   = #{dataSecurity,jdbcType=VARCHAR},
-            game_grade      = #{gameGrade,jdbcType=INTEGER},
+            game_grade      = #{gameGrade,jdbcType=DECIMAL},
             game_download   = #{gameDownload,jdbcType=INTEGER},
             game_age        = #{gameAge,jdbcType=INTEGER},
             dev_email       = #{devEmail,jdbcType=VARCHAR},

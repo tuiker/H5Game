@@ -71,6 +71,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         if (mobileGameVo != null) {
             //加载评论
             MobileGameReviewDto grDto = new MobileGameReviewDto();
+            grDto.setGameId(dto.getGameId());
             grDto.setPage(dto.getPage());
             grDto.setPageSize(dto.getPageSize());
             Page<MobileGameReviewVo> reviewPage = gameReviewService.pageQuery(grDto);
@@ -122,7 +123,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      */
     public Game insert(Game game) {
         long gameId = getGameId();
-        game.setUpdateId(game.getUpdateId());
+        game.setUpdateId(game.getCreateId());
         game.setId(gameId);
         game.setApkName(getApkName(game.getGameUrl()));
         //生成落地页，注意环境不同，地址不一样
@@ -148,6 +149,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(StrUtil.isNotBlank(game.getDataSecurity()), Game::getDataSecurity, game.getDataSecurity())
                 .set(StrUtil.isNotBlank(game.getDevEmail()), Game::getDevEmail, game.getDevEmail())
                 .set(StrUtil.isNotBlank(game.getDevUrl()), Game::getDevUrl, game.getDevUrl())
+                .set(StrUtil.isNotBlank(game.getGameLabel()), Game::getGameLabel, game.getGameLabel())
                 .set(game.getUpdateId() > 0, Game::getUpdateId, game.getUpdateId())
                 .set(Game::getUpdateTime, LocalDateTime.now())
                 .set(game.getGameAge() != null, Game::getGameAge, game.getGameAge())
