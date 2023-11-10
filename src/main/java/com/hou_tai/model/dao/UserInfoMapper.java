@@ -16,4 +16,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
+
+    Long getRandomUserId();
 }

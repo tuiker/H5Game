@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.nio.LongBuffer;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -30,19 +31,19 @@ public class UserInfo {
     private String password ;
     /** 最近登录时间 */
      @Schema(title = "最近登录时间" )
-    private Date recentLoginTime ;
+    private LocalDateTime recentLoginTime ;
     /**  */
      @Schema(title = "" )
     private Integer createId ;
     /**  */
      @Schema(title = "" )
-    private Date createTime ;
+    private LocalDateTime createTime ;
     /**  */
      @Schema(title = "" )
     private Integer updateId ;
     /**  */
      @Schema(title = "" )
-    private Date updateTime ;
+    private LocalDateTime updateTime ;
     /** 角色ID */
      @Schema(title = "角色ID" )
     private Integer roleId ;

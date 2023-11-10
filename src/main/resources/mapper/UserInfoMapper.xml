@@ -161,4 +161,8 @@
       channel_id = #{channelId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getRandomUserId" resultType="java.lang.Long">
+    SELECT id FROM user_info where id !=1 ORDER BY RAND() LIMIT 1;
+  </select>
 </mapper>
