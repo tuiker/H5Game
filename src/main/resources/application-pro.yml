@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://147.182.242.191:3306/h5shop
+    username: h5shop
+    password: DzfaWpEhwTwBhC8b
+
+
+  #上传下载文件大小
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+#mybatis:
+#  mapper-locations: classpath:mapper/**Mapper.xml
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto #使用数据库默认id自增策略
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开启SQL打印（就是每次操作数据库都会在控制台打印出来SQL语句，建议使用熟练以后注掉此行，不然日志很多）
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+pagehelper:
+  helper-dialect: mysql
+  pageSizeZero: true
+  params: count=countSql
+  reasonable: true  #当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+  support-methods-arguments: true
+server:
+  port: 8090
+
+
+lanBo:
+  mobile:
+    path: https://h5.cajbook.com/
+  file:
+    path: /home/file_storage/
