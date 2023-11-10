@@ -30,6 +30,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
     public List<String> upload(MultipartFile[] files) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
         List<String> urlList = new ArrayList<>();
+        String bathPath="/home/file_storage/";
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             String saveDBPath = "";
@@ -52,23 +53,21 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 } else {
                     folderPath = "file/" + datePath;
                 }
-                String path = "/home/file_storage/" + folderPath;
+                String path = bathPath + folderPath;
                 //文件名 普通地址 命名方式:时间-数字-描述
                 String newFileName = sdf.format(new Date()) + "-" + (i + 1) + extension;
                 File targetFile = new File(path, newFileName);
                 if (!targetFile.exists()) targetFile.mkdirs();
                 try {
                     file.transferTo(targetFile.getAbsoluteFile()); //getPath 是个坑，一定要用绝对路径 getAbsoluteFile
-                    System.out.println("文件将要保存的路径：{}" + targetFile.getAbsoluteFile());
+                    System.out.println("文件实际保存的路径：{}" + targetFile.getAbsoluteFile());
                     saveDBPath = targetFile.getAbsoluteFile().getAbsolutePath();
                     //储存数据库文件名
-                    if(active!=null&&!active.equals("dev")){//非本地则替换路径
-                        //System.out.println(saveDBPath);
-                        saveDBPath = saveDBPath.replace("\\", "/").replaceAll("/home/file_storage",mobilePath);
-                        //System.out.println(saveDBPath);
+                    if(active!=null&&!active.equals("dev")){//非开发则替换路径
+                        saveDBPath = saveDBPath.replace("\\", "/")
+                                .replaceAll(bathPath,mobilePath);
                     }
                     urlList.add(saveDBPath);
-
                 } catch (Exception e) {
                 }
             }
