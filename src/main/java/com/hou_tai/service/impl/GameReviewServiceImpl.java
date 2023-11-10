@@ -111,6 +111,8 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
     public GameReview insert(GameReview gameReview) {
         gameReview.setUserId(userInfoService.getRandomUserId());//设置当前为用户
         gameReview.setReviewTime(LocalDateTime.now());
+        gameReview.setHelpNum(CommonNum.ZERO);
+        gameReview.setHaveReply(CommonNum.ZERO);
         this.save(gameReview);
         return gameReview;
     }
