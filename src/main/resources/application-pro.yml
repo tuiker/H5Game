@@ -37,6 +37,6 @@ server:
 
 lanBo:
   mobile:
-    path: https://h5.cajbook.com/
+    path: https://googleplay.gqdoc.com/
   file:
     path: /home/file_storage/
