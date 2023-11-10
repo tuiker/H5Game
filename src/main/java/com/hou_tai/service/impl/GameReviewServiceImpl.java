@@ -22,6 +22,7 @@ import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
 import com.hou_tai.response_vo.MobileGameReviewVo;
 import com.hou_tai.service.IGameReviewService;
+import com.hou_tai.service.IUserInfoService;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,9 @@ import java.util.List;
 public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameReview> implements IGameReviewService {
     @Resource
     private GameReviewMapper gameReviewMapper;
+
+    @Resource
+    private IUserInfoService userInfoService;
 
     @Override
     public Page<GameReviewPageVo> getReviewPage(PageDaoEntity pageDao) {
@@ -105,6 +109,7 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
      * @return 实例对象
      */
     public GameReview insert(GameReview gameReview) {
+        gameReview.setUserId(userInfoService.getRandomUserId());//设置当前为用户
         gameReview.setReviewTime(LocalDateTime.now());
         this.save(gameReview);
         return gameReview;
@@ -154,7 +159,7 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
         LambdaUpdateWrapper<GameReview> wrapper = new LambdaUpdateWrapper<GameReview>();
         wrapper.set(GameReview::getReplyContent, gameReview.getReplyContent())
                 .set(GameReview::getHaveReply, CommonNum.ONE)
-                .set(GameReview::getReplyUserId, gameReview.getReplyUserId())
+                .set(GameReview::getReplyUserId, gameReview.getReplyUserId()==null||gameReview.getReplyUserId()==0?CommonNum.ONE:gameReview.getReplyUserId())
                 //.set(GameReview::getReviewGrade,gameReview.getReviewGrade())
                 .set(GameReview::getReplyTime, LocalDateTime.now())
                 .eq(GameReview::getId, gameReview.getId());

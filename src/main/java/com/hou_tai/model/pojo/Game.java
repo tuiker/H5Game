@@ -1,12 +1,15 @@
 package com.hou_tai.model.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hou_tai.model.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @TableName("game")
 @Schema(title = "游戏实体")
-public class Game extends BaseEntity implements Serializable {
+public class Game implements Serializable {
 
     @Schema(title = "游戏ID")
     //@TableId(value = "id", type = IdType.AUTO)
@@ -49,7 +52,8 @@ public class Game extends BaseEntity implements Serializable {
     private String game_logo;
     @Schema(title = "落地页地址")
     @TableField(value = "game_fall_url")
-    private String gameFallUrl;;
+    private String gameFallUrl;
+    ;
     /**
      * 游戏主图
      */
@@ -125,10 +129,10 @@ public class Game extends BaseEntity implements Serializable {
     /**
      *
      */
-//    @TableField(value = "create_time", fill = FieldFill.INSERT) // 插入自动填充
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime createTime;
+    @TableField(value = "create_time", fill = FieldFill.INSERT) // 插入自动填充
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
     /**
      * 更新用户ID
      */
@@ -138,11 +142,11 @@ public class Game extends BaseEntity implements Serializable {
     /**
      *
      */
-//    @Schema(title = "游戏更新日期")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
-//    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
-//    @TableField(value = "update_time")
-//    private LocalDateTime updateTime;
+    @Schema(title = "游戏更新日期")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
+    @TableField(value = "update_time")
+    private LocalDateTime updateTime;
 
     @Schema(title = "游戏标签 用;分隔")
     @TableField(value = "game_label")
