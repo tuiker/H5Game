@@ -225,4 +225,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return list;
     }
 
+    public Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto){
+        //具体类型的实现在此处
+        return pageForMobileHome(dto);
+    }
+
 }

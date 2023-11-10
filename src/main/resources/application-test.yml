@@ -63,4 +63,4 @@ server:
   port: 8090
 
 mobile:
-  path: https://h5shop.cajbook.com
+  path: https://h5shop.cajbook.com/

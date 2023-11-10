@@ -91,7 +91,9 @@ public interface IGameService {
      * @return Page<GameVo>
      **/
     Page<MobileGameVo> pageForMobile(MobileGameDto dto);
-    
+
 
     List<MobileGameHomeVo> getHomeTypeList(MobileHomeGameDto dto);
+
+    Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto);
 }

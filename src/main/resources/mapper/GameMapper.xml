@@ -11,6 +11,7 @@
         <result column="game_background" jdbcType="VARCHAR" property="gameBackground"/>
         <result column="game_url" jdbcType="VARCHAR" property="gameUrl"/>
         <result column="apk_name" jdbcType="VARCHAR" property="apkName"/>
+        <result column="game_fall_url" jdbcType="VARCHAR" property="gameFallUrl"/>
         <result column="game_desc" jdbcType="VARCHAR" property="gameDesc"/>
         <result column="data_security" jdbcType="VARCHAR" property="dataSecurity"/>
         <result column="game_grade" jdbcType="INTEGER" property="gameGrade"/>
@@ -29,7 +30,7 @@
         id
         , game_name, game_type, language_id, game_logo, game_main_logo, game_background,
     game_url, game_desc, data_security, game_grade, game_download, game_age, dev_email, 
-    dev_url, create_id, create_time, update_id, update_time,game_label,review_num,apk_name
+    dev_url, create_id, create_time, update_id, update_time,game_label,review_num,apk_name,game_fall_url
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -84,7 +85,7 @@
                 game_background,
             </if>
             <if test="gameUrl != null">
-                game_url,apk_name
+                game_url
             </if>
             <if test="apkName != null">
                 apk_name,
