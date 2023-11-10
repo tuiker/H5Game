@@ -123,7 +123,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      */
     public Game insert(Game game) {
         long gameId = getGameId();
-        game.setUpdateId(game.getCreateId());
+        //game.setUpdateId(game.getCreateId());
         game.setId(gameId);
         game.setApkName(getApkName(game.getGameUrl()));
         //生成落地页，注意环境不同，地址不一样
@@ -150,7 +150,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(StrUtil.isNotBlank(game.getDevEmail()), Game::getDevEmail, game.getDevEmail())
                 .set(StrUtil.isNotBlank(game.getDevUrl()), Game::getDevUrl, game.getDevUrl())
                 .set(StrUtil.isNotBlank(game.getGameLabel()), Game::getGameLabel, game.getGameLabel())
-                .set(game.getUpdateId() > 0, Game::getUpdateId, game.getUpdateId())
+                //.set(game.getUpdateId() > 0, Game::getUpdateId, game.getUpdateId())
                 .set(Game::getUpdateTime, LocalDateTime.now())
                 .set(game.getGameAge() != null, Game::getGameAge, game.getGameAge())
                 .set(game.getReviewNum() != null, Game::getReviewNum, game.getReviewNum())
