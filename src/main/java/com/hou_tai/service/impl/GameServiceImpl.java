@@ -65,27 +65,35 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     }
 
     public MobileGameVo getVoById(MobileGameDto dto) {
-        MobileGameVo mobileGameVo = this.baseMapper.selectJoinOne(MobileGameVo.class, new MPJLambdaWrapper<Game>()
-                .selectAll(Game.class)
-                .select("gt.type_name,l.language_name")
-                .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
-                .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
-                .eq(Game::getId, dto.getGameId()));
-        if (mobileGameVo != null) {
-            //加载评论
-            MobileGameReviewDto grDto = new MobileGameReviewDto();
-            grDto.setGameId(dto.getGameId());
-            grDto.setPage(dto.getPage());
-            grDto.setPageSize(dto.getPageSize());
-            Page<MobileGameReviewVo> reviewPage = gameReviewService.pageQuery(grDto);
-            if (reviewPage.getTotal() > 0) {
-                List<MobileGameReviewVo> grList = reviewPage.getRecords();
-                //回复数据
-                mobileGameVo.setGameReviewList(grList);
-            }
+        Boolean result=this.baseMapper.exists(new LambdaQueryWrapper<Game>().eq(Game::getApkName,dto.getGameApkName()));
+        if(!result){
+            return null;
+        }else{
+            MobileGameVo mobileGameVo = this.baseMapper.selectJoinOne(MobileGameVo.class, new MPJLambdaWrapper<Game>()
+                    .selectAll(Game.class)
+                    .select("gt.type_name,l.language_name")
+                    .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                    .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
+                    //.eq(Game::getId, dto.getGameId())
+                    .eq(Game::getApkName, dto.getGameApkName()));
+            if (mobileGameVo != null) {
+                //加载评论
+                MobileGameReviewDto grDto = new MobileGameReviewDto();
+                grDto.setGameId(dto.getGameId());
+                grDto.setPage(dto.getPage());
+                grDto.setPageSize(dto.getPageSize());
+                Page<MobileGameReviewVo> reviewPage = gameReviewService.pageQuery(grDto);
+                if (reviewPage.getTotal() > 0) {
+                    List<MobileGameReviewVo> grList = reviewPage.getRecords();
+                    //回复数据
+                    mobileGameVo.setGameReviewList(grList);
+                }
 
+            }
+            return mobileGameVo;
         }
-        return mobileGameVo;
+
+
     }
 
     public GameVo getVoById(Long id) {

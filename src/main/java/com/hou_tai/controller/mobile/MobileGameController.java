@@ -2,6 +2,7 @@ package com.hou_tai.controller.mobile;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.enums.HomeEnums;
+import com.hou_tai.enums.ResultCode;
 import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.dto.MobileHomeGameDto;
@@ -66,7 +67,8 @@ public class MobileGameController {
     @PostMapping("/getVoById")
     @ApiResponse(responseCode = "200", description = "查找成功")
     public ResultVO<MobileGameVo> getVoById(@RequestBody MobileGameDto dto){
-        return ResponseData.success(gameService.getVoById(dto));
+        MobileGameVo vo=gameService.getVoById(dto);
+        return vo!=null?ResponseData.success(vo):ResponseData.error("参数错误,请检查数据",ResultCode.FAILED);
     }
 
     @Operation(summary = "游戏评论列表")
