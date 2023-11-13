@@ -200,10 +200,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     }
 
 
-    public Page<MobileGameVo> pageForMobile(MobileGameDto dto) {
-        Page<MobileGameVo> pagin = this.baseMapper.selectJoinPage(
+    public Page<MobileGameHomeVo> pageForMobile(MobileGameDto dto) {
+        Page<MobileGameHomeVo> pagin = this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(), dto.getPageSize()),
-                MobileGameVo.class, new MPJLambdaWrapper<Game>()
+                MobileGameHomeVo.class, new MPJLambdaWrapper<Game>()
                         .select(Game::getId, Game::getGameName, Game::getGameLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
@@ -215,10 +215,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return pagin;
     }
 
-    public Page<MobileGameVo> pageForMobileHome(MobileHomeGameDto dto) {
-        Page<MobileGameVo> pagin = this.baseMapper.selectJoinPage(
+    public Page<MobileGameHomeVo> pageForMobileHome(MobileHomeGameDto dto) {
+        Page<MobileGameHomeVo> pagin = this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(), dto.getPageSize()),
-                MobileGameVo.class, new MPJLambdaWrapper<Game>()
+                MobileGameHomeVo.class, new MPJLambdaWrapper<Game>()
                         .select(Game::getId, Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
@@ -229,23 +229,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return pagin;
     }
 
-    public List<MobileGameHomeVo> getHomeTypeList(MobileHomeGameDto dto) {
-        if (dto.getHomeType() == null) {
-            dto.setHomeType(CommonNum.ZERO);
-        }
-        //此处暂时用全数据
-        Page<MobileGameVo> page = pageForMobileHome(dto);
-        List<MobileGameHomeVo> list = new ArrayList<>();
-        MobileHomeGameDto gameDto = dto;
-        //如果搜索带参了 则只传对应的 其他的不传
-        Stream.of(HomeEnums.values()).forEach(e -> {
-            list.add(MobileGameHomeVo.builder().gameVoList((gameDto.getHomeType() == CommonNum.ZERO || e.getCode() == gameDto.getHomeType())
-                    ? page.getRecords() : null).homeType(e.getCode()).build());
-        });
-        return list;
-    }
-
-    public Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto) {
+    public Page<MobileGameHomeVo> pageForHomeType(MobileHomeGameDto dto) {
         //具体类型的实现在此处
         return pageForMobileHome(dto);
     }
