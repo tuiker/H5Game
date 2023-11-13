@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.hou_tai.enums.HomeEnums;
 import com.hou_tai.final_common.CommonNum;
-import com.hou_tai.final_common.CommonString;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileGameDto;
@@ -37,10 +35,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @ClassName: GameServiceImpl
@@ -65,9 +61,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     }
 
     public MobileGameVo getVoById(MobileGameDto dto) {
-        Boolean result=this.baseMapper.exists(new LambdaQueryWrapper<Game>().eq(Game::getApkName,dto.getGameApkName()));
-        if(result){
-            MobileGameVo mobileGameVo=null;
+        Boolean result = this.baseMapper.exists(new LambdaQueryWrapper<Game>().eq(Game::getApkName, dto.getGameApkName()));
+        if (result) {
+            MobileGameVo mobileGameVo = null;
             List<MobileGameVo> mobileGameVoList = this.baseMapper.selectJoinList(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                     .selectAll(Game.class)
                     .select("gt.type_name,l.language_name")
@@ -76,7 +72,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                     //.eq(Game::getId, dto.getGameId())
                     .eq(Game::getApkName, dto.getGameApkName()));
             if (CollectionUtil.isNotEmpty(mobileGameVoList)) {
-                mobileGameVo=mobileGameVoList.get(0);
+                mobileGameVo = mobileGameVoList.get(0);
                 //加载评论
                 MobileGameReviewDto grDto = new MobileGameReviewDto();
                 grDto.setGameId(dto.getGameId());
@@ -91,7 +87,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             }
             return mobileGameVo;
         }
-         return null;
+        return null;
     }
 
     public GameVo getVoById(Long id) {
@@ -119,7 +115,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
                         .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
-                        .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType));
+                        .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime));
         //3. 返回结果
         return pagin;
     }
@@ -134,10 +131,11 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         long gameId = getGameId();
         //game.setUpdateId(game.getCreateId());
         game.setId(gameId);
-        String apkName=getApkName(game.getGameUrl());
+        String apkName = getApkName(game.getGameUrl());
         game.setApkName(apkName);
         //生成落地页，注意环境不同，地址不一样
         game.setGameFallUrl(fallPath + apkName);
+        game.setCreateTime(LocalDateTime.now());
         this.save(game);
         return game;
     }
@@ -211,12 +209,14 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 new Page<>(dto.getPage(), dto.getPageSize()),
                 MobileGameHomeVo.class,
                 new MPJLambdaWrapper<Game>()
-                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType,Game::getApkName)
+                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType, Game::getApkName)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime)
                         .eq(dto.getGameType() != null && dto.getGameType() > 0, Game::getGameType, dto.getGameType())
-                        .notIn(dto.getGameId() != null, Game::getId, dto.getGameId())
+                        .notIn(dto.getGameId() != null, Game::getId, dto.getGameId()
+                        )
         );
         //3. 返回结果
         return pagin;
@@ -226,10 +226,11 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         Page<MobileGameHomeVo> pagin = this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(), dto.getPageSize()), MobileGameHomeVo.class,
                 new MPJLambdaWrapper<Game>()
-                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType,Game::getApkName)
+                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType, Game::getApkName)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime)
                         .eq(dto.getLanguageId() != null && dto.getLanguageId() > 0, Game::getLanguageId, dto.getLanguageId())
         );
         //3. 返回结果
@@ -262,8 +263,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         ApkFile apkFile;
         ApkMeta apkMeta;
         try {
-            if(active!=null&&!active.equals("dev")){//非开发则替换路径
-                apkUrl = apkUrl.replace("\\", "/").replaceAll(mobilePath,filePath);
+            if (active != null && !active.equals("dev")) {//非开发则替换路径
+                apkUrl = apkUrl.replace("\\", "/").replaceAll(mobilePath, filePath);
             }
             apkFile = new ApkFile(new File(apkUrl));
             apkMeta = apkFile.getApkMeta();
