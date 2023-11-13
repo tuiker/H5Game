@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Select;
 public interface GameReviewMapper extends MPJBaseMapper<GameReview> {
     String pageListSql = "SELECT ga.id gameId,ga.game_name gameName,gr.review_content reviewContent,gr.reply_content replyContent," +
             "gr.review_grade reviewGrade,gr.review_time reviewTime,gr.have_reply haveReply,gr.id id  "
-            + "FROM game_review gr LEFT JOIN game ga ON gr.game_id = ga.id";
+            + "FROM game_review gr LEFT JOIN game ga ON gr.game_id = ga.id order by gr.review_time desc";
 
     /**
      * @Description 连表分页查询 游戏评论列表
