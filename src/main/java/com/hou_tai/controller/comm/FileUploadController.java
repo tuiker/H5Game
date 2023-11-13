@@ -40,7 +40,9 @@ public class FileUploadController {
         if (files == null || (files.length == 1 && files[0].getSize() == 0)) {
             return ResponseData.error("文件为空", ResultCode.FAILED);
         }
+        log.info("文件上传开始>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         List<String> map = fileUploadService.upload(files);
+        log.info("文件上传结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         //System.out.println(map);
         return ResponseData.success(map);
 
