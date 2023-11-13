@@ -38,6 +38,7 @@ public class FileUploadController {
     public ResultVO<Object> uploadFile(@RequestPart("files") MultipartFile[] files) //1返回图片相对路径 2返回图片绝对路径
     {
         if (files == null || (files.length == 1 && files[0].getSize() == 0)) {
+            log.info("文件上传失败**************");
             return ResponseData.error("文件为空", ResultCode.FAILED);
         }
         log.info("文件上传开始>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
