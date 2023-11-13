@@ -1,16 +1,14 @@
 package com.hou_tai.controller.pc;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.base.PageDaoEntity;
-import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IGameReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/pc/game/review")
 @Tag(name = "后台端游戏评论控制层")
+@Slf4j
 public class GameReviewController {
 
     @Resource
