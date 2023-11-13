@@ -25,4 +25,7 @@ public class MobileGameDto  extends PageDaoEntity{
     @Schema(title = "游戏类型",description = "当前游戏类型,则为相似游戏")
     private Integer gameType;
 
+    @Schema(title = "游戏包名",description = "当前游戏游戏包名,进行排除")
+    private String gameApkName;
+
 }

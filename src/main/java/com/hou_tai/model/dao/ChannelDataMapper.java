@@ -1,11 +1,12 @@
 package com.hou_tai.model.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hou_tai.model.pojo.ChannelData;
 import com.hou_tai.response_vo.DataOfTimeVo;
 
 import java.util.List;
 
-public interface ChannelDataMapper {
+public interface ChannelDataMapper extends BaseMapper<ChannelData> {
     /**
      * @Description 获取今天请求次数
      * @Author GaoLu

@@ -90,10 +90,8 @@ public interface IGameService {
      * @Param  * @param dto
      * @return Page<GameVo>
      **/
-    Page<MobileGameVo> pageForMobile(MobileGameDto dto);
+    Page<MobileGameHomeVo> pageForMobile(MobileGameDto dto);
 
 
-    List<MobileGameHomeVo> getHomeTypeList(MobileHomeGameDto dto);
-
-    Page<MobileGameVo> pageForHomeType(MobileHomeGameDto dto);
+    Page<MobileGameHomeVo> pageForHomeType(MobileHomeGameDto dto);
 }
