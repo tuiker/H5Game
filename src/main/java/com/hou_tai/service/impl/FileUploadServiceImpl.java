@@ -40,6 +40,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             String saveDBPath = "";
             if (file != null && file.getSize() > 0) {
                 String fileName = file.getOriginalFilename();
+                log.info("上传文件名：*********>>>>>>>>>>>" + fileName);
                 //根据文件类型储存在不同的文件夹下
                 String extension = getSuffix(fileName);//文件格式
                 if ((".pjpeg").equals(extension)) {//图片扩展名=转换
