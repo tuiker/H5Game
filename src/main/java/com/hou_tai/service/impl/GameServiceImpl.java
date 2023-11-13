@@ -119,7 +119,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
                         .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
-                        .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType));
+                        .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime))
+                ;
         //3. 返回结果
         return pagin;
     }
@@ -215,8 +217,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime)
                         .eq(dto.getGameType() != null && dto.getGameType() > 0, Game::getGameType, dto.getGameType())
-                        .notIn(dto.getGameId() != null, Game::getId, dto.getGameId())
+                        .notIn(dto.getGameId() != null, Game::getId, dto.getGameId()
+                                )
         );
         //3. 返回结果
         return pagin;
@@ -230,6 +234,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
+                        .orderByDesc(Game::getCreateTime)
                         .eq(dto.getLanguageId() != null && dto.getLanguageId() > 0, Game::getLanguageId, dto.getLanguageId())
         );
         //3. 返回结果
