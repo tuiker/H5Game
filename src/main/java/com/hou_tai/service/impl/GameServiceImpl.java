@@ -66,17 +66,17 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
 
     public MobileGameVo getVoById(MobileGameDto dto) {
         Boolean result=this.baseMapper.exists(new LambdaQueryWrapper<Game>().eq(Game::getApkName,dto.getGameApkName()));
-        if(!result){
-            return null;
-        }else{
-            MobileGameVo mobileGameVo = this.baseMapper.selectJoinOne(MobileGameVo.class, new MPJLambdaWrapper<Game>()
+        if(result){
+            MobileGameVo mobileGameVo=null;
+            List<MobileGameVo> mobileGameVoList = this.baseMapper.selectJoinList(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                     .selectAll(Game.class)
                     .select("gt.type_name,l.language_name")
                     .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
                     .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                     //.eq(Game::getId, dto.getGameId())
                     .eq(Game::getApkName, dto.getGameApkName()));
-            if (mobileGameVo != null) {
+            if (CollectionUtil.isNotEmpty(mobileGameVoList)) {
+                mobileGameVo=mobileGameVoList.get(0);
                 //加载评论
                 MobileGameReviewDto grDto = new MobileGameReviewDto();
                 grDto.setGameId(dto.getGameId());
@@ -88,12 +88,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                     //回复数据
                     mobileGameVo.setGameReviewList(grList);
                 }
-
             }
             return mobileGameVo;
         }
-
-
+         return null;
     }
 
     public GameVo getVoById(Long id) {
@@ -208,12 +206,12 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         return Long.valueOf(gameId);
     }
 
-
     public Page<MobileGameHomeVo> pageForMobile(MobileGameDto dto) {
         Page<MobileGameHomeVo> pagin = this.baseMapper.selectJoinPage(
                 new Page<>(dto.getPage(), dto.getPageSize()),
-                MobileGameHomeVo.class, new MPJLambdaWrapper<Game>()
-                        .select(Game::getId, Game::getGameName, Game::getGameLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType)
+                MobileGameHomeVo.class,
+                new MPJLambdaWrapper<Game>()
+                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType,Game::getApkName)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
@@ -226,9 +224,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
 
     public Page<MobileGameHomeVo> pageForMobileHome(MobileHomeGameDto dto) {
         Page<MobileGameHomeVo> pagin = this.baseMapper.selectJoinPage(
-                new Page<>(dto.getPage(), dto.getPageSize()),
-                MobileGameHomeVo.class, new MPJLambdaWrapper<Game>()
-                        .select(Game::getId, Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType)
+                new Page<>(dto.getPage(), dto.getPageSize()), MobileGameHomeVo.class,
+                new MPJLambdaWrapper<Game>()
+                        .select(Game::getGameName, Game::getGameLogo, Game::getGameMainLogo, Game::getGameGrade, Game::getGameLabel, Game::getGameType,Game::getApkName)
                         .select("l.language_name,gt.type_name")
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)

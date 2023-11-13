@@ -4,9 +4,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hou_tai.model.base.PageDaoEntity;
+import com.hou_tai.model.pojo.Game;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,6 +22,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(title = "游戏首页出参")
 public class MobileGameHomeVo  implements Serializable {
 
@@ -74,6 +79,9 @@ public class MobileGameHomeVo  implements Serializable {
     @TableField(value = "game_label")
     private String gameLabel;
 
+    @Schema(title = "游戏")
+    @TableField(value = "apk_name")
+    private String apkName;
 
 
 }
