@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://147.182.242.191:3306/h5shop
-    username: ubuntu
-    password: THCN7GzJAKjwsCrx
+    username: h5shop
+    password: HZ3m3Djxn=e9kD6Dv0
 
 
   #上传下载文件大小
