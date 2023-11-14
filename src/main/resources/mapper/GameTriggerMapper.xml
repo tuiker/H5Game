@@ -23,4 +23,10 @@
         GROUP BY
             create_time;
     </select>
+    <select id="getCountAll" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM game_trigger
+        WHERE type = #{type,jdbcType=INTEGER}
+        and game_id =#{gameId}
+    </select>
 </mapper>

@@ -95,6 +95,7 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
                 .leftJoin(UserInfo.class,"u", UserInfo::getId,GameReview::getUserId)
                 .leftJoin(Game.class,"g", Game::getId,GameReview::getGameId)
                 .leftJoin(UserInfo.class,"ru", UserInfo::getId,GameReview::getReplyUserId)
+                .orderByDesc(GameReview::getReviewTime)
                 .eq(dto.getGameId()!=null&&dto.getGameId()>0,GameReview::getGameId,dto.getGameId())
                 .eq(dto.getReviewGrade()!=null&&dto.getReviewGrade()>0,GameReview::getReviewGrade,dto.getReviewGrade())
         );

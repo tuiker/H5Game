@@ -11,10 +11,10 @@ public interface GameTriggerMapper extends BaseMapper<GameTrigger> {
      * @Description
      * @Author GaoLu
      * @Date 2023/11/8
-     * @Return 条数
+     * @Return 今日下载、打开数据
      * @Param type 数据类型 2下载3打开
      **/
-    Integer getCountByToday(int type,long gameId);
+    Integer getCountByToday(int type);
 
     /**
      * @Description 获取近七日数据
@@ -24,4 +24,14 @@ public interface GameTriggerMapper extends BaseMapper<GameTrigger> {
      * @Param type
      **/
     List<DataOfTimeVo> getNumForSevenDay(int type);
+
+    /**
+     * @Description 根据游戏ID找到对应数据
+     * @Author GaoLu
+     * @Date 2023/11/14
+     * @Return
+     * @Param type 2下载，3打开
+     * @Param gameId 游戏ID
+     **/
+    Integer getCountAll(int type, long gameId);
 }
