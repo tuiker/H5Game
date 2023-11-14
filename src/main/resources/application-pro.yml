@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://147.182.242.191:3306/h5shop
     username: ubuntu
-    password:
+    password: THCN7GzJAKjwsCrx
 
 
   #上传下载文件大小
