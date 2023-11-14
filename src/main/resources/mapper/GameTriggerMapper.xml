@@ -21,7 +21,7 @@
             , INTERVAL 7 DAY ) &lt;= date ( create_time )
           AND type = #{type,jdbcType=INTEGER}
         GROUP BY
-            create_time;
+            time
     </select>
     <select id="getCountAll" resultType="java.lang.Integer">
         SELECT COUNT(1)
