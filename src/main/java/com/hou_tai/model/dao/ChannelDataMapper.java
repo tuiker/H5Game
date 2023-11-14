@@ -13,14 +13,23 @@ public interface ChannelDataMapper extends BaseMapper<ChannelData> {
      * @Date 2023/11/8
      * @Return 总数
      **/
-    Integer getCountByToday(long gameId);
+    Integer getCountByToday();
+
+    /**
+     * @Description 第三方渠道游戏请求数据
+     * @Author GaoLu
+     * @Date 2023/11/14
+     * @Return
+     * @Param gameId 游戏ID
+     **/
+    Integer getCountAll(long gameId);
 
     /**
      * @Description 7日内时间数据
      * @Author GaoLu
-     * @Date  2023/11/8
+     * @Date 2023/11/8
      * @Return
-    **/
+     **/
     List<DataOfTimeVo> getNumForSevenDay();
 
     int deleteByPrimaryKey(Integer id);

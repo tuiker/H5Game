@@ -34,6 +34,9 @@
         WHERE
             DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date ( record_time );
     </select>
+    <select id="getCountAll" resultType="java.lang.Integer">
+        SELECT SUM(request_data) FROM channel_data WHERE game_id=#{gameId,jdbcType=INTEGER}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from channel_data

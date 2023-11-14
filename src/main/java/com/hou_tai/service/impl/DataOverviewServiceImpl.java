@@ -35,10 +35,10 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
     @Override
     public DataBoardVo getAllStates() {
         DataBoardVo dataBoardVo = new DataBoardVo();
-        Integer requestNum=channelDataMapper.getCountByToday(CommonNum.ZERO);
+        Integer requestNum=channelDataMapper.getCountByToday();
         dataBoardVo.setTodayRequestNum(requestNum==null?0:requestNum);
-        dataBoardVo.setTodayDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO, CommonNum.ZERO));
-        dataBoardVo.setTodayOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE, CommonNum.ZERO));
+        dataBoardVo.setTodayDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO));
+        dataBoardVo.setTodayOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE));
         dataBoardVo.setRequestDataOfTime(channelDataMapper.getNumForSevenDay());
         dataBoardVo.setDownloadDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.TWO));
         dataBoardVo.setOpenDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.THREE));
@@ -52,10 +52,10 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
                 gameGeneralizeVo.setGameType(GameTypeEnums.getValue(game.getGameType()));
                 gameGeneralizeVo.setGameLanguage(LanguageTypeEnum.getValue(game.getLanguageId()));
                 long gameId = game.getId();
-                Integer requestNum2=channelDataMapper.getCountByToday(CommonNum.ZERO);
-                gameGeneralizeVo.setRequestNum(requestNum2==null?0:requestNum);
-                gameGeneralizeVo.setDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO, gameId));
-                gameGeneralizeVo.setOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE, gameId));
+                Integer requestNum2=channelDataMapper.getCountAll(gameId);
+                gameGeneralizeVo.setRequestNum(requestNum2==null?0:requestNum2);
+                gameGeneralizeVo.setDownloadNum(gameTriggerMapper.getCountAll(CommonNum.TWO, gameId));
+                gameGeneralizeVo.setOpenNum(gameTriggerMapper.getCountAll(CommonNum.THREE, gameId));
                 list.add(gameGeneralizeVo);
             });
         }
