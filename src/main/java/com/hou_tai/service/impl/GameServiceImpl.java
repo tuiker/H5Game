@@ -147,12 +147,16 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     public Game update(Game game) {
+        String url = game.getGameUrl();
+        String apkName = getApkName(url);
         LambdaUpdateWrapper<Game> wrapper = new LambdaUpdateWrapper<Game>();
         wrapper.set(StrUtil.isNotBlank(game.getGameName()), Game::getGameName, game.getGameName())
                 .set(StrUtil.isNotBlank(game.getGameLogo()), Game::getGameLogo, game.getGameLogo())
                 .set(StrUtil.isNotBlank(game.getGameMainLogo()), Game::getGameMainLogo, game.getGameMainLogo())
                 .set(StrUtil.isNotBlank(game.getGameBackground()), Game::getGameBackground, game.getGameBackground())
-                .set(StrUtil.isNotBlank(game.getGameUrl()), Game::getGameUrl, game.getGameUrl())
+                .set(Game::getGameUrl, url)
+                .set(Game::getApkName, apkName)
+                .set(Game::getGameFallUrl, fallPath + apkName)
                 .set(StrUtil.isNotBlank(game.getGameDesc()), Game::getGameDesc, game.getGameDesc())
                 .set(StrUtil.isNotBlank(game.getDataSecurity()), Game::getDataSecurity, game.getDataSecurity())
                 .set(StrUtil.isNotBlank(game.getDevEmail()), Game::getDevEmail, game.getDevEmail())
@@ -164,7 +168,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(game.getReviewNum() != null, Game::getReviewNum, game.getReviewNum())
                 .set(game.getGameGrade() != null, Game::getGameGrade, game.getGameGrade())
                 .set(game.getGameDownload() != null, Game::getGameDownload, game.getGameDownload())
+                .set(game.getUpdateTime() != null, Game::getUpdateTime, game.getUpdateTime())
                 .set(game.getUpdateTime() != null, Game::getUpdateTime, game.getUpdateTime());
+
         //2. 设置主键，并更新
         wrapper.eq(Game::getId, game.getId());
         this.update(wrapper);
