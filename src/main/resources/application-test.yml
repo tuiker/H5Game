@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://65.49.215.185:3306/h5shop
     username: h5shop
-    password: DzfaWpEhwTwBhC8b
+    password: THCN7GzJAKjwsCrx
 
   # mail邮箱
   mail:
