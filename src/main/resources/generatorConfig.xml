@@ -53,7 +53,7 @@
                 enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
          </table>-->
-        <table tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false"
+        <table tableName="channel_data" domainObjectName="ChannelData" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
