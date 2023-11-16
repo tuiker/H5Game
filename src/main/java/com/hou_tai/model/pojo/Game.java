@@ -155,5 +155,8 @@ public class Game implements Serializable {
     @TableField(value = "review_num")
     private Integer reviewNum;
 
+    @Schema(title = "逻辑删除标识，1：已删除，0：未删除")
+    @TableField(value = "deleted")
+    private Integer deleted;
 
 }
