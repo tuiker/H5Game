@@ -7,9 +7,6 @@
         FROM game_trigger
         WHERE TO_DAYS(create_time) = TO_DAYS(NOW())
           AND type = #{type,jdbcType=INTEGER}
-        <if test="gameId !=null and gameId !=0">
-            and game_id =#{gameId}
-        </if>
     </select>
     <select id="getNumForSevenDay" resultType="com.hou_tai.response_vo.DataOfTimeVo">
         SELECT COUNT(1) num,
