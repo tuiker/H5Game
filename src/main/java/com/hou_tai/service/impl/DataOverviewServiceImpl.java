@@ -39,9 +39,9 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
         log.info("今日请求数据：》》》》》》"+num1);
         log.info("今日下载数据：》》》》》》"+num2);
         log.info("今日打开数据：》》》》》》"+num3);
-        dataBoardVo.setTodayRequestNum(num1);
-        dataBoardVo.setTodayDownloadNum(num2);
-        dataBoardVo.setTodayOpenNum(num3);
+        dataBoardVo.setTodayRequestNum(gameTriggerMapper.getCountByToday(CommonNum.ONE));
+        dataBoardVo.setTodayDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO));
+        dataBoardVo.setTodayOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE));
         dataBoardVo.setRequestDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.ONE));
         dataBoardVo.setDownloadDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.TWO));
         dataBoardVo.setOpenDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.THREE));
