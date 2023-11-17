@@ -141,6 +141,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         //生成落地页，注意环境不同，地址不一样
         game.setGameFallUrl(fallPath + apkName);
         game.setCreateTime(LocalDateTime.now());
+        game.setUpdateTime(LocalDateTime.now());
         this.save(game);
         return game;
     }
