@@ -23,6 +23,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_id" jdbcType="BIGINT" property="updateId"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="game_update_time" jdbcType="TIMESTAMP" property="gameUpdateTime"/>
         <result column="game_label" jdbcType="VARCHAR" property="gameLabel"/>
         <result column="review_num" jdbcType="INTEGER" property="reviewNum"/>
     </resultMap>
@@ -31,6 +32,7 @@
         , game_name, game_type, language_id, game_logo, game_main_logo, game_background,
     game_url, game_desc, data_security, game_grade, game_download, game_age, dev_email, 
     dev_url, create_id, create_time, update_id, update_time,game_label,review_num,apk_name,game_fall_url
+            ,game_update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -50,7 +52,7 @@
                           data_security, game_grade, game_download,
                           game_age, dev_email, dev_url,
                           create_id, create_time, update_id,
-                          update_time, game_label, review_num, apk_name,game_fall_url)
+                          update_time, game_label, review_num, apk_name,game_fall_url,game_update_time)
         values (#{id,jdbcType=BIGINT}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER},
                 #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR},
                 #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
@@ -58,7 +60,7 @@
                 #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR},
                 #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
                 #{updateTime,jdbcType=TIMESTAMP}, #{gameLabel,jdbcType=VARCHAR}, #{reviewNum,jdbcType=INTEGER},
-                #{apkName,jdbcType=VARCHAR},#{gameFallUrl,jdbcType=VARCHAR})
+                #{apkName,jdbcType=VARCHAR},#{gameFallUrl,jdbcType=VARCHAR},#{gameUpdateTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.Game">
         insert into game
@@ -132,6 +134,10 @@
             <if test="reviewNum != null">
                 review_num,
             </if>
+            <if test="gameUpdateTime != null">
+                game_update_time,
+            </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -203,6 +209,9 @@
             <if test="reviewNum != null">
                 #{reviewNum,jdbcType=INTEGER},
             </if>
+            <if test="gameUpdateTime != null">
+                #{gameUpdateTime,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.hou_tai.model.pojo.Game">
@@ -271,6 +280,10 @@
             <if test="reviewNum != null">
                 review_num=#{reviewNum,jdbcType=INTEGER},
             </if>
+            <if test="game_update_time != null">
+                game_update_time = #{gameUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -295,6 +308,7 @@
             create_time     = #{createTime,jdbcType=TIMESTAMP},
             update_id       = #{updateId,jdbcType=BIGINT},
             update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            game_update_time= #{gameUpdateTime,jdbcType=TIMESTAMP},
             game_label      = #{gameLabel,jdbcType=VARCHAR},
             review_num      = #{reviewNum,jdbcType=INTEGER}
         where id = #{id,jdbcType=BIGINT}
