@@ -13,16 +13,14 @@ import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.dto.MobileHomeGameDto;
-import com.hou_tai.model.pojo.Game;
-import com.hou_tai.model.pojo.GameType;
-import com.hou_tai.model.pojo.Language;
-import com.hou_tai.model.pojo.UserInfo;
+import com.hou_tai.model.pojo.*;
 import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.response_vo.MobileGameHomeVo;
 import com.hou_tai.response_vo.MobileGameReviewVo;
 import com.hou_tai.response_vo.MobileGameVo;
 import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
+import com.hou_tai.service.IGameTriggerService;
 import com.hou_tai.service.IReviewReplyService;
 import com.hou_tai.util.BeanUtil;
 import com.hou_tai.util.SystemNumUtil;
@@ -49,6 +47,9 @@ import java.util.List;
 public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IGameService {
     @Resource
     IGameReviewService gameReviewService;
+
+    @Resource
+    IGameTriggerService gameTriggerService;
 
     @Resource
     IReviewReplyService reviewReplyService;
@@ -85,6 +86,12 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                     mobileGameVo.setGameReviewList(grList);
                 }
             }
+            //更新请求数据
+            GameTrigger gameTrigger = new GameTrigger();
+            gameTrigger.setCreateTime(LocalDateTime.now());
+            gameTrigger.setType(CommonNum.ONE);
+            gameTrigger.setGameId(dto.getGameId());
+            gameTriggerService.insert(gameTrigger);
             return mobileGameVo;
         }
         return null;
