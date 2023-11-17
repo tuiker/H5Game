@@ -87,7 +87,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             GameTrigger gameTrigger = new GameTrigger();
             gameTrigger.setCreateTime(LocalDateTime.now());
             gameTrigger.setType(CommonNum.ONE);
-            gameTrigger.setGameId(dto.getGameId());
+            gameTrigger.setGameId(mobileGameVo.getId());
             gameTriggerService.insert(gameTrigger);
             return mobileGameVo;
         }

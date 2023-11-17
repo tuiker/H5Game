@@ -1,7 +1,6 @@
 package com.hou_tai.response_vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hou_tai.model.pojo.Game;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,15 +18,19 @@ import java.util.List;
  * @Version: 1.0
  **/
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Schema(title = "移动端游戏输出")
 public class MobileGameVo extends Game {
+    //获取游戏ID需要
+    private Long id;
 
     @Schema(title = "游戏类型名称")
-    private String typeName ;
-    /** 游戏语言ID */
+    private String typeName;
+    /**
+     * 游戏语言ID
+     */
     @Schema(title = "游戏语言")
-    private String languageName ;
+    private String languageName;
 
     @Schema(title = "游戏评论集合")
     List<MobileGameReviewVo> gameReviewList;
@@ -40,6 +43,6 @@ public class MobileGameVo extends Game {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JSONField(format = "yyyy-MM-dd")
-   // @TableField(value = "create_time")
+    // @TableField(value = "create_time")
     private LocalDateTime createTime;
 }
