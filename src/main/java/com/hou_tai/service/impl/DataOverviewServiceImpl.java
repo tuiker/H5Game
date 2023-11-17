@@ -11,6 +11,7 @@ import com.hou_tai.response_vo.DataBoardVo;
 import com.hou_tai.response_vo.GameGeneralizeVo;
 import com.hou_tai.service.IDataOverviewService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
  * @Date:2023-10-18 13:41
  */
 @Service
+@Slf4j
 public class DataOverviewServiceImpl implements IDataOverviewService {
     @Resource
     private GameTriggerMapper gameTriggerMapper;
@@ -31,9 +33,15 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
     @Override
     public DataBoardVo getAllStates() {
         DataBoardVo dataBoardVo = new DataBoardVo();
-        dataBoardVo.setTodayRequestNum(gameTriggerMapper.getCountByToday(CommonNum.ONE));
-        dataBoardVo.setTodayDownloadNum(gameTriggerMapper.getCountByToday(CommonNum.TWO));
-        dataBoardVo.setTodayOpenNum(gameTriggerMapper.getCountByToday(CommonNum.THREE));
+        int num1=gameTriggerMapper.getCountByToday(CommonNum.ONE);
+        int num2=gameTriggerMapper.getCountByToday(CommonNum.TWO);
+        int num3=gameTriggerMapper.getCountByToday(CommonNum.THREE);
+        log.info("今日请求数据：》》》》》》"+num1);
+        log.info("今日下载数据：》》》》》》"+num2);
+        log.info("今日打开数据：》》》》》》"+num3);
+        dataBoardVo.setTodayRequestNum(num1);
+        dataBoardVo.setTodayDownloadNum(num2);
+        dataBoardVo.setTodayOpenNum(num3);
         dataBoardVo.setRequestDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.ONE));
         dataBoardVo.setDownloadDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.TWO));
         dataBoardVo.setOpenDataOfTime(gameTriggerMapper.getNumForSevenDay(CommonNum.THREE));
