@@ -56,10 +56,12 @@ CREATE TABLE `game`  (
                          `game_age` int NULL DEFAULT 0 COMMENT '游戏适合年龄',
                          `dev_email` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '开发者邮箱',
                          `dev_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '开发者地址',
+                         `game_update_time` datetime DEFAULT NULL COMMENT '游戏更新日期',
                          `create_id` bigint NOT NULL COMMENT '创建用户ID',
                          `create_time` datetime NOT NULL,
                          `update_id` bigint NOT NULL COMMENT '更新用户ID',
                          `update_time` datetime NULL DEFAULT NULL,
+                         `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除标识，1：已删除，0：未删除',
                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '游戏表' ROW_FORMAT = DYNAMIC;
 

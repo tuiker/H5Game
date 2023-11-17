@@ -1,5 +1,6 @@
 package com.hou_tai.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -9,10 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.final_common.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
-import com.hou_tai.model.dto.GameDto;
-import com.hou_tai.model.dto.MobileGameDto;
-import com.hou_tai.model.dto.MobileGameReviewDto;
-import com.hou_tai.model.dto.MobileHomeGameDto;
+import com.hou_tai.model.dto.*;
 import com.hou_tai.model.pojo.*;
 import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.response_vo.MobileGameHomeVo;
@@ -22,7 +20,6 @@ import com.hou_tai.service.IGameReviewService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IGameTriggerService;
 import com.hou_tai.service.IReviewReplyService;
-import com.hou_tai.util.BeanUtil;
 import com.hou_tai.util.SystemNumUtil;
 import jakarta.annotation.Resource;
 import net.dongliu.apk.parser.ApkFile;
@@ -131,12 +128,13 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     /**
      * 新增数据
      *
-     * @param game 实例对象
+     * @param gameAddReqDTO 实例对象
      * @return 实例对象
      */
-    public Game insert(Game game) {
+    public Game insert(GameAddReqDTO gameAddReqDTO) {
+        //转换对象
+        Game game = BeanUtil.copyProperties(gameAddReqDTO, Game.class);
         long gameId = getGameId();
-        //game.setUpdateId(game.getCreateId());
         game.setId(gameId);
         String apkName = getApkName(game.getGameUrl());
         game.setApkName(apkName);
@@ -175,8 +173,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(game.getReviewNum() != null, Game::getReviewNum, game.getReviewNum())
                 .set(game.getGameGrade() != null, Game::getGameGrade, game.getGameGrade())
                 .set(game.getGameDownload() != null, Game::getGameDownload, game.getGameDownload())
-                .set(game.getUpdateTime() != null, Game::getUpdateTime, game.getUpdateTime())
-                .set(game.getUpdateTime() != null, Game::getUpdateTime, game.getUpdateTime());
+                .set(game.getGameUpdateTime() != null, Game::getGameUpdateTime, game.getGameUpdateTime());
 
         //2. 设置主键，并更新
         wrapper.eq(Game::getId, game.getId());
@@ -199,7 +196,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         List<GameVo> volist = Arrays.asList();
         List<Game> list = this.list(new LambdaQueryWrapper<Game>().select(Game::getId, Game::getGameName));
         if (CollectionUtil.isNotEmpty(list)) {
-            volist = BeanUtil.copyListProperties(list, GameVo.class);
+            volist = BeanUtil.copyToList(list, GameVo.class);
         }
         return volist;
     }

@@ -1,6 +1,7 @@
 package com.hou_tai.controller.pc;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hou_tai.model.dto.GameAddReqDTO;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.response.ResponseData;
@@ -58,15 +59,15 @@ public class GameController {
     /**
      * 新增数据
      *
-     * @param game 实例对象
+     * @param gameAddReqDTO 实例对象
      * @return 实例对象
      */
     @Operation(summary = "新增数据",description = "gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
     @PostMapping("/add")
-    public ResultVO<Game> add(@RequestBody Game game){
-        return ResponseData.success(gameService.insert(game));
+    public ResultVO<Game> add(@RequestBody GameAddReqDTO gameAddReqDTO){
+        return ResponseData.success(gameService.insert(gameAddReqDTO));
     }
 
     /**

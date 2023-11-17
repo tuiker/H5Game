@@ -1,6 +1,7 @@
 package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hou_tai.model.dto.GameAddReqDTO;
 import com.hou_tai.model.dto.MobileGameDto;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.MobileHomeGameDto;
@@ -46,10 +47,10 @@ public interface IGameService {
     /**
      * 新增数据
      *
-     * @param game 实例对象
+     * @param gameAddReqDTO 实例对象
      * @return 实例对象
      */
-    Game insert(Game game);
+    Game insert(GameAddReqDTO gameAddReqDTO);
     /**
      * 更新数据
      *

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -141,11 +142,17 @@ public class Game implements Serializable {
     /**
      *
      */
-    @Schema(title = "游戏更新日期")
+    @Schema(title = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
     @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
+
+    @Schema(title = "游戏更新日期")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
+    @TableField(value = "game_update_time")
+    private LocalDateTime gameUpdateTime;
 
     @Schema(title = "游戏标签 用;分隔")
     @TableField(value = "game_label")
