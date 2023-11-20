@@ -35,14 +35,14 @@ public class FileUploadController {
     @ResponseBody
     @Operation(summary = "文件上传")
     @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResultVO<Object> uploadFile(@RequestPart("files") MultipartFile[] files) //1返回图片相对路径 2返回图片绝对路径
+    public ResultVO<Object> uploadFile(@RequestPart("files") MultipartFile[] files, String gameName) //1返回图片相对路径 2返回图片绝对路径
     {
         if (files == null || (files.length == 1 && files[0].getSize() == 0)) {
             log.info("文件上传失败**************");
             return ResponseData.error("文件为空", ResultCode.FAILED);
         }
         log.info("文件上传开始>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        List<String> map = fileUploadService.upload(files);
+        List<String> map = fileUploadService.upload(files, gameName);
         log.info("文件上传结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         //System.out.println(map);
         return ResponseData.success(map);
