@@ -21,5 +21,5 @@ public interface IFileUploadService {
      * @Param describe 类型
      * @Param type 描述
      **/
-    List<String> upload(MultipartFile[] files);
+    List<String> upload(MultipartFile[] files, String gameName);
 }

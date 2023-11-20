@@ -39,7 +39,7 @@ public class MobileGameVo extends Game {
     @JsonFormat(pattern = "yyyy-MM-dd")  //前后端接收日期都可以改变格式
     @JSONField(format = "yyyy-MM-dd") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
     //@TableField(value = "update_time")
-    private LocalDateTime updateTime;
+    private LocalDateTime gameUpdateTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JSONField(format = "yyyy-MM-dd")

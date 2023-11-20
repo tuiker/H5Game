@@ -120,7 +120,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
-                        .orderByDesc(Game::getCreateTime));
+                        .orderByDesc(Game::getUpdateTime));
         //3. 返回结果
         return pagin;
     }
