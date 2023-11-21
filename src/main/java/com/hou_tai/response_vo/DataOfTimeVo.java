@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -17,8 +18,8 @@ import java.time.LocalDateTime;
 public class DataOfTimeVo {
     @Schema(title = "数据", description = "相关数值", name = "num")
     private int num;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Schema(title = "时间", description = "对应日期", name = "time")
-    private LocalDateTime time;
+    private LocalDate time;
 }
