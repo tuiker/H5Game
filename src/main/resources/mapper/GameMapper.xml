@@ -13,6 +13,7 @@
         <result column="apk_name" jdbcType="VARCHAR" property="apkName"/>
         <result column="game_fall_url" jdbcType="VARCHAR" property="gameFallUrl"/>
         <result column="game_desc" jdbcType="VARCHAR" property="gameDesc"/>
+        <result column="script_desc" jdbcType="VARCHAR" property="scriptDesc"/>
         <result column="data_security" jdbcType="VARCHAR" property="dataSecurity"/>
         <result column="game_grade" jdbcType="DECIMAL" property="gameGrade"/>
         <result column="game_download" jdbcType="INTEGER" property="gameDownload"/>
@@ -32,7 +33,7 @@
         , game_name, game_type, language_id, game_logo, game_main_logo, game_background,
     game_url, game_desc, data_security, game_grade, game_download, game_age, dev_email, 
     dev_url, create_id, create_time, update_id, update_time,game_label,review_num,apk_name,game_fall_url
-            ,game_update_time
+            ,game_update_time,script_desc
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -52,7 +53,7 @@
                           data_security, game_grade, game_download,
                           game_age, dev_email, dev_url,
                           create_id, create_time, update_id,
-                          update_time, game_label, review_num, apk_name,game_fall_url,game_update_time)
+                          update_time, game_label, review_num, apk_name, game_fall_url, game_update_time, script_desc)
         values (#{id,jdbcType=BIGINT}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER},
                 #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR},
                 #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
@@ -60,7 +61,8 @@
                 #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR},
                 #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
                 #{updateTime,jdbcType=TIMESTAMP}, #{gameLabel,jdbcType=VARCHAR}, #{reviewNum,jdbcType=INTEGER},
-                #{apkName,jdbcType=VARCHAR},#{gameFallUrl,jdbcType=VARCHAR},#{gameUpdateTime,jdbcType=TIMESTAMP})
+                #{apkName,jdbcType=VARCHAR}, #{gameFallUrl,jdbcType=VARCHAR}, #{gameUpdateTime,jdbcType=TIMESTAMP},
+                #{scriptDesc,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.hou_tai.model.pojo.Game">
         insert into game
@@ -98,6 +100,10 @@
             <if test="gameDesc != null">
                 game_desc,
             </if>
+            <if test="scriptDesc != null">
+                script_desc,
+            </if>
+
             <if test="dataSecurity != null">
                 data_security,
             </if>
@@ -173,6 +179,9 @@
             <if test="gameDesc != null">
                 #{gameDesc,jdbcType=VARCHAR},
             </if>
+            <if test="scriptDesc != null">
+                #{scriptDesc,jdbcType=VARCHAR},
+            </if>
             <if test="dataSecurity != null">
                 #{dataSecurity,jdbcType=VARCHAR},
             </if>
@@ -244,6 +253,10 @@
             <if test="gameDesc != null">
                 game_desc = #{gameDesc,jdbcType=VARCHAR},
             </if>
+            <if test="scriptDesc != null">
+                script_desc = #{scriptDesc,jdbcType=VARCHAR},
+            </if>
+
             <if test="dataSecurity != null">
                 data_security = #{dataSecurity,jdbcType=VARCHAR},
             </if>
@@ -298,6 +311,7 @@
             game_url        = #{gameUrl,jdbcType=VARCHAR},
             apk_name        = #{apkName,jdbcType=VARCHAR},
             game_desc       = #{gameDesc,jdbcType=VARCHAR},
+            script_desc     = #{scriptDesc,jdbcType=VARCHAR},
             data_security   = #{dataSecurity,jdbcType=VARCHAR},
             game_grade      = #{gameGrade,jdbcType=DECIMAL},
             game_download   = #{gameDownload,jdbcType=INTEGER},

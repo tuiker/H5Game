@@ -1,17 +1,12 @@
 package com.hou_tai.response_vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hou_tai.model.pojo.Game;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @ClassName: GameVo
@@ -21,9 +16,9 @@ import java.util.List;
  * @Version: 1.0
  **/
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Schema(title = "游戏输出")
-public class GameVo{
+public class GameVo {
 
     @Schema(title = "游戏ID")
     private Long id;
@@ -57,6 +52,9 @@ public class GameVo{
 
     @Schema(title = "游戏描述")
     private String gameDesc;
+
+    @Schema(title = "脚本描述")
+    private String scriptDesc;
 
     @Schema(title = "数据安全")
     private String dataSecurity;
@@ -104,14 +102,13 @@ public class GameVo{
     private Integer reviewNum;
 
     @Schema(title = "游戏类型名称")
-    private String typeName ;
+    private String typeName;
 
     @Schema(title = "游戏语言")
-    private String languageName ;
+    private String languageName;
 
     @Schema(title = "实际游戏评论数")
-    private Integer realReviewNum ;
-
+    private Integer realReviewNum;
 
 
 }
