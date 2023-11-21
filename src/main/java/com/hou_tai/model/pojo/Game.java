@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -84,6 +83,13 @@ public class Game implements Serializable {
     @Schema(title = "游戏描述")
     @TableField(value = "game_desc")
     private String gameDesc;
+
+    /**
+     * 脚本描述
+     */
+    @Schema(title = "游戏描述")
+    @TableField(value = "script_desc")
+    private String scriptDesc;
     /**
      * 数据安全
      */
