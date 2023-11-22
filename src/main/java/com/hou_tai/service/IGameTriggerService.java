@@ -13,6 +13,6 @@ import com.hou_tai.response.ResultVO;
  **/
 public interface IGameTriggerService {
 
-    ResultVO insertByPoint(PointDto dto);
+    ResultVO<String> insertByPoint(PointDto dto);
     GameTrigger insert(GameTrigger gameTrigger);
 }

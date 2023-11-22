@@ -1,6 +1,7 @@
 package com.hou_tai.response_vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -49,6 +50,9 @@ public class GameVo {
 
     @Schema(title = "APK包名")
     private String apkName;
+
+    @Schema(title = "APK链接")
+    private String apkLink;
 
     @Schema(title = "游戏描述")
     private String gameDesc;
