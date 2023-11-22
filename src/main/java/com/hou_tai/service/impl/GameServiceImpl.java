@@ -162,6 +162,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 .set(StrUtil.isNotBlank(game.getGameBackground()), Game::getGameBackground, game.getGameBackground())
                 .set(Game::getGameUrl, url)
                 .set(Game::getApkName, apkName)
+                .set(Game::getApkLink, game.getApkLink())
                 .set(Game::getGameFallUrl, fallPath + apkName)
                 .set(StrUtil.isNotBlank(game.getGameDesc()), Game::getGameDesc, game.getGameDesc())
                 .set(StrUtil.isNotBlank(game.getScriptDesc()), Game::getScriptDesc, game.getScriptDesc())

@@ -1,6 +1,8 @@
 package com.hou_tai.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hou_tai.enums.ResultCode;
 import com.hou_tai.final_common.CommonNum;
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,19 +39,28 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
     private GameMapper gameMapper;
 
     @Override
-    public ResultVO insertByPoint(PointDto dto) {
-        //3.应用打开类型   根据APK包名找到对应 gameId
-        if (CommonNum.THREE == dto.getTriggerType()) {
+    public ResultVO<String> insertByPoint(PointDto dto) {
+        List<Game> list = null;
+        String apkLink = "";
+        if(StrUtil.isNotBlank(dto.getApkName())){
             Map<String, Object> map = new HashMap<>();
             map.put("apk_name", dto.getApkName());
-            List<Game> list = gameMapper.selectByMap(map);
-            if (ObjectUtil.isNotNull(list) && list.size() > CommonNum.ZERO) {
+            list = gameMapper.selectByMap(map);
+
+            if(CollectionUtil.isNotEmpty(list)){
+                apkLink = list.get(0).getApkLink();
+            }
+        }
+
+        //3.应用打开类型   根据APK包名找到对应 gameId
+        if (CommonNum.THREE == dto.getTriggerType()) {
+            if (CollectionUtil.isNotEmpty(list)) {
                 dto.setGameId(list.get(0).getId());
             } else
                 return ResponseData.error("请先上传APK包", ResultCode.ERROR);
         }
         insert(GameTrigger.builder().gameId(dto.getGameId()).type(dto.getTriggerType()).createTime(LocalDateTime.now()).build());
-        return ResponseData.success();
+        return ResponseData.success(apkLink);
     }
 
     /**

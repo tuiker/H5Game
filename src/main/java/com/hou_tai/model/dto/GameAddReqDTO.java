@@ -43,6 +43,9 @@ public class GameAddReqDTO implements Serializable {
     @Schema(title = "APK包名")
     private String apkName;
 
+    @Schema(title = "APK链接")
+    private String apkLink;
+
     @Schema(title = "游戏描述")
     private String gameDesc;
 

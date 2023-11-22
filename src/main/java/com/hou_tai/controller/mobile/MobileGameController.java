@@ -51,7 +51,7 @@ public class MobileGameController {
     @Operation(summary = "新增埋点数据",description = "触发类型 2下载3打开")
     @PostMapping("/addPointNum")
     @ResponseBody
-    public ResultVO addPointNum(@RequestBody PointDto dto) {
+    public ResultVO<String> addPointNum(@RequestBody PointDto dto) {
         return gameTriggerService.insertByPoint(dto);
     }
 

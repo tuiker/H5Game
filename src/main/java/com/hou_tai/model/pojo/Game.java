@@ -77,6 +77,14 @@ public class Game implements Serializable {
     @Schema(title = "APK包名")
     @TableField(value = "apk_name")
     private String apkName;
+
+    /**
+     * APK链接
+     */
+    @Schema(title = "APK链接")
+    @TableField(value = "apk_link")
+    private String apkLink;
+
     /**
      * 游戏描述
      */

@@ -49,14 +49,14 @@
     <insert id="insert" parameterType="com.hou_tai.model.pojo.Game">
         insert into game (id, game_name, game_type,
                           language_id, game_logo, game_main_logo,
-                          game_background, game_url, game_desc,
+                          game_background, game_url, apk_link, game_desc,
                           data_security, game_grade, game_download,
                           game_age, dev_email, dev_url,
                           create_id, create_time, update_id,
                           update_time, game_label, review_num, apk_name, game_fall_url, game_update_time, script_desc)
         values (#{id,jdbcType=BIGINT}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=INTEGER},
                 #{languageId,jdbcType=INTEGER}, #{gameLogo,jdbcType=VARCHAR}, #{gameMainLogo,jdbcType=VARCHAR},
-                #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
+                #{gameBackground,jdbcType=VARCHAR}, #{gameUrl,jdbcType=VARCHAR}, #{apkLink,jdbcType=VARCHAR}, #{gameDesc,jdbcType=VARCHAR},
                 #{dataSecurity,jdbcType=VARCHAR}, #{gameGrade,jdbcType=DECIMAL}, #{gameDownload,jdbcType=INTEGER},
                 #{gameAge,jdbcType=INTEGER}, #{devEmail,jdbcType=VARCHAR}, #{devUrl,jdbcType=VARCHAR},
                 #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT},
