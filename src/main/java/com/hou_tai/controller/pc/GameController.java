@@ -1,13 +1,17 @@
 package com.hou_tai.controller.pc;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameAddReqDTO;
 import com.hou_tai.model.dto.GameDto;
 import com.hou_tai.model.dto.GameUpdateReqDTO;
+import com.hou_tai.model.dto.ScriptDescSaveReqDTO;
 import com.hou_tai.model.pojo.Game;
+import com.hou_tai.model.pojo.GameExtend;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.service.IGameExtendService;
 import com.hou_tai.service.IGameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +34,8 @@ public class GameController {
 
     @Resource
     private IGameService gameService;
+    @Resource
+    private IGameExtendService gameExtendService;
 
     /**
      * 通过ID查询单条数据
@@ -83,6 +89,14 @@ public class GameController {
     @PostMapping("/update")
     public ResultVO<Boolean> update(@RequestBody GameUpdateReqDTO reqDTO){
         return ResponseData.success(gameService.update(reqDTO));
+    }
+
+    @Operation(summary = "保存游戏数据追踪")
+    @PostMapping("/saveGameScriptDesc")
+    public ResultVO<Boolean> saveGameScriptDesc(@RequestBody ScriptDescSaveReqDTO reqDTO){
+        GameExtend gameExtend = BeanUtil.copyProperties(reqDTO, GameExtend.class);
+        gameExtendService.updateByGameId(gameExtend);
+        return ResponseData.success(true);
     }
 
     /**

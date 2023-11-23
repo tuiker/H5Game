@@ -1,7 +1,6 @@
 package com.hou_tai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hou_tai.enums.ResultCode;
@@ -10,18 +9,17 @@ import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dao.GameTriggerMapper;
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.model.pojo.GameApk;
+import com.hou_tai.model.pojo.GameExtend;
 import com.hou_tai.model.pojo.GameTrigger;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
-import com.hou_tai.service.IGameApkService;
+import com.hou_tai.service.IGameExtendService;
 import com.hou_tai.service.IGameTriggerService;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
     private GameMapper gameMapper;
 
     @Resource
-    private IGameApkService gameApkService;
+    private IGameExtendService gameExtendService;
 
     @Override
     public ResultVO<String> insertByPoint(PointDto dto) {
@@ -53,8 +51,8 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
             list = gameMapper.selectByMap(map);
 
             if(CollectionUtil.isNotEmpty(list)){
-                GameApk gameApk = gameApkService.getGameApkByGameId(list.get(0).getId());
-                apkLink = gameApk.getApkLink();
+                GameExtend gameExtend = gameExtendService.getGameExtendByGameId(list.get(0).getId());
+                apkLink = gameExtend.getApkLink();
             }
         }
 

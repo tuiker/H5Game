@@ -1,7 +1,6 @@
 package com.hou_tai.model.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,9 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@TableName("game_apk")
-@Schema(title = "游戏APK扩展表")
-public class GameApk {
+@TableName("game_extend")
+@Schema(title = "游戏扩展表")
+public class GameExtend {
 
     /**
      * 主键ID

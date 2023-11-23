@@ -52,7 +52,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     IReviewReplyService reviewReplyService;
 
     @Resource
-    private IGameApkService gameApkService;
+    private IGameExtendService gameExtendService;
 
     @Value("${lanBo.fall.path:}")
     private String fallPath;
@@ -68,7 +68,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             List<MobileGameVo> mobileGameVoList = this.baseMapper.selectJoinList(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                     .selectAll(Game.class)
                     .select("ga.user_name, ga.apk_link, ga.script_desc, gt.type_name, l.language_name")
-                    .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
+                    .leftJoin(GameExtend.class, "ga", GameExtend::getGameId, Game::getId)
                     .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
                     .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                     //.eq(Game::getId, dto.getGameId())
@@ -102,7 +102,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         GameVo gameVo = this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
                 .selectAll(Game.class)
                 .select("ga.user_name, ga.apk_link, ga.script_desc, gt.type_name, l.language_name")
-                .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
+                .leftJoin(GameExtend.class, "ga", GameExtend::getGameId, Game::getId)
                 .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
                 .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                 .eq(Game::getId, id));
@@ -122,7 +122,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                         .selectAll(Game.class)
                         .select("ga.user_name, ga.apk_link, ga.script_desc, l.language_name, gt.type_name")
                         .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
-                        .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
+                        .leftJoin(GameExtend.class, "ga", GameExtend::getGameId, Game::getId)
                         .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
@@ -156,9 +156,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         this.save(game);
 
         //创建并保存游戏APK扩展对象
-        GameApk gameApk = BeanUtil.copyProperties(gameAddReqDTO, GameApk.class);
-        gameApk.setGameId(gameId);
-        gameApkService.save(gameApk);
+        GameExtend gameExtend = BeanUtil.copyProperties(gameAddReqDTO, GameExtend.class);
+        gameExtend.setGameId(gameId);
+        gameExtendService.save(gameExtend);
         return game;
     }
 
@@ -197,10 +197,10 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         wrapper.eq(Game::getId, reqDTO.getId());
         this.update(wrapper);
 
-        GameApk gameApk = BeanUtil.copyProperties(reqDTO, GameApk.class);
-        gameApk.setId(null);
-        gameApk.setGameId(reqDTO.getId());
-        gameApkService.updateByGameId(gameApk);
+        GameExtend gameExtend = BeanUtil.copyProperties(reqDTO, GameExtend.class);
+        gameExtend.setId(null);
+        gameExtend.setGameId(reqDTO.getId());
+        gameExtendService.updateByGameId(gameExtend);
 
         //3. 更新成功了，查询最最对象返回
         return true;
