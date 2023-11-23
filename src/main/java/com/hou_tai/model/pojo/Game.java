@@ -79,25 +79,12 @@ public class Game implements Serializable {
     private String apkName;
 
     /**
-     * APK链接
-     */
-    @Schema(title = "APK链接")
-    @TableField(value = "apk_link")
-    private String apkLink;
-
-    /**
      * 游戏描述
      */
     @Schema(title = "游戏描述")
     @TableField(value = "game_desc")
     private String gameDesc;
 
-    /**
-     * 脚本描述
-     */
-    @Schema(title = "游戏描述")
-    @TableField(value = "script_desc")
-    private String scriptDesc;
     /**
      * 数据安全
      */
@@ -176,7 +163,9 @@ public class Game implements Serializable {
     @TableField(value = "review_num")
     private Integer reviewNum;
 
-    @Schema(title = "逻辑删除标识，1：已删除，0：未删除")
+    /**
+     * 逻辑删除标识，1：已删除，0：未删除
+     */
     @TableField(value = "deleted")
     private Integer deleted;
 
