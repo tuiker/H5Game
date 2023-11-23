@@ -2,6 +2,7 @@ package com.hou_tai.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -16,19 +17,18 @@ import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.response_vo.MobileGameHomeVo;
 import com.hou_tai.response_vo.MobileGameReviewVo;
 import com.hou_tai.response_vo.MobileGameVo;
-import com.hou_tai.service.IGameReviewService;
-import com.hou_tai.service.IGameService;
-import com.hou_tai.service.IGameTriggerService;
-import com.hou_tai.service.IReviewReplyService;
+import com.hou_tai.service.*;
 import com.hou_tai.util.SystemNumUtil;
 import jakarta.annotation.Resource;
 import net.dongliu.apk.parser.ApkFile;
 import net.dongliu.apk.parser.bean.ApkMeta;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +51,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     @Resource
     IReviewReplyService reviewReplyService;
 
+    @Resource
+    private IGameApkService gameApkService;
+
     @Value("${lanBo.fall.path:}")
     private String fallPath;
 
@@ -64,7 +67,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             MobileGameVo mobileGameVo = null;
             List<MobileGameVo> mobileGameVoList = this.baseMapper.selectJoinList(MobileGameVo.class, new MPJLambdaWrapper<Game>()
                     .selectAll(Game.class)
-                    .select("gt.type_name,l.language_name")
+                    .select("ga.user_name, ga.apk_link, ga.script_desc, gt.type_name, l.language_name")
+                    .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
                     .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
                     .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                     //.eq(Game::getId, dto.getGameId())
@@ -97,7 +101,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
     public GameVo getVoById(Long id) {
         GameVo gameVo = this.baseMapper.selectJoinOne(GameVo.class, new MPJLambdaWrapper<Game>()
                 .selectAll(Game.class)
-                .select("gt.type_name,l.language_name")
+                .select("ga.user_name, ga.apk_link, ga.script_desc, gt.type_name, l.language_name")
+                .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
                 .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
                 .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                 .eq(Game::getId, id));
@@ -115,8 +120,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
                 new Page<>(dto.getPage(), dto.getPageSize()),
                 GameVo.class, new MPJLambdaWrapper<Game>()
                         .selectAll(Game.class)
-                        .select("u.user_name,l.language_name,gt.type_name")
+                        .select("ga.user_name, ga.apk_link, ga.script_desc, l.language_name, gt.type_name")
                         .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
+                        .leftJoin(GameApk.class, "ga", GameApk::getGameId, Game::getId)
                         .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
                         .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
                         .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
@@ -131,6 +137,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @param gameAddReqDTO 实例对象
      * @return 实例对象
      */
+    @Transactional
     public Game insert(GameAddReqDTO gameAddReqDTO) {
         //转换对象
         Game game = BeanUtil.copyProperties(gameAddReqDTO, Game.class);
@@ -142,47 +149,61 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         game.setGameFallUrl(fallPath + apkName);
         game.setCreateTime(LocalDateTime.now());
         game.setUpdateTime(LocalDateTime.now());
+
+        //游戏评分取4.6-4.9之间的随机数，四舍五入保留一位小数
+        game.setGameGrade(RandomUtil.randomDouble(4.6, 4.9, 1, RoundingMode.HALF_UP));
+
         this.save(game);
+
+        //创建并保存游戏APK扩展对象
+        GameApk gameApk = BeanUtil.copyProperties(gameAddReqDTO, GameApk.class);
+        gameApk.setGameId(gameId);
+        gameApkService.save(gameApk);
         return game;
     }
 
     /**
      * 更新数据
      *
-     * @param game 实例对象
+     * @param reqDTO 实例对象
      * @return 实例对象
      */
-    public Game update(Game game) {
-        String url = game.getGameUrl();
+    @Transactional
+    public Boolean update(GameUpdateReqDTO reqDTO) {
+        String url = reqDTO.getGameUrl();
         String apkName = getApkName(url);
         LambdaUpdateWrapper<Game> wrapper = new LambdaUpdateWrapper<Game>();
-        wrapper.set(StrUtil.isNotBlank(game.getGameName()), Game::getGameName, game.getGameName())
-                .set(StrUtil.isNotBlank(game.getGameLogo()), Game::getGameLogo, game.getGameLogo())
-                .set(StrUtil.isNotBlank(game.getGameMainLogo()), Game::getGameMainLogo, game.getGameMainLogo())
-                .set(StrUtil.isNotBlank(game.getGameBackground()), Game::getGameBackground, game.getGameBackground())
+        wrapper.set(StrUtil.isNotBlank(reqDTO.getGameName()), Game::getGameName, reqDTO.getGameName())
+                .set(StrUtil.isNotBlank(reqDTO.getGameLogo()), Game::getGameLogo, reqDTO.getGameLogo())
+                .set(StrUtil.isNotBlank(reqDTO.getGameMainLogo()), Game::getGameMainLogo, reqDTO.getGameMainLogo())
+                .set(StrUtil.isNotBlank(reqDTO.getGameBackground()), Game::getGameBackground, reqDTO.getGameBackground())
                 .set(Game::getGameUrl, url)
                 .set(Game::getApkName, apkName)
-                .set(Game::getApkLink, game.getApkLink())
                 .set(Game::getGameFallUrl, fallPath + apkName)
-                .set(StrUtil.isNotBlank(game.getGameDesc()), Game::getGameDesc, game.getGameDesc())
-                .set(StrUtil.isNotBlank(game.getScriptDesc()), Game::getScriptDesc, game.getScriptDesc())
-                .set(StrUtil.isNotBlank(game.getDataSecurity()), Game::getDataSecurity, game.getDataSecurity())
-                .set(StrUtil.isNotBlank(game.getDevEmail()), Game::getDevEmail, game.getDevEmail())
-                .set(StrUtil.isNotBlank(game.getDevUrl()), Game::getDevUrl, game.getDevUrl())
-                .set(StrUtil.isNotBlank(game.getGameLabel()), Game::getGameLabel, game.getGameLabel())
+                .set(StrUtil.isNotBlank(reqDTO.getGameDesc()), Game::getGameDesc, reqDTO.getGameDesc())
+                .set(StrUtil.isNotBlank(reqDTO.getDataSecurity()), Game::getDataSecurity, reqDTO.getDataSecurity())
+                .set(StrUtil.isNotBlank(reqDTO.getDevEmail()), Game::getDevEmail, reqDTO.getDevEmail())
+                .set(StrUtil.isNotBlank(reqDTO.getDevUrl()), Game::getDevUrl, reqDTO.getDevUrl())
+                .set(StrUtil.isNotBlank(reqDTO.getGameLabel()), Game::getGameLabel, reqDTO.getGameLabel())
                 //.set(game.getUpdateId() > 0, Game::getUpdateId, game.getUpdateId())
                 .set(Game::getUpdateTime, LocalDateTime.now())
-                .set(game.getGameAge() != null, Game::getGameAge, game.getGameAge())
-                .set(game.getReviewNum() != null, Game::getReviewNum, game.getReviewNum())
-                .set(game.getGameGrade() != null, Game::getGameGrade, game.getGameGrade())
-                .set(game.getGameDownload() != null, Game::getGameDownload, game.getGameDownload())
-                .set(game.getGameUpdateTime() != null, Game::getGameUpdateTime, game.getGameUpdateTime());
+                .set(reqDTO.getGameAge() != null, Game::getGameAge, reqDTO.getGameAge())
+                .set(reqDTO.getReviewNum() != null, Game::getReviewNum, reqDTO.getReviewNum())
+                .set(reqDTO.getGameGrade() != null, Game::getGameGrade, reqDTO.getGameGrade())
+                .set(reqDTO.getGameDownload() != null, Game::getGameDownload, reqDTO.getGameDownload())
+                .set(reqDTO.getGameUpdateTime() != null, Game::getGameUpdateTime, reqDTO.getGameUpdateTime());
 
         //2. 设置主键，并更新
-        wrapper.eq(Game::getId, game.getId());
+        wrapper.eq(Game::getId, reqDTO.getId());
         this.update(wrapper);
+
+        GameApk gameApk = BeanUtil.copyProperties(reqDTO, GameApk.class);
+        gameApk.setId(null);
+        gameApk.setGameId(reqDTO.getId());
+        gameApkService.updateByGameId(gameApk);
+
         //3. 更新成功了，查询最最对象返回
-        return game;
+        return true;
     }
 
     /**
@@ -191,8 +212,13 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @param id 主键
      * @return 是否成功
      */
+    @Transactional
     public boolean deleteById(Long id) {
-        return this.removeById(id);
+        this.removeById(id);
+        //游戏是逻辑删除，那么此处的游戏APK扩展信息就不删了
+        //删除游戏APK扩展信息
+        //gameApkService.deleteByGameId(id);
+        return true;
     }
 
     public List<GameVo> listByGame() {

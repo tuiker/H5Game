@@ -1,6 +1,7 @@
 package com.hou_tai.response_vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hou_tai.model.pojo.Game;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,15 +21,67 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Schema(title = "移动端游戏输出")
-public class MobileGameVo extends Game {
-    //获取游戏ID需要
+public class MobileGameVo {
+    @Schema(title = "游戏ID")
     private Long id;
+
+    @Schema(title = "游戏名称")
+    private String gameName;
+
+    @Schema(title = "游戏类型")
+    private Integer gameType;
+
+    @Schema(title = "游戏语言ID")
+    private Integer languageId;
+
+    @Schema(title = "游戏LOGO")
+    private String gameLogo;
+
+    @Schema(title = "落地页地址")
+    private String gameFallUrl;
+
+    @Schema(title = "游戏主图")
+    private String gameMainLogo;
+
+    @Schema(title = "游戏背景")
+    private String gameBackground;
+
+    @Schema(title = "游戏地址")
+    private String gameUrl;
+
+    @Schema(title = "APK包名")
+    private String apkName;
+
+    @Schema(title = "游戏描述")
+    private String gameDesc;
+
+    @Schema(title = "数据安全")
+    private String dataSecurity;
+
+    @Schema(title = "游戏评分")
+    private Double gameGrade;
+
+    @Schema(title = "游戏下载次数")
+    private Integer gameDownload;
+
+    @Schema(title = "游戏适合年龄")
+    private Integer gameAge;
+
+    @Schema(title = "开发者邮箱")
+    private String devEmail;
+
+    @Schema(title = "开发者地址")
+    private String devUrl;
+
+    @Schema(title = "游戏标签 用;分隔")
+    private String gameLabel;
+
+    @Schema(title = "游戏评论数")
+    private Integer reviewNum;
 
     @Schema(title = "游戏类型名称")
     private String typeName;
-    /**
-     * 游戏语言ID
-     */
+
     @Schema(title = "游戏语言")
     private String languageName;
 
@@ -41,8 +94,18 @@ public class MobileGameVo extends Game {
     //@TableField(value = "update_time")
     private LocalDateTime gameUpdateTime;
 
+    @Schema(title = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JSONField(format = "yyyy-MM-dd")
     // @TableField(value = "create_time")
     private LocalDateTime createTime;
+
+    @Schema(title = "APK链接")
+    private String apkLink;
+
+    @Schema(title = "数据追踪")
+    private String scriptDesc;
+
+    @Schema(title = "客户名称")
+    private String userName;
 }

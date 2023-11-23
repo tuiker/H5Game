@@ -84,4 +84,7 @@ public class GameAddReqDTO implements Serializable {
     @Schema(title = "游戏评论数")
     private Integer reviewNum;
 
+    @Schema(title = "客户名称")
+    private String userName;
+
 }

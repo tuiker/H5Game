@@ -3,6 +3,7 @@ package com.hou_tai.controller.pc;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.dto.GameAddReqDTO;
 import com.hou_tai.model.dto.GameDto;
+import com.hou_tai.model.dto.GameUpdateReqDTO;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
@@ -73,15 +74,15 @@ public class GameController {
     /**
      * 更新数据
      *
-     * @param game 实例对象
+     * @param reqDTO 实例对象
      * @return 实例对象
      */
     @Operation(summary = "更新数据",description = "id,gameName,gameType,languageId," +
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
     @PostMapping("/update")
-    public ResultVO<Game> update(@RequestBody Game game){
-        return ResponseData.success(gameService.update(game));
+    public ResultVO<Boolean> update(@RequestBody GameUpdateReqDTO reqDTO){
+        return ResponseData.success(gameService.update(reqDTO));
     }
 
     /**

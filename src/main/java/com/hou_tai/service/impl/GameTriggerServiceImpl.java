@@ -10,9 +10,11 @@ import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dao.GameTriggerMapper;
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.Game;
+import com.hou_tai.model.pojo.GameApk;
 import com.hou_tai.model.pojo.GameTrigger;
 import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
+import com.hou_tai.service.IGameApkService;
 import com.hou_tai.service.IGameTriggerService;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -38,6 +40,9 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
     @Resource
     private GameMapper gameMapper;
 
+    @Resource
+    private IGameApkService gameApkService;
+
     @Override
     public ResultVO<String> insertByPoint(PointDto dto) {
         List<Game> list = null;
@@ -48,7 +53,8 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
             list = gameMapper.selectByMap(map);
 
             if(CollectionUtil.isNotEmpty(list)){
-                apkLink = list.get(0).getApkLink();
+                GameApk gameApk = gameApkService.getGameApkByGameId(list.get(0).getId());
+                apkLink = gameApk.getApkLink();
             }
         }
 

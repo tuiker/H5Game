@@ -1,28 +1,23 @@
-package com.hou_tai.response_vo;
+package com.hou_tai.model.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * @ClassName: GameVo
- * @Description: 游戏输出
- * @Author: Sam
- * @Date: 2023-11-04 11:52
- * @Version: 1.0
- **/
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Schema(title = "游戏输出")
-public class GameVo {
+@Schema(title = "游戏修改请求 DTO")
+public class GameUpdateReqDTO implements Serializable {
 
     @Schema(title = "游戏ID")
-    private Long id;
+    private Long Id;
 
     @Schema(title = "游戏名称")
     private String gameName;
@@ -57,9 +52,6 @@ public class GameVo {
     @Schema(title = "游戏描述")
     private String gameDesc;
 
-    @Schema(title = "脚本描述")
-    private String scriptDesc;
-
     @Schema(title = "数据安全")
     private String dataSecurity;
 
@@ -81,18 +73,8 @@ public class GameVo {
     @Schema(title = "创建用户ID")
     private Long createId;
 
-    @Schema(title = "创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
-
     @Schema(title = "更新用户ID")
     private Long updateId;
-
-    @Schema(title = "游戏更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss") //ResponseBody做了拦截，封装了一层导致原来JsonFormat无效，前端返回日期，要用JSONField来处理
-    private LocalDateTime updateTime;
 
     @Schema(title = "游戏更新日期")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //前后端接收日期都可以改变格式
@@ -105,16 +87,10 @@ public class GameVo {
     @Schema(title = "游戏评论数")
     private Integer reviewNum;
 
-    @Schema(title = "游戏类型名称")
-    private String typeName;
-
-    @Schema(title = "游戏语言")
-    private String languageName;
-
-    @Schema(title = "实际游戏评论数")
-    private Integer realReviewNum;
-
     @Schema(title = "客户名称")
     private String userName;
+
+    @Schema(title = "数据追踪")
+    private String scriptDesc;
 
 }
