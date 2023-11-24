@@ -23,7 +23,7 @@ public interface GameTriggerMapper extends BaseMapper<GameTrigger> {
      * @Return
      * @Param type
      **/
-    List<DataOfTimeVo> getNumForSevenDay(int type);
+    List<DataOfTimeVo> getNumForSevenDay(Long gameId, int type);
 
     /**
      * @Description 根据游戏ID找到对应数据

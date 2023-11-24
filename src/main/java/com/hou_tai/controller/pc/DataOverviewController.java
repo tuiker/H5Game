@@ -5,12 +5,11 @@ import com.hou_tai.response.ResponseData;
 import com.hou_tai.response.ResultVO;
 import com.hou_tai.service.IDataOverviewService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -32,9 +31,10 @@ public class DataOverviewController {
      * @Date 2023/11/8
      **/
     @Operation(summary = "数据概括", description = "数据概括")
-    @PostMapping("/getAllStates")
-    public ResultVO getAllStates() {
-        return ResponseData.success(dataOverviewService.getAllStates());
+    @Parameter(name = "gameId", description = "游戏ID")
+    @GetMapping("/getAllStates")
+    public ResultVO getAllStates(@RequestParam(value = "gameId", required = false) Long gameId) {
+        return ResponseData.success(dataOverviewService.getAllStates(gameId));
     }
 
 

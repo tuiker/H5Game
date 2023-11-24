@@ -16,6 +16,9 @@
         WHERE
             DATE_SUB( CURDATE()
             , INTERVAL 7 DAY ) &lt;= date ( create_time )
+          <if test="null != gameId">
+              AND game_id = #{gameId}
+          </if>
           AND type = #{type,jdbcType=INTEGER}
         GROUP BY
             time
