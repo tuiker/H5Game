@@ -16,6 +16,6 @@ public interface IDataOverviewService {
      * @Date 2023/11/8
      * @Return 数据概括对象
      **/
-    DataBoardVo getAllStates();
+    DataBoardVo getAllStates(Long gameId);
 
 }
