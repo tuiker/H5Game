@@ -48,6 +48,12 @@
             <version>3.5.3.1</version>
         </dependency>
 
+        <!-- spring security 安全框架引入, 进行权限控制 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!--springboot集成swagger-->
         <dependency>
             <groupId>org.springdoc</groupId>

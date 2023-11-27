@@ -2,7 +2,7 @@ package com.hou_tai.service;
 
 import com.hou_tai.model.dto.PointDto;
 import com.hou_tai.model.pojo.GameTrigger;
-import com.hou_tai.response.ResultVO;
+import com.hou_tai.common.response.ResultVO;
 
 /**
  * @InterfaceName: GameService
