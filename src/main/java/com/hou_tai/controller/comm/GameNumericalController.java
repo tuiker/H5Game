@@ -94,7 +94,7 @@ public class GameNumericalController {
      **/
     @Operation(summary = "所有游戏")
     @GetMapping("/listByGame")
-    public ResultVO listByGame() {
+    public ResultVO<List<GameVo>> listByGame() {
         List<GameVo> list = gameService.listByGame();
         return ResponseData.success(list);
     }
