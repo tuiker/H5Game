@@ -1,14 +1,18 @@
 package com.hou_tai.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.common.enums.GameTypeEnums;
 import com.hou_tai.common.enums.LanguageTypeEnum;
 import com.hou_tai.common.constant.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dao.GameTriggerMapper;
 import com.hou_tai.model.pojo.Game;
+import com.hou_tai.model.pojo.GameExtend;
 import com.hou_tai.response_vo.DataBoardVo;
 import com.hou_tai.response_vo.GameGeneralizeVo;
+import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.service.IDataOverviewService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -45,24 +49,38 @@ public class DataOverviewServiceImpl implements IDataOverviewService {
         dataBoardVo.setRequestDataOfTime(gameTriggerMapper.getNumForSevenDay(gameId, CommonNum.ONE));
         dataBoardVo.setDownloadDataOfTime(gameTriggerMapper.getNumForSevenDay(gameId, CommonNum.TWO));
         dataBoardVo.setOpenDataOfTime(gameTriggerMapper.getNumForSevenDay(gameId, CommonNum.THREE));
+
+        return dataBoardVo;
+    }
+
+    /**
+     * 获取数据概况表格数据
+     */
+    @Override
+    public List<GameGeneralizeVo> getDataProfilingTableData() {
         //封装游戏概括
         List<GameGeneralizeVo> list = new ArrayList<>();
-        List<Game> gameList = gameMapper.selectList(null);
-        if (ObjectUtil.isNotNull(gameList) && gameList.size() > 0) {
-            gameList.forEach(game -> {
+        MPJLambdaWrapper<Game> mpjLambdaWrapper = new MPJLambdaWrapper<Game>().selectAll(Game.class)
+                .select("ge.user_name")
+                .leftJoin(GameExtend.class, "ge", GameExtend::getGameId, Game::getId);
+        List<GameVo> gameVoList = gameMapper.selectJoinList(GameVo.class, mpjLambdaWrapper);
+        if (CollectionUtil.isNotEmpty(gameVoList)) {
+            gameVoList.forEach(game -> {
+                long id = game.getId();
                 GameGeneralizeVo gameGeneralizeVo = new GameGeneralizeVo();
+                gameGeneralizeVo.setId(id);
                 gameGeneralizeVo.setGameName(game.getGameName());
                 gameGeneralizeVo.setGameType(GameTypeEnums.getValue(game.getGameType()));
                 gameGeneralizeVo.setGameLanguage(LanguageTypeEnum.getValue(game.getLanguageId()));
-                long id = game.getId();
+                gameGeneralizeVo.setUserName(game.getUserName());
                 gameGeneralizeVo.setRequestNum(gameTriggerMapper.getCountAll(CommonNum.ONE, id));
                 gameGeneralizeVo.setDownloadNum(gameTriggerMapper.getCountAll(CommonNum.TWO, id));
                 gameGeneralizeVo.setOpenNum(gameTriggerMapper.getCountAll(CommonNum.THREE, id));
                 list.add(gameGeneralizeVo);
             });
         }
-        dataBoardVo.setGameGeneralize(list);
-        return dataBoardVo;
+
+        return list;
     }
 
 
