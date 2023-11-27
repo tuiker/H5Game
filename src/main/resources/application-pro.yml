@@ -9,7 +9,8 @@ spring:
   data:
     redis:
       host: 147.182.242.191
-      port: 6379
+      port: 3189
+      password: Z#5NNYzZba3UYabhsjrNOEXY
 
   #上传下载文件大小
   servlet:
