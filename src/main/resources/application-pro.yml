@@ -5,6 +5,11 @@ spring:
     username: h5shop
     password: HZ3m3Djxn=e9kD6Dv0
 
+  #  redis配置
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
   #上传下载文件大小
   servlet:
