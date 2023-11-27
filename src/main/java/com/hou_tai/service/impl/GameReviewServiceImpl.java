@@ -1,5 +1,6 @@
 package com.hou_tai.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -11,9 +12,12 @@ import com.hou_tai.common.enums.GameTypeEnums;
 import com.hou_tai.common.enums.LanguageTypeEnum;
 import com.hou_tai.common.enums.ReviewGradeEnum;
 import com.hou_tai.common.constant.CommonNum;
+import com.hou_tai.common.util.SecurityUtils;
 import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.dao.GameReviewMapper;
+import com.hou_tai.model.dto.GameReviewAddReqDTO;
 import com.hou_tai.model.dto.MobileGameReviewDto;
+import com.hou_tai.model.dto.ReplyGameReviewReqDTO;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.model.pojo.UserInfo;
@@ -104,10 +108,11 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
     /**
      * 新增数据
      *
-     * @param gameReview 实例对象
+     * @param reqDTO 实例对象
      * @return 实例对象
      */
-    public GameReview insert(GameReview gameReview) {
+    public GameReview insert(GameReviewAddReqDTO reqDTO) {
+        GameReview gameReview = BeanUtil.copyProperties(reqDTO, GameReview.class);
         gameReview.setUserId(userInfoService.getRandomUserId());//设置当前为用户
         gameReview.setReviewTime(LocalDateTime.now());
         gameReview.setHelpNum(CommonNum.ZERO);
@@ -156,14 +161,14 @@ public class GameReviewServiceImpl extends ServiceImpl<GameReviewMapper, GameRev
     }
 
     @Override
-    public boolean saveReply(GameReview gameReview) {
+    public boolean saveReply(ReplyGameReviewReqDTO reqDTO) {
         LambdaUpdateWrapper<GameReview> wrapper = new LambdaUpdateWrapper<GameReview>();
-        wrapper.set(GameReview::getReplyContent, gameReview.getReplyContent())
+        wrapper.set(GameReview::getReplyContent, reqDTO.getReplyContent())
                 .set(GameReview::getHaveReply, CommonNum.ONE)
-                .set(GameReview::getReplyUserId, gameReview.getReplyUserId()==null||gameReview.getReplyUserId()==0?CommonNum.ONE:gameReview.getReplyUserId())
+                .set(GameReview::getReplyUserId, SecurityUtils.getLoginUserId())
                 //.set(GameReview::getReviewGrade,gameReview.getReviewGrade())
                 .set(GameReview::getReplyTime, LocalDateTime.now())
-                .eq(GameReview::getId, gameReview.getId());
+                .eq(GameReview::getId, reqDTO.getId());
         return this.update(wrapper);
     }
 

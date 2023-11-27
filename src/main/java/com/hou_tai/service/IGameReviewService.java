@@ -3,8 +3,10 @@ package com.hou_tai.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hou_tai.model.base.PageDaoEntity;
+import com.hou_tai.model.dto.GameReviewAddReqDTO;
 import com.hou_tai.model.dto.MobileGameReviewDto;
 import com.hou_tai.model.dto.PointDto;
+import com.hou_tai.model.dto.ReplyGameReviewReqDTO;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.response_vo.GameReviewVo;
 import com.hou_tai.response_vo.GameReviewPageVo;
@@ -58,10 +60,10 @@ public interface IGameReviewService extends IService<GameReview> {
     /**
      * 新增数据
      *
-     * @param gameReview 实例对象
+     * @param reqDTO 实例对象
      * @return 实例对象
      */
-    GameReview insert(GameReview gameReview);
+    GameReview insert(GameReviewAddReqDTO reqDTO);
 
     /**
      * 更新数据
@@ -95,7 +97,7 @@ public interface IGameReviewService extends IService<GameReview> {
      * @Param  * @param gameReview
      * @return boolean
      **/
-    boolean saveReply(GameReview gameReview);
+    boolean saveReply(ReplyGameReviewReqDTO reqDTO);
 
 
 }

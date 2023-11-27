@@ -1,14 +1,21 @@
 package com.hou_tai.controller.pc;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.model.base.PageDaoEntity;
+import com.hou_tai.model.dto.GameReviewAddReqDTO;
+import com.hou_tai.model.dto.ReplyGameReviewReqDTO;
+import com.hou_tai.model.dto.ReviewPageReqDTO;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
+import com.hou_tai.response_vo.GameReviewPageVo;
 import com.hou_tai.service.IGameReviewService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,9 +41,9 @@ public class GameReviewController {
      * @Return
      **/
     @Operation(summary = "游戏评论列表", description = "分页查询游戏评论")
-    @PostMapping("/getReviewPage")
-    public ResultVO getReviewPage(@RequestBody PageDaoEntity pageDao) {
-        return ResponseData.success(gameReviewService.getReviewPage(pageDao));
+    @GetMapping("/getReviewPage")
+    public ResultVO<Page<GameReviewPageVo>> getReviewPage(@ParameterObject ReviewPageReqDTO reqDTO) {
+        return ResponseData.success(gameReviewService.getReviewPage(reqDTO));
     }
 
     /**
@@ -46,8 +53,9 @@ public class GameReviewController {
      * @Return
      **/
     @Operation(summary = "游戏评论详情", description = "根据评论ID获取游戏评论详情")
+    @Parameter(name = "id", description = "评论ID", required = true)
     @GetMapping("/getGameReviewById")
-    public ResultVO getGameReviewById(Integer id) {
+    public ResultVO<GameReviewPageVo> getGameReviewById(@RequestParam("id") Integer id) {
         return ResponseData.success(gameReviewService.getGameReviewById(id));
     }
 
@@ -59,8 +67,8 @@ public class GameReviewController {
      **/
     @Operation(summary = "回复评论", description = "根据评论ID回复评论")
     @PostMapping("/saveReply")
-    public ResultVO saveReply(@RequestBody GameReview gameReview) {
-        return ResponseData.success(gameReviewService.saveReply(gameReview));
+    public ResultVO<Boolean> saveReply(@RequestBody ReplyGameReviewReqDTO reqDTO) {
+        return ResponseData.success(gameReviewService.saveReply(reqDTO));
     }
 
 
@@ -80,13 +88,13 @@ public class GameReviewController {
     /**
      * 新增数据
      *
-     * @param gameReview 实例对象
+     * @param reqDTO 实例对象
      * @return 实例对象
      */
     @Operation(summary = "新增评论数据", description = "userId,gameId,reviewContent,helpNum,reviewGrade")
     @PostMapping("/add")
-    public ResultVO<GameReview> add(@RequestBody GameReview gameReview) {
-        return ResponseData.success(gameReviewService.insert(gameReview));
+    public ResultVO<GameReview> add(@RequestBody GameReviewAddReqDTO reqDTO) {
+        return ResponseData.success(gameReviewService.insert(reqDTO));
     }
 
     /**
