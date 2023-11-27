@@ -2,8 +2,8 @@ package com.hou_tai.controller.pc;
 
 import com.hou_tai.model.base.PageDaoEntity;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.response.ResponseData;
-import com.hou_tai.response.ResultVO;
+import com.hou_tai.common.response.ResponseData;
+import com.hou_tai.common.response.ResultVO;
 import com.hou_tai.service.IGameReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

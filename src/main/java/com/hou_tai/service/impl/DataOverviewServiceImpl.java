@@ -1,9 +1,9 @@
 package com.hou_tai.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.hou_tai.enums.GameTypeEnums;
-import com.hou_tai.enums.LanguageTypeEnum;
-import com.hou_tai.final_common.CommonNum;
+import com.hou_tai.common.enums.GameTypeEnums;
+import com.hou_tai.common.enums.LanguageTypeEnum;
+import com.hou_tai.common.constant.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dao.GameTriggerMapper;
 import com.hou_tai.model.pojo.Game;
