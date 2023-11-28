@@ -17,12 +17,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Schema(title = "游戏查询入参")
+@Schema(description = "游戏查询入参")
 public class GameDto extends PageDaoEntity {
 
-    @Schema(title = "游戏id")
+    @Schema(description = "游戏id", type = "Long")
     private Long gameId;
 
-    @Schema(title = "游戏名称")
+    @Schema(description = "游戏名称", type = "String")
     private String gameName;
 }

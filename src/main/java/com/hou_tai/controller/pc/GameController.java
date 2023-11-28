@@ -14,9 +14,11 @@ import com.hou_tai.response_vo.GameVo;
 import com.hou_tai.service.IGameExtendService;
 import com.hou_tai.service.IGameService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -44,8 +46,9 @@ public class GameController {
      * @return 实例对象
      */
     @Operation(summary = "通过ID查询单条数据")
+    @Parameter(name = "id", description = "游戏ID", required = true)
     @GetMapping("getVoById")
-    public ResultVO<GameVo> getVoById( Long id){
+    public ResultVO<GameVo> getVoById(@RequestParam("id") Long id){
         return ResponseData.success(gameService.getVoById(id));
     }
 
@@ -56,8 +59,8 @@ public class GameController {
      * @return 查询结果
      */
     @Operation(summary = "分页查询")
-    @PostMapping("/page")
-    public ResultVO<Page<GameVo>> paginQuery(@RequestBody GameDto dto){
+    @GetMapping("/page")
+    public ResultVO<Page<GameVo>> paginQuery(@ParameterObject GameDto dto){
         //1.分页参数
         Page<GameVo> page = gameService.paginQuery(dto);
         return ResponseData.success(page);
