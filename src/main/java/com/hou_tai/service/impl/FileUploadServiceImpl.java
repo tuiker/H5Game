@@ -65,7 +65,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
                     newFileName = gameName+ extension;
                 }
                 File targetFile = new File(path, newFileName);
-                if (!targetFile.exists()) targetFile.mkdirs();
+                if (targetFile.exists()) {//已存在，进行删除，解决问题：同一个名称的APK包重复上传报错：Cannot write uploaded file to disk!
+                    targetFile.delete();
+                }else {//不存在
+                    targetFile.mkdirs();
+                }
                 try {
                     file.transferTo(targetFile.getAbsoluteFile()); //getPath 是个坑，一定要用绝对路径 getAbsoluteFile
                     log.info("文件实际保存的路径：>>>>>>>>>>>{}" + targetFile.getAbsoluteFile());
