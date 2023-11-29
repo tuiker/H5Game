@@ -1,5 +1,6 @@
 package com.hou_tai.controller.comm;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.hou_tai.common.enums.ResultCode;
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
@@ -45,7 +46,7 @@ public class FileUploadController {
         List<String> map = fileUploadService.upload(files, gameName);
         log.info("文件上传结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         //System.out.println(map);
-        return ResponseData.success(map);
+        return CollectionUtil.isNotEmpty(map) ? ResponseData.success(map) : ResponseData.error("上传失败", ResultCode.FAILED);
 
     }
 }
