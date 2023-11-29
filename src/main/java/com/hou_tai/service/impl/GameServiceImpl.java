@@ -116,17 +116,25 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return
      */
     public Page<GameVo> paginQuery(GameDto dto) {
-        Page<GameVo> pagin = this.baseMapper.selectJoinPage(
-                new Page<>(dto.getPage(), dto.getPageSize()),
-                GameVo.class, new MPJLambdaWrapper<Game>()
-                        .selectAll(Game.class)
-                        .select("ga.user_name, ga.apk_link, ga.script_desc, l.language_name, gt.type_name")
-                        .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
-                        .leftJoin(GameExtend.class, "ga", GameExtend::getGameId, Game::getId)
-                        .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
-                        .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
-                        .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType)
-                        .orderByDesc(Game::getUpdateTime));
+        MPJLambdaWrapper<Game> mpjLambdaWrapper = new MPJLambdaWrapper<Game>()
+                .selectAll(Game.class)
+                .select("ga.user_name, ga.apk_link, ga.script_desc, l.language_name, gt.type_name")
+                .select("(select IFNULL(count(1),0) from game_review gr where gr.game_id=t.id) real_review_num")
+                .leftJoin(GameExtend.class, "ga", GameExtend::getGameId, Game::getId)
+                .leftJoin(UserInfo.class, "u", UserInfo::getId, Game::getCreateId)
+                .leftJoin(Language.class, "l", Language::getId, Game::getLanguageId)
+                .leftJoin(GameType.class, "gt", GameType::getId, Game::getGameType);
+
+        if(null != dto.getGameId()){
+            mpjLambdaWrapper.eq(Game::getId, dto.getGameId());
+        }
+        if(StrUtil.isNotBlank(dto.getGameName())){
+            mpjLambdaWrapper.like(Game::getGameName, dto.getGameName());
+        }
+        mpjLambdaWrapper.orderByDesc(Game::getUpdateTime);
+
+        Page<GameVo> pagin = this.baseMapper.selectJoinPage(new Page<>(dto.getPage(), dto.getPageSize()),
+                GameVo.class, mpjLambdaWrapper);
         //3. 返回结果
         return pagin;
     }
