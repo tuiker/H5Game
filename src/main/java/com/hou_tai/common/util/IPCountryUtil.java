@@ -1,5 +1,10 @@
 package com.hou_tai.common.util;
 
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,16 +21,23 @@ import java.util.regex.Pattern;
  * @Date: 2023-10-31 15:02
  * @Description: 根据IP获取国家地址
  */
+@Slf4j
+@Component
 public class IPCountryUtil {
+    @Value("${lanBo.ipv4.path}")
+    private String IP4_PATH;
+
+    @PostConstruct
+    public void getIp() throws IOException {
+        //读取ip.csv文件，创建 KEY:ip,VALUE:语言ID 缓存
+        init();
+    }
     private static final HashMap<Long, Integer> maxIpMap = new HashMap<>();
-
-    private static final String IP4_PATH = "D:\\_A_GL\\tools\\others\\IP\\ip4.csv";
-
     private static final String UNKNOWN = "unknown";
     private static final String LOCAL_IP_PROMPT = "本地循环地址";
     private static final String PRIVATE_IP_PROMPT = "私有地址";
 
-    private static final String[] LOCAL_IPS = {"127.0.0.1", "0.0.0.0", "localhost","0:0:0:0:0:0:0:1"};
+    private static final String[] LOCAL_IPS = {"127.0.0.1", "0.0.0.0", "localhost"};
 
     private static final String PRIVATE_IP_REGEX = "^(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$";
 
@@ -34,10 +46,8 @@ public class IPCountryUtil {
     private static Long[] maxIps;
 
     public static void main(String[] args) throws IOException {
-        // init();
-        init();
         String[] ips = {
-                "139.82.73.42", "24.9.55.92", "46.221.227.19",
+                "112.169.175.14",
                 "127.0.0.1", "0.0.0.0", "LOCALHOST", "192.168.33.174", "10.2.2.2", "172.17.3.3"
         };
         for (String ip : ips) {
@@ -46,6 +56,7 @@ public class IPCountryUtil {
     }
 
     public static Integer ipToCountry(String ip) {
+        log.info("===========================访问源ip: " + ip + "=============================");
         if (isLocalIp(ip)) {
             return 1;
         }
@@ -54,10 +65,13 @@ public class IPCountryUtil {
         }
         long ipNum = ipToNum(ip);
         Long bound = null;
-        for (int i = 0; i < maxIps.length; i++) {
-            if (maxIps[i] >= ipNum) {
-                bound = maxIps[i];
-                break;
+        log.info("===========================ipNum: " + ipNum + "=============================");
+        if (maxIps != null && maxIps.length > 0) {
+            for (int i = 0; i < maxIps.length; i++) {
+                if (maxIps[i] >= ipNum) {
+                    bound = maxIps[i];
+                    break;
+                }
             }
         }
         if (bound == null) {
@@ -86,7 +100,11 @@ public class IPCountryUtil {
         return (Long.parseLong(parts[0]) << 24) + (Long.parseLong(parts[1]) << 16) + (Long.parseLong(parts[2]) << 8) + Long.parseLong(parts[3]);
     }
 
-    private static void init() throws IOException {
+    /**
+     * 初始化IP缓存
+     */
+    private void init() throws IOException {
+        log.info("进入IP初始化》》》》》》》"+IP4_PATH);
         Path path = Paths.get(IP4_PATH);
         List<String> lines = Files.readAllLines(path);
         LinkedList<Long> maxIpList = new LinkedList<>();
@@ -105,18 +123,18 @@ public class IPCountryUtil {
         maxIps = new Long[maxIpList.size()];
         maxIpList.toArray(maxIps);
         Arrays.sort(maxIps);
+        log.info("IP初始化成功》》》》》》》共{}条记录", maxIps.length);
     }
 
     private static final HashMap<String, Integer> map = new HashMap<>();
 
     static {
-        map.put("PT", 2);
-        map.put("IN", 3);
-        map.put("JP", 5);
-        map.put("KR", 6);
-        map.put("ID", 7);
+        map.put("BR", 2);  //巴西（葡萄牙语）
+//        map.put("IN", 3);  //印度
+        map.put("KR", 6);  //韩国
+        map.put("JP", 5);  //日本
         //map.put("ES", "西班牙");
-        /* map.put("ID", "印度尼西亚");
+        /*
        map.put("AD","安道尔共和国");
         map.put("AE","阿拉伯联合酋长国");
         map.put("AF","阿富汗");
@@ -205,7 +223,7 @@ public class IPCountryUtil {
         map.put("KG","吉尔吉斯坦");
         map.put("KH","柬埔寨");
         map.put("KP","朝鲜");
-        map.put("KR","韩国");
+
         map.put("KT","科特迪瓦共和国");
         map.put("KW","科威特");
         map.put("KZ","哈萨克斯坦");

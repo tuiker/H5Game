@@ -84,3 +84,7 @@ pagehelper:
   support-methods-arguments: true
 server:
   port: 8090
+
+lanBo:
+  ipv4:
+    path: src\main\resources\others\ip4.csv
