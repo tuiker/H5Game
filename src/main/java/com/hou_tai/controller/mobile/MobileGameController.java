@@ -66,6 +66,7 @@ public class MobileGameController {
 //        }
 
         Integer type = CountryLanguageEnum.getValue(conutry.trim());
+        log.info("获取的初始语言》》》》》》》》》" + type);
         if (null == type) {
             type = 1;
         }
