@@ -56,11 +56,6 @@ public class MobileGameController {
         //根据用户ip获取语言id
         String conutry = request.getHeader("cf-ipcountry");
         log.info("当前地址客户城市》》》》》》》》》》》》》》" + conutry);
-        char[] chas=conutry.toCharArray();
-        for (int i = 0; i <chas.length ; i++) {
-            log.info("conutry数据》》》》》》》》》》》》》》" + chas[i]);
-        }
-
         String realIp = request.getHeader("x-real-ip");
         log.info("当前地址客户端IP》》》》》》》》》》》》》》" + realIp);
 //
@@ -70,8 +65,6 @@ public class MobileGameController {
 //            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
 //        }
 
-        boolean bo="KR".equals(conutry.trim());
-        log.info("是否相等言》》》》》》》》》"+bo  );
         Integer type = CountryLanguageEnum.getValue(conutry.trim());
         log.info("获取的初始语言》》》》》》》》》" + type);
         if (null == type) {
