@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Locale;
 
 /**
  * @ClassName: GameController
@@ -56,22 +54,17 @@ public class MobileGameController {
     @GetMapping("/getLanguageType")
     public ResultVO getLanguageType(HttpServletRequest request) {
         //根据用户ip获取语言id
-        log.info("当前地址客户端IP》》》》》》》》》》》》》》" + request.getHeader("x-real-ip"));
-        Locale locale = request.getLocale();
-        String conutry = locale.getCountry();
+        String conutry = request.getHeader("cf-ipcountry");
+        log.info("当前地址客户城市》》》》》》》》》》》》》》" + conutry);
+        String realIp = request.getHeader("x-real-ip");
+        log.info("当前地址客户端IP》》》》》》》》》》》》》》" + realIp);
 
         Enumeration<String> s = request.getHeaderNames();
         while (s.hasMoreElements()) {
             String name = s.nextElement();
-            log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
+            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
         }
 
-        Iterator<String> ss = s.asIterator();
-        if (ss.hasNext()) {
-            String name = ss.next();
-            log.info("请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
-        }
-        log.info("客户端浏览器国家、、、、、、》》》》" + conutry);
         Integer type = CountryLanguageEnum.getValue(conutry);
         if (null == type) {
             type = 1;
