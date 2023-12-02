@@ -25,18 +25,13 @@ public enum CountryLanguageEnum {
     private int code;
 
     CountryLanguageEnum(String msg,int code) {
-        this.code = code;
         this.msg = msg;
+        this.code = code;
     }
 
     public static Integer getValue(String msg) {
-        log.info("得到的参数》》》》》》"+msg);
-        log.info("得到的参数values》》》》》》"+CountryLanguageEnum.values().length);
         for (CountryLanguageEnum ele : CountryLanguageEnum.values()) {
-            String msgName=ele.getMsg();
-            log.info("得到的参数msgName》》》》》》"+msgName);
-            log.info("得到的参数Bo》》》》》》"+msgName.equals(msg));
-            if (msgName == msg) return ele.getCode();
+            if (msg.equals(ele.getMsg()) ) return ele.getCode();
         }
         return null;
     }
