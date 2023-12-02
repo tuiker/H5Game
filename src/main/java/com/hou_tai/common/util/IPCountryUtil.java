@@ -108,7 +108,8 @@ public class IPCountryUtil {
      */
     private void init() throws IOException {
         log.info("进入IP初始化》》》》》》》"+IP4_PATH);
-        Path path = Paths.get("src\\main\\resources\\others\\ip4.csv");
+        //Path path = Paths.get("src\\main\\resources\\others\\ip4.csv");
+        Path path = Paths.get(IP4_PATH);
         List<String> lines = Files.readAllLines(path);
         LinkedList<Long> maxIpList = new LinkedList<>();
         for (String line : lines) {
