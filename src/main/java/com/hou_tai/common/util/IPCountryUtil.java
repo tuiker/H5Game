@@ -49,6 +49,7 @@ public class IPCountryUtil {
         IPCountryUtil ipCountryUtil=new IPCountryUtil();
         ipCountryUtil.init();
         String[] ips = {
+                "1.21.255.255",
                 "112.169.175.14",
                 "13.114.244.69", " 192.168.0.117", "LOCALHOST", "192.168.33.174", "10.2.2.2", "172.17.3.3"
         };
