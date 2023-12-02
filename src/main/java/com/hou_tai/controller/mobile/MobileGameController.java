@@ -70,7 +70,7 @@ public class MobileGameController {
 //            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
 //        }
 
-        boolean bo="KR"==conutry.trim();
+        boolean bo="KR".equals(conutry.trim());
         log.info("是否相等言》》》》》》》》》"+bo  );
         Integer type = CountryLanguageEnum.getValue(conutry.trim());
         log.info("获取的初始语言》》》》》》》》》" + type);
