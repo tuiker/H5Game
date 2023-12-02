@@ -45,6 +45,8 @@ server:
 
 
 lanBo:
+  ipv4:
+    path: /home/file_storage/tools/ip4.csv
   mobile:
     path: https://googleplay.gqdoc.com/
   file:
