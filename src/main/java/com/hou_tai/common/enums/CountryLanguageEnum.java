@@ -1,6 +1,7 @@
 package com.hou_tai.common.enums;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author: GaoLu
@@ -8,6 +9,7 @@ import lombok.Getter;
  * @Description: 语言枚举
  */
 @Getter
+@Slf4j
 public enum CountryLanguageEnum {
     ENGLISH("英语",1),
     PORTUGUESE("BR",2 ), //巴西——葡萄牙语
@@ -27,6 +29,7 @@ public enum CountryLanguageEnum {
     }
 
     public static Integer getValue(String msg) {
+        log.info("得到的参数》》》》》》"+msg);
         for (CountryLanguageEnum ele : values()) {
             if (ele.getMsg() == msg) return ele.getCode();
         }
