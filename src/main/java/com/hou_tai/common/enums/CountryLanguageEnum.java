@@ -33,7 +33,10 @@ public enum CountryLanguageEnum {
         log.info("得到的参数》》》》》》"+msg);
         log.info("得到的参数values》》》》》》"+CountryLanguageEnum.values().length);
         for (CountryLanguageEnum ele : CountryLanguageEnum.values()) {
-            if (ele.getMsg() == msg) return ele.getCode();
+            String msgName=ele.getMsg();
+            log.info("得到的参数msgName》》》》》》"+msgName);
+            log.info("得到的参数Bo》》》》》》"+msgName.equals(msg));
+            if (msgName == msg) return ele.getCode();
         }
         return null;
     }
