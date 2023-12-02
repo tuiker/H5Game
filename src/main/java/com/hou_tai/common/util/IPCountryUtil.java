@@ -27,11 +27,11 @@ public class IPCountryUtil {
     @Value("${lanBo.ipv4.path}")
     private String IP4_PATH;
 
-    @PostConstruct
-    public void getIp() throws IOException {
-        //读取ip.csv文件，创建 KEY:ip,VALUE:语言ID 缓存
-        init();
-    }
+//    @PostConstruct
+//    public void getIp() throws IOException {
+//        //读取ip.csv文件，创建 KEY:ip,VALUE:语言ID 缓存
+//        init();
+//    }
     private static final HashMap<Long, Integer> maxIpMap = new HashMap<>();
     private static final String UNKNOWN = "unknown";
     private static final String LOCAL_IP_PROMPT = "本地循环地址";
@@ -46,8 +46,8 @@ public class IPCountryUtil {
     private static Long[] maxIps;
 
     public static void main(String[] args) throws IOException {
-        IPCountryUtil ipCountryUtil=new IPCountryUtil();
-        ipCountryUtil.init();
+//        IPCountryUtil ipCountryUtil=new IPCountryUtil();
+//        ipCountryUtil.init();
         String[] ips = {
                 "1.21.255.255",
                 "112.169.175.14",
