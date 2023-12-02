@@ -26,6 +26,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Locale;
 
 /**
@@ -57,10 +59,17 @@ public class MobileGameController {
         log.info("当前地址客户端IP》》》》》》》》》》》》》》" + request.getRemoteAddr());
         Locale locale = request.getLocale();
         String conutry = locale.getCountry();
+
+        Enumeration<String> s = request.getHeaderNames();
+        Iterator<String> ss = s.asIterator();
+        if (ss.hasNext()) {
+            String name = ss.next();
+            System.out.println("请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
+        }
         log.info("客户端浏览器国家、、、、、、》》》》" + conutry);
         Integer type = CountryLanguageEnum.getValue(conutry);
-        if(null==type){
-            type=1;
+        if (null == type) {
+            type = 1;
         }
         log.info("获取的语言》》》》》》》》》" + type);
         return ResponseData.success(type);
