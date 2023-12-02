@@ -56,15 +56,16 @@ public class MobileGameController {
     @GetMapping("/getLanguageType")
     public ResultVO getLanguageType(HttpServletRequest request) {
         //根据用户ip获取语言id
-        log.info("当前地址客户端IP》》》》》》》》》》》》》》" + request.getRemoteAddr());
+        log.info("当前地址客户端IP》》》》》》》》》》》》》》" + request.getHeader("x-real-ip"));
         Locale locale = request.getLocale();
         String conutry = locale.getCountry();
 
         Enumeration<String> s = request.getHeaderNames();
         Iterator<String> ss = s.asIterator();
+        log.info("请求头里有参数》》》》" );
         if (ss.hasNext()) {
             String name = ss.next();
-            System.out.println("请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
+            log.info("请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
         }
         log.info("客户端浏览器国家、、、、、、》》》》" + conutry);
         Integer type = CountryLanguageEnum.getValue(conutry);
