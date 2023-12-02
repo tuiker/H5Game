@@ -51,7 +51,9 @@ public class MobileGameController {
     @GetMapping("/getLanguageType")
     public ResultVO getLanguageType(HttpServletRequest request) {
         //根据用户ip获取语言id
-        return ResponseData.success(IPCountryUtil.ipToCountry(IPAdress.getIp(request)));
+        int type = IPCountryUtil.ipToCountry(IPAdress.getIp(request));
+        log.info("获取的语言》》》》》》》》》" + type);
+        return ResponseData.success(type);
     }
 
     @Operation(summary = "新增埋点数据", description = "触发类型 2下载3打开")
