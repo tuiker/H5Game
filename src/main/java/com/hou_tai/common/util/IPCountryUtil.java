@@ -46,9 +46,11 @@ public class IPCountryUtil {
     private static Long[] maxIps;
 
     public static void main(String[] args) throws IOException {
+        IPCountryUtil ipCountryUtil=new IPCountryUtil();
+        ipCountryUtil.init();
         String[] ips = {
                 "112.169.175.14",
-                "127.0.0.1", "0.0.0.0", "LOCALHOST", "192.168.33.174", "10.2.2.2", "172.17.3.3"
+                "13.114.244.69", " 192.168.0.117", "LOCALHOST", "192.168.33.174", "10.2.2.2", "172.17.3.3"
         };
         for (String ip : ips) {
             System.out.println(ipToCountry(ip));
@@ -105,7 +107,7 @@ public class IPCountryUtil {
      */
     private void init() throws IOException {
         log.info("进入IP初始化》》》》》》》"+IP4_PATH);
-        Path path = Paths.get(IP4_PATH);
+        Path path = Paths.get("src\\main\\resources\\others\\ip4.csv");
         List<String> lines = Files.readAllLines(path);
         LinkedList<Long> maxIpList = new LinkedList<>();
         for (String line : lines) {

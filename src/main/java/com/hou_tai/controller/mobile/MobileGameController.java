@@ -1,6 +1,7 @@
 package com.hou_tai.controller.mobile;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hou_tai.common.enums.CountryLanguageEnum;
 import com.hou_tai.common.enums.HomeEnums;
 import com.hou_tai.common.enums.ResultCode;
 import com.hou_tai.common.response.ResponseData;
@@ -24,6 +25,8 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 /**
  * @ClassName: GameController
@@ -51,7 +54,14 @@ public class MobileGameController {
     @GetMapping("/getLanguageType")
     public ResultVO getLanguageType(HttpServletRequest request) {
         //根据用户ip获取语言id
-        int type = IPCountryUtil.ipToCountry(IPAdress.getIp(request));
+        log.info("当前地址客户端IP》》》》》》》》》》》》》》" + request.getRemoteAddr());
+        Locale locale = request.getLocale();
+        String conutry = locale.getCountry();
+        log.info("客户端浏览器国家、、、、、、》》》》" + conutry);
+        Integer type = CountryLanguageEnum.getValue(conutry);
+        if(null==type){
+            type=1;
+        }
         log.info("获取的语言》》》》》》》》》" + type);
         return ResponseData.success(type);
     }
