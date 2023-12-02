@@ -56,6 +56,11 @@ public class MobileGameController {
         //根据用户ip获取语言id
         String conutry = request.getHeader("cf-ipcountry");
         log.info("当前地址客户城市》》》》》》》》》》》》》》" + conutry);
+        char[] chas=conutry.toCharArray();
+        for (int i = 0; i <chas.length ; i++) {
+            log.info("conutry数据》》》》》》》》》》》》》》" + chas[i]);
+        }
+
         String realIp = request.getHeader("x-real-ip");
         log.info("当前地址客户端IP》》》》》》》》》》》》》》" + realIp);
 //
