@@ -58,14 +58,14 @@ public class MobileGameController {
         log.info("当前地址客户城市》》》》》》》》》》》》》》" + conutry);
         String realIp = request.getHeader("x-real-ip");
         log.info("当前地址客户端IP》》》》》》》》》》》》》》" + realIp);
+//
+//        Enumeration<String> s = request.getHeaderNames();
+//        while (s.hasMoreElements()) {
+//            String name = s.nextElement();
+//            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
+//        }
 
-        Enumeration<String> s = request.getHeaderNames();
-        while (s.hasMoreElements()) {
-            String name = s.nextElement();
-            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
-        }
-
-        Integer type = CountryLanguageEnum.getValue(conutry);
+        Integer type = CountryLanguageEnum.getValue(conutry.trim());
         if (null == type) {
             type = 1;
         }
