@@ -65,7 +65,7 @@ public class MobileGameController {
 //            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
 //        }
 
-        Integer type = CountryLanguageEnum.getValue(conutry.trim());
+        Integer type = CountryLanguageEnum.getValue("KR");
         log.info("获取的初始语言》》》》》》》》》" + type);
         if (null == type) {
             type = 1;
