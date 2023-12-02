@@ -52,7 +52,7 @@ public class GameTriggerServiceImpl extends ServiceImpl<GameTriggerMapper, GameT
 
             if(CollectionUtil.isNotEmpty(list)){
                 GameExtend gameExtend = gameExtendService.getGameExtendByGameId(list.get(0).getId());
-                apkLink = gameExtend.getApkLink();
+                apkLink = null != gameExtend ? gameExtend.getApkLink() : "";
             }
         }
 
