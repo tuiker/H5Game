@@ -30,7 +30,7 @@ public enum CountryLanguageEnum {
 
     public static Integer getValue(String msg) {
         log.info("得到的参数》》》》》》"+msg);
-        log.info("得到的参数values》》》》》》"+values());
+        log.info("得到的参数values》》》》》》"+values().length);
         for (CountryLanguageEnum ele : values()) {
             if (ele.getMsg() == msg) return ele.getCode();
         }
