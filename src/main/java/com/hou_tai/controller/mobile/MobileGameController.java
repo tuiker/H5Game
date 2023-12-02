@@ -61,8 +61,12 @@ public class MobileGameController {
         String conutry = locale.getCountry();
 
         Enumeration<String> s = request.getHeaderNames();
+        while (s.hasMoreElements()) {
+            String name = s.nextElement();
+            log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
+        }
+
         Iterator<String> ss = s.asIterator();
-        log.info("请求头里有参数》》》》" );
         if (ss.hasNext()) {
             String name = ss.next();
             log.info("请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
