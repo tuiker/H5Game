@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hou_tai.model.dao.SysMenuMapper">
+
+    <select id="getSysMenuListByUserId" resultType="com.hou_tai.response_vo.SysMenuRespVO">
+        SELECT sm.* FROM sys_user_menu AS um LEFT JOIN sys_menu AS sm ON sm.id = um.menu_id
+        WHERE um.user_id = #{userId}
+    </select>
+
+</mapper>
