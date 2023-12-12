@@ -1,5 +1,6 @@
 package com.hou_tai.controller.mobile;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hou_tai.common.enums.CountryLanguageEnum;
 import com.hou_tai.common.enums.HomeEnums;
@@ -25,8 +26,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Enumeration;
 
 /**
  * @ClassName: GameController
@@ -54,8 +53,8 @@ public class MobileGameController {
     @GetMapping("/getLanguageType")
     public ResultVO getLanguageType(HttpServletRequest request) {
         //根据用户ip获取语言id
-        String conutry = request.getHeader("cf-ipcountry");
-        log.info("当前地址客户城市》》》》》》》》》》》》》》" + conutry);
+        String country = request.getHeader("cf-ipcountry");
+        log.info("当前地址客户城市》》》》》》》》》》》》》》" + country);
         String realIp = request.getHeader("x-real-ip");
         log.info("当前地址客户端IP》》》》》》》》》》》》》》" + realIp);
 //
@@ -64,8 +63,9 @@ public class MobileGameController {
 //            String name = s.nextElement();
 //            //log.info("hasMoreElements请求头里的参数》》》》》》》》》》" + name + "对应值》》》》" + request.getHeader(name));
 //        }
-
-        Integer type = CountryLanguageEnum.getValue(conutry);
+        if (StringUtils.isBlank(country))
+            country = "CN";
+        Integer type = CountryLanguageEnum.getValue(country);
         log.info("获取的初始语言》》》》》》》》》" + type);
         if (null == type) {
             type = 1;
