@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Slf4j
 @Configuration
-@EnableScheduling
+//@EnableScheduling
 public class SchedulingConfig {
     @Resource
     private IChannelDataService channelDataService;
@@ -29,7 +29,7 @@ public class SchedulingConfig {
      * @Date 2023/11/13
      * @Return
      **/
-    @Scheduled(cron = "0 */30 * * * ?") // 每30分钟执行一次
+    //@Scheduled(cron = "0 */30 * * * ?") // 每30分钟执行一次
     public void getToken() {
         try {
             log.info("定时任务开始.......");
