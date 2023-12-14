@@ -1,12 +1,10 @@
 package com.hou_tai.model.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.base.MPJBaseMapper;
-import com.hou_tai.model.dto.MobileGameReviewDto;
-import com.hou_tai.model.dto.PointDto;
+import com.hou_tai.controller.mobile.dto.MobileGameReviewDto;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.response_vo.GameReviewPageVo;
+import com.hou_tai.controller.pc.vo.GameReviewPageVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

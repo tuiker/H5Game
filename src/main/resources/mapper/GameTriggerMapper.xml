@@ -8,7 +8,7 @@
         WHERE TO_DAYS(create_time) = TO_DAYS(NOW())
           AND type = #{type,jdbcType=INTEGER}
     </select>
-    <select id="getNumForSevenDay" resultType="com.hou_tai.response_vo.DataOfTimeVo">
+    <select id="getNumForSevenDay" resultType="com.hou_tai.controller.pc.vo.DataOfTimeVo">
         SELECT COUNT(1) num,
                date_format(create_time, '%Y-%m-%d') time
         FROM

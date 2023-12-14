@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hou_tai.model.dao.DataOverviewMapper">
 
-    <select id="getBoardList" resultType="com.hou_tai.response_vo.DataBoardVo">
+    <select id="getBoardList" resultType="com.hou_tai.controller.pc.vo.DataBoardVo">
             <!--1访问2下载3打开-->
             select '1' type,IFNULL(SUM(request_data),0) total from channel_data where  DATE(record_time)= CURDATE()
             UNION ALL
@@ -11,7 +11,7 @@
             select '3' type,IFNULL(count(1),0) total from game_trigger where type=3 and DATE(create_time) = CURDATE()
     </select>
 
-    <select id="getLinesStats"  resultType="com.hou_tai.response_vo.DataLineVo">
+    <select id="getLinesStats"  resultType="com.hou_tai.controller.pc.vo.DataLineVo">
         <if test="type==1"><!--1访问-->
             SELECT '1' type,DATE_FORMAT(record_time,'%Y-%m-%d') days,IFNULL(SUM(request_data),0) total  FROM channel_data
             where DATE(record_time) between #{dto.startDate} and #{dto.endDate}  GROUP BY days
@@ -26,7 +26,7 @@
         </if>
     </select>
 
-    <select id="getListStats" resultType="com.hou_tai.response_vo.DataListVo">
+    <select id="getListStats" resultType="com.hou_tai.controller.pc.vo.DataListVo">
         select t1.*,
                rank() over(ORDER BY download_num desc ) as 'rank'
             from (

@@ -24,7 +24,7 @@
     from game_review
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="getGameReviewById" resultType="com.hou_tai.response_vo.GameReviewPageVo">
+  <select id="getGameReviewById" resultType="com.hou_tai.controller.pc.vo.GameReviewPageVo">
     SELECT
       ga.id gameId,
       ga.game_name gameName,

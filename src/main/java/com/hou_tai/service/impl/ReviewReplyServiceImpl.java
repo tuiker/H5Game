@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.model.dao.ReviewReplyMapper;
 import com.hou_tai.model.pojo.*;
-import com.hou_tai.response_vo.ReviewReplyVo;
+import com.hou_tai.controller.pc.vo.ReviewReplyVo;
 import com.hou_tai.service.IReviewReplyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

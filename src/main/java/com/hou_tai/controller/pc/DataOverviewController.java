@@ -3,8 +3,8 @@ package com.hou_tai.controller.pc;
 
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
-import com.hou_tai.response_vo.DataBoardVo;
-import com.hou_tai.response_vo.GameGeneralizeVo;
+import com.hou_tai.controller.pc.vo.DataBoardVo;
+import com.hou_tai.controller.pc.vo.GameGeneralizeVo;
 import com.hou_tai.service.IDataOverviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

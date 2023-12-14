@@ -6,7 +6,7 @@ import com.hou_tai.model.pojo.GameType;
 import com.hou_tai.model.pojo.Language;
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
-import com.hou_tai.response_vo.GameVo;
+import com.hou_tai.controller.pc.vo.GameVo;
 import com.hou_tai.service.IChannelService;
 import com.hou_tai.service.IGameService;
 import com.hou_tai.service.IGameTypeService;

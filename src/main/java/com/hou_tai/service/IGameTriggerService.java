@@ -1,6 +1,6 @@
 package com.hou_tai.service;
 
-import com.hou_tai.model.dto.PointDto;
+import com.hou_tai.controller.pc.dto.PointDto;
 import com.hou_tai.model.pojo.GameTrigger;
 import com.hou_tai.common.response.ResultVO;
 

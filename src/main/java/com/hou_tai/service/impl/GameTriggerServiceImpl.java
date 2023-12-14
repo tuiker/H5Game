@@ -7,7 +7,7 @@ import com.hou_tai.common.enums.ResultCode;
 import com.hou_tai.common.constant.CommonNum;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dao.GameTriggerMapper;
-import com.hou_tai.model.dto.PointDto;
+import com.hou_tai.controller.pc.dto.PointDto;
 import com.hou_tai.model.pojo.Game;
 import com.hou_tai.model.pojo.GameExtend;
 import com.hou_tai.model.pojo.GameTrigger;

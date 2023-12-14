@@ -1,7 +1,6 @@
 package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hou_tai.model.dto.ScriptDescSaveReqDTO;
 import com.hou_tai.model.pojo.GameExtend;
 
 /**

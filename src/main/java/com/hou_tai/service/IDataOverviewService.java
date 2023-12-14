@@ -1,8 +1,8 @@
 package com.hou_tai.service;
 
 
-import com.hou_tai.response_vo.DataBoardVo;
-import com.hou_tai.response_vo.GameGeneralizeVo;
+import com.hou_tai.controller.pc.vo.DataBoardVo;
+import com.hou_tai.controller.pc.vo.GameGeneralizeVo;
 
 import java.util.List;
 

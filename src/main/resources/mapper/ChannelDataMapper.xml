@@ -26,7 +26,7 @@
             and game_id =#{gameId}
         </if>
     </select>
-    <select id="getNumForSevenDay" resultType="com.hou_tai.response_vo.DataOfTimeVo">
+    <select id="getNumForSevenDay" resultType="com.hou_tai.controller.pc.vo.DataOfTimeVo">
         SELECT request_data num,
                date_format(record_time, '%Y-%m-%d') time
         FROM

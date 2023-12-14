@@ -20,6 +20,10 @@ public class ResponseData {
         return new ResultVO<T>().setCodeAndMsg(resultCode).setData(data);
     }
 
+    public static <T> ResultVO<T> success(String msg, T data) {
+        return new ResultVO<T>().setCode(ResultCode.SUCCESS.getCode()).setMsg(msg).setData(data);
+    }
+
     public static <T> ResultVO<T> success(ResultCode resultCode, String msg, T data) {
         return new ResultVO<T>().setCode(resultCode.getCode()).setMsg(msg).setData(data);
     }

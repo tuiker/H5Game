@@ -10,6 +10,6 @@ public class CommConstant {
     public static final Long ADMIN_ID = 1L;
 
     /** 根菜单ID */
-    public static final Integer ROOT_MENU_ID = 0;
+    public static final Integer ROOT_MENU_ID = -1;
 
 }

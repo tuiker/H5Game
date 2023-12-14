@@ -2,7 +2,7 @@ package com.hou_tai.model.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hou_tai.model.pojo.ChannelData;
-import com.hou_tai.response_vo.DataOfTimeVo;
+import com.hou_tai.controller.pc.vo.DataOfTimeVo;
 
 import java.util.List;
 

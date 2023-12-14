@@ -3,14 +3,12 @@ package com.hou_tai.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hou_tai.model.base.PageDaoEntity;
-import com.hou_tai.model.dto.GameReviewAddReqDTO;
-import com.hou_tai.model.dto.MobileGameReviewDto;
-import com.hou_tai.model.dto.PointDto;
-import com.hou_tai.model.dto.ReplyGameReviewReqDTO;
+import com.hou_tai.controller.pc.dto.GameReviewAddReqDTO;
+import com.hou_tai.controller.mobile.dto.MobileGameReviewDto;
+import com.hou_tai.controller.pc.dto.ReplyGameReviewReqDTO;
 import com.hou_tai.model.pojo.GameReview;
-import com.hou_tai.response_vo.GameReviewVo;
-import com.hou_tai.response_vo.GameReviewPageVo;
-import com.hou_tai.response_vo.MobileGameReviewVo;
+import com.hou_tai.controller.pc.vo.GameReviewPageVo;
+import com.hou_tai.controller.mobile.vo.MobileGameReviewVo;
 
 /**
  * @InterfaceName: GameService

@@ -1,11 +1,15 @@
 package com.hou_tai.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hou_tai.model.dto.*;
+import com.hou_tai.controller.mobile.dto.MobileGameDto;
+import com.hou_tai.controller.mobile.dto.MobileHomeGameDto;
+import com.hou_tai.controller.pc.dto.GameAddReqDTO;
+import com.hou_tai.controller.pc.dto.GameDto;
+import com.hou_tai.controller.pc.dto.GameUpdateReqDTO;
 import com.hou_tai.model.pojo.Game;
-import com.hou_tai.response_vo.GameVo;
-import com.hou_tai.response_vo.MobileGameHomeVo;
-import com.hou_tai.response_vo.MobileGameVo;
+import com.hou_tai.controller.pc.vo.GameVo;
+import com.hou_tai.controller.mobile.vo.MobileGameHomeVo;
+import com.hou_tai.controller.mobile.vo.MobileGameVo;
 
 import java.util.List;
 

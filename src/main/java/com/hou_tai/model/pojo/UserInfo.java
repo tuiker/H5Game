@@ -34,13 +34,13 @@ public class UserInfo {
     private LocalDateTime recentLoginTime ;
     /**  */
      @Schema(title = "" )
-    private Integer createId ;
+    private Long createId ;
     /**  */
      @Schema(title = "" )
     private LocalDateTime createTime ;
     /**  */
      @Schema(title = "" )
-    private Integer updateId ;
+    private Long updateId ;
     /**  */
      @Schema(title = "" )
     private LocalDateTime updateTime ;

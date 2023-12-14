@@ -1,20 +1,23 @@
 package com.hou_tai.controller.pc;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.hou_tai.common.constant.CommConstant;
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
-import com.hou_tai.common.util.SecurityUtils;
-import com.hou_tai.response_vo.SysMenuRespVO;
+import com.hou_tai.controller.pc.dto.SysMenuAddReqDTO;
+import com.hou_tai.controller.pc.dto.SysMenuUpdateReqDTO;
+import com.hou_tai.controller.pc.vo.SysMenuRespVO;
+import com.hou_tai.model.pojo.SysMenu;
 import com.hou_tai.service.ISysMenuService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,6 +63,30 @@ public class SysMenuController {
         }
         //返回过滤子节点后的权限数组，这样就是一个树结构的菜单树
         return list.stream().filter(item -> CommConstant.ROOT_MENU_ID.equals(item.getParentId())).toList();
+    }
+
+    @Operation(summary = "新增目录 / 菜单 / 权限")
+    @PostMapping("/addSysMenu")
+    public ResultVO<Boolean> addSysMenu(@RequestBody SysMenuAddReqDTO reqDTO){
+        SysMenu sysMenu = BeanUtil.copyProperties(reqDTO, SysMenu.class);
+        sysMenuService.save(sysMenu);
+        return ResponseData.success(true);
+    }
+
+    @Operation(summary = "修改目录 / 菜单 / 权限")
+    @PostMapping("/updateSysMenu")
+    public ResultVO<Boolean> updateSysMenu(@RequestBody SysMenuUpdateReqDTO reqDTO){
+        SysMenu sysMenu = BeanUtil.copyProperties(reqDTO, SysMenu.class);
+        sysMenuService.updateById(sysMenu);
+        return ResponseData.success(true);
+    }
+
+    @Operation(summary = "通过主键删除数据")
+    @Parameter(name = "ids", description = "主键ID，多个id用“,”号分隔", required = true)
+    @DeleteMapping("/deleteByIds")
+    public ResultVO<Boolean> deleteByIds(@RequestParam("ids") String ids){
+        sysMenuService.removeBatchByIds(Arrays.asList(ids.split(",")));
+        return ResponseData.success(true);
     }
 
 }

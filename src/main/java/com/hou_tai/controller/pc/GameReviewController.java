@@ -1,14 +1,13 @@
 package com.hou_tai.controller.pc;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hou_tai.model.base.PageDaoEntity;
-import com.hou_tai.model.dto.GameReviewAddReqDTO;
-import com.hou_tai.model.dto.ReplyGameReviewReqDTO;
-import com.hou_tai.model.dto.ReviewPageReqDTO;
+import com.hou_tai.controller.pc.dto.GameReviewAddReqDTO;
+import com.hou_tai.controller.pc.dto.ReplyGameReviewReqDTO;
+import com.hou_tai.controller.pc.dto.ReviewPageReqDTO;
 import com.hou_tai.model.pojo.GameReview;
 import com.hou_tai.common.response.ResponseData;
 import com.hou_tai.common.response.ResultVO;
-import com.hou_tai.response_vo.GameReviewPageVo;
+import com.hou_tai.controller.pc.vo.GameReviewPageVo;
 import com.hou_tai.service.IGameReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

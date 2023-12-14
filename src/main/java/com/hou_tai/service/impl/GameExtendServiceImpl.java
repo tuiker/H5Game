@@ -3,7 +3,6 @@ package com.hou_tai.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hou_tai.model.dao.GameExtendMapper;
-import com.hou_tai.model.dto.ScriptDescSaveReqDTO;
 import com.hou_tai.model.pojo.GameExtend;
 import com.hou_tai.service.IGameExtendService;
 import org.springframework.stereotype.Service;
