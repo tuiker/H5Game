@@ -76,8 +76,8 @@ public class GameController {
             "gameLogo,gameMainLogo,gameBackground,gameUrl,gameDesc," +
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
     @PostMapping("/add")
-    public ResultVO<Game> add(@RequestBody GameAddReqDTO gameAddReqDTO){
-        return ResponseData.success(gameService.insert(gameAddReqDTO));
+    public ResultVO<Boolean> add(@RequestBody GameAddReqDTO gameAddReqDTO){
+        return gameService.insert(gameAddReqDTO);
     }
 
     /**
@@ -91,7 +91,7 @@ public class GameController {
             "dataSecurity,gameGrade,gameDownload,gameAge,devEmail,devUrl,gameLabel")
     @PostMapping("/update")
     public ResultVO<Boolean> update(@RequestBody GameUpdateReqDTO reqDTO){
-        return ResponseData.success(gameService.update(reqDTO));
+        return gameService.update(reqDTO);
     }
 
     @Operation(summary = "保存游戏数据追踪")

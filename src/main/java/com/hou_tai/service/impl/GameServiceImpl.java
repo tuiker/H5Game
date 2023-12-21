@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.hou_tai.common.constant.CommonNum;
+import com.hou_tai.common.response.ResponseData;
+import com.hou_tai.common.response.ResultVO;
 import com.hou_tai.model.dao.GameMapper;
 import com.hou_tai.model.dto.*;
 import com.hou_tai.model.pojo.*;
@@ -146,12 +148,21 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     @Transactional
-    public Game insert(GameAddReqDTO gameAddReqDTO) {
+    public ResultVO<Boolean> insert(GameAddReqDTO gameAddReqDTO) {
         //转换对象
         Game game = BeanUtil.copyProperties(gameAddReqDTO, Game.class);
         long gameId = getGameId();
         game.setId(gameId);
         String apkName = getApkName(game.getGameUrl());
+
+        if(checkGameNameIsExists(game.getGameName(), null)){
+            return ResponseData.success("游戏名称已存在，请更换", false);
+        }
+        if(checkApkNameIsExists(apkName, null)){
+            return ResponseData.success("该游戏APK包已被其他游戏上传，请更换", false);
+        }
+
+
         game.setApkName(apkName);
         //生成落地页，注意环境不同，地址不一样
         game.setGameFallUrl(fallPath + apkName);
@@ -167,7 +178,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         GameExtend gameExtend = BeanUtil.copyProperties(gameAddReqDTO, GameExtend.class);
         gameExtend.setGameId(gameId);
         gameExtendService.save(gameExtend);
-        return game;
+        return ResponseData.success(true);
     }
 
     /**
@@ -177,9 +188,17 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
      * @return 实例对象
      */
     @Transactional
-    public Boolean update(GameUpdateReqDTO reqDTO) {
+    public ResultVO<Boolean> update(GameUpdateReqDTO reqDTO) {
         String url = reqDTO.getGameUrl();
         String apkName = getApkName(url);
+
+        if(checkGameNameIsExists(reqDTO.getGameName(), reqDTO.getId())){
+            return ResponseData.success("游戏名称已存在，请更换", false);
+        }
+        if(checkApkNameIsExists(apkName, reqDTO.getId())){
+            return ResponseData.success("该游戏APK包已被其他游戏上传，请更换", false);
+        }
+
         LambdaUpdateWrapper<Game> wrapper = new LambdaUpdateWrapper<Game>();
         wrapper.set(StrUtil.isNotBlank(reqDTO.getGameName()), Game::getGameName, reqDTO.getGameName())
                 .set(StrUtil.isNotBlank(reqDTO.getGameLogo()), Game::getGameLogo, reqDTO.getGameLogo())
@@ -211,7 +230,39 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
         gameExtendService.updateByGameId(gameExtend);
 
         //3. 更新成功了，查询最最对象返回
-        return true;
+        return ResponseData.success(true);
+    }
+
+    /**
+     * 校验游戏名称是否已存在
+     * @param gameName 游戏名称
+     * @param gameId 游戏ID
+     * @return true：已存在， false：不存在
+     */
+    public Boolean checkGameNameIsExists(String gameName, Long gameId){
+        LambdaQueryWrapper<Game> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Game::getGameName, gameName);
+        if(null != gameId){
+            queryWrapper.ne(Game::getId, gameId);
+        }
+        long count = this.count(queryWrapper);
+        return count > 0;
+    }
+
+    /**
+     * 校验APK包名是否已存在
+     * @param apkName APK包名
+     * @param gameId 游戏ID
+     * @return true：已存在， false：不存在
+     */
+    public Boolean checkApkNameIsExists(String apkName, Long gameId){
+        LambdaQueryWrapper<Game> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Game::getApkName, apkName);
+        if(null != gameId){
+            queryWrapper.ne(Game::getId, gameId);
+        }
+        long count = this.count(queryWrapper);
+        return count > 0;
     }
 
     /**
@@ -316,6 +367,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements IG
             apkFile = new ApkFile(new File(apkUrl));
             apkMeta = apkFile.getApkMeta();
             System.out.println(apkMeta.getPackageName());
+
+            apkFile.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
